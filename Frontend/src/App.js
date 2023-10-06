@@ -6,6 +6,7 @@ import ProductSlider from "./Components/Slider";
 import Navigation from "./Components/Navigation";
 import Products from "./Components/Products";
 import Test from "./Components/Test";
+import Login from "./Components/Login";
 // import object from "prop-types";
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
     <div className="app">
       <Navigation />
       <ProductSlider products={commerceProducts} />
+      <Login />
       <ProductsList products={products} />
       <Products />
       <Test />
