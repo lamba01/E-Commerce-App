@@ -1,0 +1,11 @@
+.slider {
+  height: 70vh;
+  background-color: rgb(240, 237, 237);
+  width: 100vw;
+  display: flex;
+}
+.slider-product__image {
+  height: 50vh;
+  width: 50vw;
+  border: none;
+}

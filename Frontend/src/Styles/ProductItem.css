@@ -1,0 +1,7 @@
+.product__image {
+  width: 100px;
+  height: 100px;
+}
+.product__card {
+  display: flex;
+}
