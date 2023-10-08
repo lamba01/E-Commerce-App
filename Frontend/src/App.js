@@ -3,10 +3,11 @@ import axios from "axios";
 import commerce from "./lib/Commerce";
 import ProductsList from "./Components/ProductsList";
 import ProductSlider from "./Components/Slider";
-import Navigation from "./Components/Navigation";
+// import Navigation from "./Components/Navigation";
 import Products from "./Components/Products";
 import Test from "./Components/Test";
 import Login from "./Components/Login";
+import SignUp from "./Components/Signup";
 // import object from "prop-types";
 
 const App = () => {
@@ -41,9 +42,10 @@ const App = () => {
   };
   return (
     <div className="app">
-      <Navigation />
+      {/* <Navigation /> */}
       <ProductSlider products={commerceProducts} />
       <Login />
+      <SignUp />
       <ProductsList products={products} />
       <Products />
       <Test />
