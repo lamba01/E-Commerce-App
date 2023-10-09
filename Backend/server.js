@@ -129,6 +129,23 @@ app.post("/api/login", (req, res) => {
 //   });
 // });
 
+app.post("/api/add-to-cart", (req, res) => {
+  const { product } = req.body;
+  console.log(req.body);
+
+  try {
+    db.query(
+      "INSERT INTO cart (product_name, price, quantity, product_image) VALUES (?, ?, ?, ?)",
+      [req.body.title, req.body.price, req.body.id, req.body.image] // Assuming a default quantity of 1
+    );
+
+    return res.json({ message: "Product added successfully" });
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
