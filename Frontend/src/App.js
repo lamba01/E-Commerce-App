@@ -8,6 +8,7 @@ import Products from "./Components/Products";
 import Test from "./Components/Test";
 import Login from "./Components/Login";
 import SignUp from "./Components/Signup";
+import Cart from "./Components/Cart";
 // import object from "prop-types";
 
 const App = () => {
@@ -43,9 +44,10 @@ const App = () => {
   return (
     <div className="app">
       {/* <Navigation /> */}
-      <ProductSlider products={commerceProducts} />
+      {/* <ProductSlider products={commerceProducts} /> */}
       <Login />
-      <SignUp />
+      <Cart />
+      {/* <SignUp /> */}
       <ProductsList products={products} />
       <Products />
       <Test />

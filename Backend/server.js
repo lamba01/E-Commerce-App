@@ -24,6 +24,7 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) {
     console.error("Database connection failed:", err);
+    process.exit(1);
   } else {
     console.log("Connected to the database");
   }
@@ -129,19 +130,94 @@ app.post("/api/login", (req, res) => {
 //   });
 // });
 
+// Add to cart
+// app.post("/api/add-to-cart", (req, res) => {
+//   const { product } = req.body;
+//   console.log(req.body);
+
 app.post("/api/add-to-cart", (req, res) => {
   const { product } = req.body;
   console.log(req.body);
 
   try {
+    let productName, price, productId, productImage;
+
+    // Check if the request body follows the first format ('title' and 'price')
+    if (req.body.title && req.body.price) {
+      productName = req.body.title;
+      price = req.body.price;
+      productId = req.body.id; // Assuming this is present in both formats
+      productImage = req.body.image; // Assuming this is present in both formats
+    } else if (req.body.name && req.body.price.raw) {
+      // Check if the request body follows the second format ('name' and 'price.raw')
+      productName = req.body.name;
+      price = req.body.price.raw;
+      productId = req.body.price.raw; // Assuming this is present in both formats
+      productImage = req.body.image.url; // Assuming this is present in both formats
+    } else {
+      // Handle the case where the format is not recognized
+      return res.status(400).json({ error: "Invalid product format" });
+    }
+
     db.query(
       "INSERT INTO cart (product_name, price, quantity, product_image) VALUES (?, ?, ?, ?)",
-      [req.body.title, req.body.price, req.body.id, req.body.image] // Assuming a default quantity of 1
+      [productName, price, productId, productImage] // Assuming a default quantity of 1
     );
 
     return res.json({ message: "Product added successfully" });
   } catch (error) {
     console.error("Error adding product to cart:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//   try {
+//     let productName, price, productId, productImage;
+
+//     // Check if the request body follows the first format ('title' and 'price')
+//     if (req.body.title && req.body.price) {
+//       productName = req.body.title;
+//       price = req.body.price;
+//       productId = req.body.id; // Assuming this is present in both formats
+//       productImage = req.body.image; // Assuming this is present in both formats
+//     } else if (req.body.name && req.body.price.raw) {
+//       // Check if the request body follows the second format ('name' and 'price.raw')
+//       productName = req.body.name;
+//       price = req.body.price.raw;
+//       productId = req.body.price.raw; // Assuming this is present in both formats
+//       productImage = req.body.image.url; // Assuming this is present in both formats
+//     } else {
+//       // Handle the case where the format is not recognized
+//       return res.status(400).json({ error: "Invalid product format" });
+//     }
+//     db.query(
+//       "INSERT INTO cart (product_name, price, quantity, product_image) VALUES (?, ?, ?, ?)",
+//       [req.body.title, req.body.price, req.body.id, req.body.image] // Assuming a default quantity of 1
+//     );
+
+//     return res.json({ message: "Product added successfully" });
+//   } catch (error) {
+//     console.error("Error adding product to cart:", error);
+//     return res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// Import necessary libraries and configure your Express app
+
+// Route to retrieve cart details
+app.get("/api/cart", (req, res) => {
+  try {
+    // Execute a SELECT query to retrieve cart details
+    db.query("SELECT * FROM cart", (error, results) => {
+      if (error) {
+        console.error("Error retrieving cart details:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+      // Send the retrieved cart details as a JSON response
+      return res.json(results);
+    });
+  } catch (error) {
+    console.error("Error retrieving cart details:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });

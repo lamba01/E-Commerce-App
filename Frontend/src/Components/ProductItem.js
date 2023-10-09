@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { stripHtml } from "string-strip-html";
 import "../Styles/ProductItem.css";
+import AddToCartButton from "./Addtocart";
 
 const ProductItem = ({ product }) => {
   const { result } = stripHtml(product.description);
+  console.log(product);
 
   return (
     <div className="product__card">
@@ -24,6 +26,7 @@ const ProductItem = ({ product }) => {
             {product.price.formatted_with_symbol}
           </p>
         </div>
+        <AddToCartButton product={product} />
       </div>
     </div>
   );
