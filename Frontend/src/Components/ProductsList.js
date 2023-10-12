@@ -1,12 +1,39 @@
+// import React from "react";
+// import PropTypes from "prop-types";
+// import ProductItem from "./ProductItem";
+
+// const ProductsList = ({ products }) => {
+//   return (
+//     <div className="products" id="products">
+//       {products.map((product) => (
+//         <ProductItem key={product.id} product={product} />
+//       ))}
+//     </div>
+//   );
+// };
+
+// ProductsList.propTypes = {
+//   products: PropTypes.array,
+// };
+
+// export default ProductsList;
+
 import React from "react";
 import PropTypes from "prop-types";
 import ProductItem from "./ProductItem";
+import { Link } from "react-router-dom";
 
 const ProductsList = ({ products }) => {
   return (
     <div className="products" id="products">
       {products.map((product) => (
-        <ProductItem key={product.id} product={product} />
+        <Link
+          to={`/product/${product.id}`} // Link to the product details page using the product's ID
+          key={product.id}
+          className="product-link"
+        >
+          <ProductItem product={product} />
+        </Link>
       ))}
     </div>
   );

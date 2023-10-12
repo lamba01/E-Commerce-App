@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import BackBtn from '../Components/BackBtn';
 
 function Cart() {
   const [cartDetails, setCartDetails] = useState([]);
@@ -12,7 +13,7 @@ function Cart() {
     axios.get('/api/cart')
       .then((response) => {
         setCartDetails(response.data);
-        // console.log(response.data)
+        // console.log(response.data.length)
       })
       .catch((error) => {
         console.error('Error fetching cart details:', error);
@@ -30,8 +31,12 @@ function Cart() {
           </li>
         ))}
       </ul>
+      <BackBtn />
     </div>
   );
 }
 
 export default Cart;
+
+
+

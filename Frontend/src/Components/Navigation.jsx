@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import "../Styles/Navigation.css"
 
 function Navigation() {
@@ -12,7 +13,7 @@ function Navigation() {
         <span className="line line3"></span>
       </div>
       <ul className ="menu-items">
-        <li><a className ="links">cart</a></li>
+      <Link to={`/cart`} className="product-card-link"><li>cart</li></Link>
         <li><a className ="links">Sign-In</a></li>
 
       </ul>
