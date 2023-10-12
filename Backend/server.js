@@ -131,36 +131,117 @@ app.post("/api/login", (req, res) => {
 //   });
 // });
 
+// Route to add to cart
+// app.post("/api/add-to-cart", (req, res) => {
+//   const { product } = req.body;
+//   console.log(req.body);
+
+//   try {
+//     let productName, price, productId, productImage;
+
+//     // Check if the request body follows the first format ('title' and 'price')
+//     if (req.body.title && req.body.price) {
+//       productName = req.body.title;
+//       price = req.body.price;
+//       productId = req.body.id; // Assuming this is present in both formats
+//       productImage = req.body.image; // Assuming this is present in both formats
+//     } else if (req.body.name && req.body.price.raw) {
+//       // Check if the request body follows the second format ('name' and 'price.raw')
+//       productName = req.body.name;
+//       price = req.body.price.raw;
+//       productId = req.body.price.raw; // Assuming this is present in both formats
+//       productImage = req.body.image.url; // Assuming this is present in both formats
+//     } else {
+//       // Handle the case where the format is not recognized
+//       return res.status(400).json({ error: "Invalid product format" });
+//     }
+
+//     db.query(
+//       "INSERT INTO cart (product_name, price, quantity, product_image) VALUES (?, ?, ?, ?)",
+//       [productName, price, productId, productImage] // Assuming a default quantity of 1
+//     );
+
+//     return res.json({ message: "Product added successfully" });
+//   } catch (error) {
+//     console.error("Error adding product to cart:", error);
+//     return res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 app.post("/api/add-to-cart", (req, res) => {
   const { product } = req.body;
-  console.log(req.body);
 
   try {
     let productName, price, productId, productImage;
 
-    // Check if the request body follows the first format ('title' and 'price')
     if (req.body.title && req.body.price) {
       productName = req.body.title;
       price = req.body.price;
-      productId = req.body.id; // Assuming this is present in both formats
-      productImage = req.body.image; // Assuming this is present in both formats
+      productId = req.body.id;
+      productImage = req.body.image;
     } else if (req.body.name && req.body.price.raw) {
-      // Check if the request body follows the second format ('name' and 'price.raw')
       productName = req.body.name;
       price = req.body.price.raw;
-      productId = req.body.price.raw; // Assuming this is present in both formats
-      productImage = req.body.image.url; // Assuming this is present in both formats
+      productId = req.body.price.raw;
+      productImage = req.body.image.url;
     } else {
-      // Handle the case where the format is not recognized
       return res.status(400).json({ error: "Invalid product format" });
     }
 
+    // Check if the product with the same name is already in the cart
     db.query(
-      "INSERT INTO cart (product_name, price, quantity, product_image) VALUES (?, ?, ?, ?)",
-      [productName, price, productId, productImage] // Assuming a default quantity of 1
-    );
+      "SELECT * FROM cart WHERE product_name = ?",
+      [productName],
+      (selectError, selectResults) => {
+        if (selectError) {
+          console.error(
+            "Error checking if the product is in the cart:",
+            selectError
+          );
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
 
-    return res.json({ message: "Product added successfully" });
+        if (selectResults.length > 0) {
+          // If the product is already in the cart, update the quantity
+          const currentQuantity = selectResults[0].quantity;
+          const newQuantity = currentQuantity + 1;
+          db.query(
+            "UPDATE cart SET quantity = ? WHERE product_name = ?",
+            [newQuantity, productName],
+            (updateError, updateResults) => {
+              if (updateError) {
+                console.error(
+                  "Error updating quantity in the cart:",
+                  updateError
+                );
+                return res.status(500).json({ error: "Internal Server Error" });
+              }
+              return res.json({
+                message: "Product added to cart successfully",
+              });
+            }
+          );
+        } else {
+          // If the product is not in the cart, insert it
+          db.query(
+            "INSERT INTO cart (product_name, price, quantity, product_image) VALUES (?, ?, ?, ?)",
+            [productName, price, 1, productImage],
+            (insertError, insertResults) => {
+              if (insertError) {
+                console.error(
+                  "Error inserting product into cart:",
+                  insertError
+                );
+                return res.status(500).json({ error: "Internal Server Error" });
+              }
+              return res.json({
+                message: "Product added to cart successfully",
+              });
+            }
+          );
+        }
+      }
+    );
   } catch (error) {
     console.error("Error adding product to cart:", error);
     return res.status(500).json({ error: "Internal Server Error" });
@@ -168,7 +249,6 @@ app.post("/api/add-to-cart", (req, res) => {
 });
 
 // Route to retrieve cart details
-
 app.get("/api/cart", (req, res) => {
   try {
     // Execute a SELECT query to retrieve cart details
@@ -184,6 +264,27 @@ app.get("/api/cart", (req, res) => {
     console.error("Error retrieving cart details:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
+});
+
+// Route to delete from cart
+app.delete("/api/cart/:cartItemId", (req, res) => {
+  const cartItemId = req.params.cartItemId;
+
+  // Implement the deletion logic to remove the item from the cart table
+  db.query(
+    "DELETE FROM cart WHERE cart_id = ?",
+    [cartItemId],
+    (error, results) => {
+      if (error) {
+        console.error("Error deleting cart item:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Cart item deleted successfully" });
+    }
+  );
 });
 
 const PORT = process.env.PORT || 3001;

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import useParams to access URL parameters
 import AddToCartButton from '../Components/Addtocart';
 import BackBtn from '../Components/BackBtn';
+import CartAmount from '../Components/CartAmount';
 
 
 function ProductDetails() {
@@ -34,6 +35,7 @@ function ProductDetails() {
       <h2>{product.title}</h2>
       <p>Category: {product.category}</p>
       <p>Price: ${product.price}</p>
+      <CartAmount />
       <AddToCartButton product={product} />
       {/* Add more details as needed */}
     </div>
@@ -41,3 +43,8 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
+
+
+
+
+

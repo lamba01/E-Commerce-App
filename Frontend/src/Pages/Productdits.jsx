@@ -4,6 +4,7 @@ import commerce from "../lib/Commerce";
 import { useParams } from 'react-router-dom';
 import AddToCartButton from '../Components/Addtocart';
 import BackBtn from "../Components/BackBtn";
+import CartAmount from "../Components/CartAmount";
 
 
 function ProductDs() {
@@ -34,6 +35,7 @@ function ProductDs() {
       <p>Price: {product.price.formatted_with_symbol}</p>
       <AddToCartButton product={product} />
       <BackBtn />
+      <CartAmount />
     </div>
   );
 }

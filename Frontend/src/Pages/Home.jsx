@@ -89,7 +89,7 @@ function Home() {
 
   return (
     <div className="app">
-      {/* <Navigation /> */}
+      <Navigation />
       <input
         type="text"
         placeholder="Search products"
