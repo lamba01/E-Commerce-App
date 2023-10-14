@@ -23,6 +23,7 @@ function ProductDetails() {
       });
   }, [productId]);
 
+
   if (!product) {
     return <div>Loading...</div>;
   }

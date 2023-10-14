@@ -88,10 +88,10 @@ function Cart() {
       <h1>Cart Details</h1>
       <ul>
         {cartDetails.map((item) => (
-          <li key={item.cart_id}>
+          <li key={item.id}>
             Product: {item.product_name}, Price: ${item.price}, Quantity: {item.quantity}
             <img src={item.product_image} alt={item.product_name} style={mystyle} />
-            <DeleteCartItemButton cartItemId={item.cart_id} onDelete={onDeleteCartItem} />
+            <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
           </li>
         ))}
       </ul>

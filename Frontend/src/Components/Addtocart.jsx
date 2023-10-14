@@ -5,7 +5,26 @@ import axios from 'axios';
 const AddToCartButton = ({ product }) => {
   const addToCart = async () => {
     try {
-      const response = await axios.post('/api/add-to-cart', product);
+      // Retrieve the JWT token from local storage
+      const token = localStorage.getItem('token');
+      console.log(token)
+
+      if (!token) {
+        alert('You are not logged in. Please log in to add products to your cart.');
+        return;
+      }
+
+      // Include the token in the request headers
+      // const headers = {
+      //   Authorization: `Bearer ${token}`,
+      // };
+      // console.log(headers)
+
+      // Make a request to your server to perform the action with the JWT token
+      const response = await axios.post('/api/add-to-cart', product,  {  headers: {
+        Authorization: `Bearer ${token}`,
+      }, } );
+
       if (response.status === 200) {
         alert('Product added successfully');
       }
@@ -23,3 +42,6 @@ AddToCartButton.propTypes = {
 };
 
 export default AddToCartButton;
+
+
+

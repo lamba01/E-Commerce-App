@@ -7,8 +7,8 @@ import ProductSlider from "../Components/Slider";
 import Navigation from "../Components/Navigation";
 import Products from "../Components/Products";
 // import Test from "./Test";
-// import Login from "./Login";
-// import SignUp from "./Signup";
+import Login from "../Components/Login";
+import SignUp from "../Components/Signup";
 // import Cart from "./Cart";
 // import { Router } from "react-router-dom";
 // import ProductDetails from "./ProductDetails";
@@ -51,7 +51,7 @@ import Products from "../Components/Products";
 //       {/* <Login /> */}
 //       {/* <ProductDetails /> */}
 //       {/* <Cart /> */}
-//       {/* <SignUp /> */}
+      // {/* <SignUp /> */}
 //       <ProductsList products={products} />
 //       <Products />
 //       {/* <Test /> */}
@@ -97,8 +97,10 @@ function Home() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-<ProductsList searchQuery={searchQuery} products={filteredProducts} />
-<Products searchQuery={searchQuery} />
+        <ProductsList searchQuery={searchQuery} products={filteredProducts} />
+        <Products searchQuery={searchQuery} />
+        <SignUp />
+        <Login />
 
 
     </div>

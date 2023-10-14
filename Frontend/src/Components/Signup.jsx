@@ -50,6 +50,7 @@ const SignUp = () => {
           <input
             type="text"
             name="name"
+            required
             value={formData.name}
             onChange={handleInputChange}
           />

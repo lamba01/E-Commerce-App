@@ -1,7 +1,5 @@
-const crypto = require("crypto");
-
 module.exports = {
-  secretKey: crypto.randomBytes(32).toString("hex"), // Generates a 32-byte (256-bit) random hexadecimal secret key
+  secretKey: "LkRj7&9sd^9~[9T$^a2Gy3zN7f]8TrpFgWz9xJ6qE0!KsUcN1vPwO5xR9aG3tZ",
   db: {
     host: "localhost",
     user: "root",
