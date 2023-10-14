@@ -216,15 +216,38 @@ app.post("/api/add-to-cart", (req, res) => {
 
 // Route to retrieve cart details
 app.get("/api/cart", (req, res) => {
+  const token = req.headers.authorization;
+
   try {
-    // Execute a SELECT query to retrieve cart details
-    db.query("SELECT * FROM cart", (error, results) => {
-      if (error) {
-        console.error("Error retrieving cart details:", error);
-        return res.status(500).json({ error: "Internal Server Error" });
+    // Extract the JWT token from the "Authorization" header
+    const tokenParts = token.split(" "); // Split "Bearer {token}" into an array
+    if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+      return res.status(401).json({ error: "Invalid token format" });
+    }
+    const jwtToken = tokenParts[1];
+
+    // Verify the JWT token using the secret key
+    jwt.verify(jwtToken, secretKey, (jwtError, decoded) => {
+      if (jwtError) {
+        // JWT verification failed; return an unauthorized response
+        return res.status(401).json({ error: "Unauthorized" });
       }
-      // Send the retrieved cart details as a JSON response
-      return res.json(results);
+
+      const userId = decoded.userId;
+
+      // Execute a SELECT query to retrieve cart details for the specific user
+      db.query(
+        "SELECT * FROM cart WHERE user_id = ?",
+        [userId],
+        (error, results) => {
+          if (error) {
+            console.error("Error retrieving cart details:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+          // Send the retrieved cart details as a JSON response
+          return res.json(results);
+        }
+      );
     });
   } catch (error) {
     console.error("Error retrieving cart details:", error);

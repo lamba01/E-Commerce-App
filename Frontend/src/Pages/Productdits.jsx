@@ -31,7 +31,7 @@ function ProductDs() {
       <h1>Product Details</h1>
       <img src={product.image.url} alt={product.name} />
       <h2>{product.name}</h2>
-      <p>Category: {product.categories[0].name}</p>
+      <p>Category: {product.categories[0]?.name}</p>
       <p>Price: {product.price.formatted_with_symbol}</p>
       <AddToCartButton product={product} />
       <BackBtn />
