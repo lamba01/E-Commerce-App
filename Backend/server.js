@@ -149,10 +149,10 @@ app.post("/api/add-to-cart", (req, res) => {
         return res.status(400).json({ error: "Invalid product format" });
       }
 
-      // Check if the product with the same name is already in the cart
+      // Check if the product with the same name is already in the user's cart
       db.query(
-        "SELECT * FROM cart WHERE product_name = ?",
-        [productName],
+        "SELECT * FROM cart WHERE user_id = ? AND product_name = ?",
+        [userId, productName],
         (selectError, selectResults) => {
           if (selectError) {
             console.error(
@@ -167,8 +167,8 @@ app.post("/api/add-to-cart", (req, res) => {
             const currentQuantity = selectResults[0].quantity;
             const newQuantity = currentQuantity + 1;
             db.query(
-              "UPDATE cart SET quantity = ? WHERE product_name = ?",
-              [newQuantity, productName],
+              "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_name = ?",
+              [newQuantity, userId, productName],
               (updateError, updateResults) => {
                 if (updateError) {
                   console.error(

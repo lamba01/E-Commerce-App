@@ -24,7 +24,6 @@ const Login = () => {
       const response = await axios.post("/api/login", formData, {
         withCredentials: true,
       });
-      console.log("Response from login:", response);
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
   
