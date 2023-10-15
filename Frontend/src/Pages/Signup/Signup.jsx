@@ -1,5 +1,6 @@
-// src/components/SignUp.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import "./signup.css"
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -42,10 +43,11 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
+    <div className='sign-form'>
+      <div className="sign-form-container">
+      <h2 className='headers'>Sign Up</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='inputt'>
           <label>Name:</label>
           <input
             type="text"
@@ -55,8 +57,8 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className='inputt'>
+          <label>Email address:</label>
           <input
             type="email"
             name="email"
@@ -64,7 +66,7 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className='inputt'>
           <label>Password:</label>
           <input
             type="password"
@@ -73,8 +75,13 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className='signin-btn'>Sign Up</button>
       </form>
+      <p className="or">or</p>
+      <Link to = {`/login`} className="btn-containerr">
+        <button className="signup-btn" type="submit">Sign In</button>
+        </Link>
+      </div>
     </div>
   );
 };

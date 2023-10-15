@@ -69,7 +69,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import ProductDetailss from "./Pages/Productdits";
 import Cart from "./Pages/Cart";
 import Login from "./Pages/Login/Login";
-import SignUp from "./Components/Signup";
+import SignUp from "./Pages/Signup/Signup";
 
 function App() {
   return (

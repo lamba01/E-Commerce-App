@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AddToCartButton = ({ product }) => {
+const AddToCartButton = ({ product, onaddToCart }) => {
   const navigate = useNavigate()
   const addToCart = async () => {
     try {
@@ -32,7 +32,8 @@ const AddToCartButton = ({ product }) => {
     }
   };
 
-  return <button onClick={addToCart}>Add to cart</button>;
+  return <button onClick={() => { addToCart(); onaddToCart(); }}>Add to cart</button>;
+
 };
 
 AddToCartButton.propTypes = {

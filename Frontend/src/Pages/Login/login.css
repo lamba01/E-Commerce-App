@@ -5,7 +5,6 @@
   justify-content: center;
   align-items: center;
 }
-/* Style for the form container */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -20,7 +19,7 @@
   background-color: white;
 }
 /* Style for the form */
-.form-container h2 {
+.header {
   margin-bottom: 20px;
 }
 form {
@@ -31,6 +30,7 @@ form {
 }
 .input label {
   display: block;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 .input input {
@@ -38,6 +38,11 @@ form {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 0px;
+}
+.btn-container {
+  width: 90%;
+  margin: 0 auto;
+  text-decoration: none;
 }
 .submit-btn,
 .signup-btn {
@@ -50,7 +55,6 @@ form {
   transition: background-color 0.3s;
 }
 .signup-btn {
-  width: 90%;
   background: none;
   border: black 1px solid;
   color: black;

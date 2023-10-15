@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./login.css"
 
 
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <div className="form">
       <div className="form-container">
-      <h2>Sign In</h2>
+      <h2 className="header">Sign In</h2>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="input">
@@ -72,20 +72,23 @@ const Login = () => {
           />
         </div>
         <div className="pass">
-          <div>    <input
-      type="checkbox"
-      name="rememberMe" // Change the name attribute
-      id="rememberMe" // Add an id attribute
-      checked={formData.rememberMe}
-      onChange={handleChange}
-    />
+        <div>    
+          <input
+            type="checkbox"
+            name="rememberMe"
+            id="rememberMe" 
+            checked={formData.rememberMe}
+            onChange={handleChange}
+          />
           <label htmlFor="remember me">Remember me</label></div>
           <p>Lost your password?</p>
         </div>
         <button className="submit-btn" type="submit">Sign In</button>
       </form>
       <p className="or">or</p>
-      <button className="signup-btn" type="submit">Create an account</button>
+      <Link to = {`/Signup`} className="btn-container">
+        <button className="signup-btn" type="submit">Create an account</button>
+        </Link>
       </div>
     </div>
   );
