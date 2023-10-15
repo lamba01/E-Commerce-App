@@ -1,0 +1,79 @@
+.form {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Style for the form container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40vw;
+  height: 80vh;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+/* Style for the form */
+.form-container h2 {
+  margin-bottom: 20px;
+}
+form {
+  width: 90%;
+}
+.input {
+  margin: 10px 0;
+}
+.input label {
+  display: block;
+  margin-bottom: 5px;
+}
+.input input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+}
+.submit-btn,
+.signup-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #0e0f0f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.signup-btn {
+  width: 90%;
+  background: none;
+  border: black 1px solid;
+  color: black;
+}
+.submit-btn:hover {
+  background-color: #323232;
+}
+.or {
+  margin: 20px 0px;
+}
+.pass {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+/* .input-container input {
+  width: 25vw;
+  padding: 10px 10px;
+  border: none;
+  background-color: hsl(235, 24%, 19%);
+  color: hsl(234, 39%, 85%);
+}
+.input-container input:focus {
+  border: 1px solid hsl(233, 11%, 84%);
+  outline: none;
+} */

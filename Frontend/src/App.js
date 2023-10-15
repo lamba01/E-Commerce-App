@@ -68,14 +68,18 @@ import Home from "./Pages/Home";
 import ProductDetails from "./Pages/ProductDetails";
 import ProductDetailss from "./Pages/Productdits";
 import Cart from "./Pages/Cart";
+import Login from "./Pages/Login/Login";
+import SignUp from "./Components/Signup";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/product/:productId" element={<ProductDetailss />} />
+        <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/Signup" element={<SignUp />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>

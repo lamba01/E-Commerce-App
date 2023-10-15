@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import commerce from "../lib/Commerce";
 import ProductsList from "../Components/ProductsList";
-import ProductSlider from "../Components/Slider";
+// import ProductSlider from "../Components/Slider";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigation from "../Components/Navigation";
 import Products from "../Components/Products";
 // import Test from "./Test";
-import Login from "../Components/Login";
-import SignUp from "../Components/Signup";
 // import Cart from "./Cart";
 // import { Router } from "react-router-dom";
 // import ProductDetails from "./ProductDetails";
@@ -96,13 +94,8 @@ function Home() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-
-        <ProductsList searchQuery={searchQuery} products={filteredProducts} />
-        <Products searchQuery={searchQuery} />
-        <SignUp />
-        <Login />
-
-
+      <Products searchQuery={searchQuery} />
+      <ProductsList searchQuery={searchQuery} products={filteredProducts} /> 
     </div>
   );
 }

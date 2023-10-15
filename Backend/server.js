@@ -57,7 +57,7 @@ app.post("/api/signup", async (req, res) => {
 
 // API endpoint for user login
 app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, rememberMe } = req.body;
 
   // Check if the user exists in the database
   db.query("SELECT * FROM user WHERE email = ?", [email], (err, results) => {
@@ -81,9 +81,10 @@ app.post("/api/login", async (req, res) => {
       }
 
       if (bcryptResult) {
+        const tokenExpiration = rememberMe ? "3d" : "3h";
         // Passwords match, create a JWT token for authentication
         const token = jwt.sign({ userId: user.id }, secretKey, {
-          expiresIn: "1h", // You can adjust the token expiration time
+          expiresIn: tokenExpiration, // You can adjust the token expiration time
         });
         // console.log("Token generated and signed:", token);
         const options = {
