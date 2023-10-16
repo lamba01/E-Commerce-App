@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Navigation from "../Components/Navigation";
 import AddToCartButton from '../Components/Addtocart';
 import BackBtn from '../Components/BackBtn';
-import CartAmount from '../Components/CartAmount';
+import ProductQuantityControl from '../Components/ProductQuantityControl';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -62,7 +63,7 @@ function ProductDetails() {
   // Call the function to check if the product is in the cart
   useEffect(() => {
     checkIfInCart();
-  }, [product]);
+  });
 
   if (!product) {
     return <div>Loading...</div>;
@@ -70,18 +71,18 @@ function ProductDetails() {
 
   return (
     <div>
+      <Navigation />
       <h1>Product Details</h1>
       <BackBtn />
       <img src={product.image} alt={product.title} />
       <h2>{product.title}</h2>
       <p>Category: {product.category}</p>
       <p>Price: ${product.price}</p>
-      <CartAmount />
       {isInCart ? (
         <div>
-          {/* Display quantity controls or any other UI if the product is in the cart */}
           <p>Product is already in your cart</p>
           {/* Include the logic for increasing and decreasing quantity here */}
+          <ProductQuantityControl product={product}/>
         </div>
       ) : (
         <AddToCartButton product={product} onaddToCart={handleAddToCart}/>

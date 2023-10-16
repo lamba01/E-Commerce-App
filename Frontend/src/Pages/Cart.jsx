@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BackBtn from '../Components/BackBtn';
 import DeleteCartItemButton from '../Components/DeleteCartItemBtn';
+import Navigation from "../Components/Navigation";
 
 function Cart() {
   const [cartDetails, setCartDetails] = useState([]);
@@ -53,24 +54,26 @@ function Cart() {
 
   return (
     <div>
+      <Navigation />
       <h1>Cart Details</h1>
       <ul>
-        {cartDetails.map((item) => (
-          <li key={item.id}>
-            <Link to={`/${item.route}/${item.product_id}`}>
-            Product: {item.product_name}, Price: ${item.price}, Quantity: {item.quantity}
-            <img src={item.product_image} alt={item.product_name} style={mystyle} />
-            <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
-            </Link>
-          </li>
-          
+        {cartDetails.map((item) => {
+          const productQuantity = localStorage.getItem(`product_${item.product_id}_quantity`) || 1;
   
-        
-        ))}
+          return (
+            <li key={item.id}>
+              <Link to={`/${item.route}/${item.product_id}`}>
+                Product: {item.product_name}, Price: ${item.price}, Quantity: {productQuantity}
+                <img src={item.product_image} alt={item.product_name} style={mystyle} />
+                <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
       <BackBtn />
     </div>
   );
-}
+}  
 
 export default Cart;
