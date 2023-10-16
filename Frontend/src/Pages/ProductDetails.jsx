@@ -1,53 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { useParams } from 'react-router-dom'; // Import useParams to access URL parameters
-// import AddToCartButton from '../Components/Addtocart';
-// import BackBtn from '../Components/BackBtn';
-// import CartAmount from '../Components/CartAmount';
-
-
-// function ProductDetails() {
-//   const { productId } = useParams(); // Get the productId from URL
-//   const [product, setProduct] = useState(null);
-
-
-//   useEffect(() => {
-//     // Fetch product details using the productId
-//     axios
-//       .get(`https://fakestoreapi.com/products/${productId}`)
-//       .then((response) => {
-//         setProduct(response.data);
-//       })
-//       .catch((error) => {
-//         console.error('Error:', error);
-//       });
-//   }, [productId]);
-
-
-//   if (!product) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div>
-//       <h1>Product Details</h1>
-//       <BackBtn />
-//       <img src={product.image} alt={product.title} />
-//       <h2>{product.title}</h2>
-//       <p>Category: {product.category}</p>
-//       <p>Price: ${product.price}</p>
-//       <CartAmount />
-//       <AddToCartButton product={product} />
-//       {/* Add more details as needed */}
-//     </div>
-//   );
-// }
-
-// export default ProductDetails;
-
-
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -88,12 +38,9 @@ function ProductDetails() {
         },
       });
   
-      // Log the response for debugging
-      console.log('Cart Check Response:', response);
-  
       if (response.status === 200) {
         const cartItems = response.data;
-        const productIsInCart = cartItems.some((item) => item.product_name === product.title);
+        const productIsInCart = cartItems.some((item) => item.product_id === productId);
         setIsInCart(productIsInCart);
       } else {
         console.error('Error checking cart. Unexpected status:', response.status);
@@ -103,8 +50,6 @@ function ProductDetails() {
     }
   };
   const handleAddToCart = () => {
-    // Implement the logic to add the product to the cart here...
-
     // After adding the product, set the isInCart state to true and update the quantity
     setIsInCart(true);// You can adjust the initial quantity if needed
     checkIfInCart();

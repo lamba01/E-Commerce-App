@@ -43,3 +43,5 @@ function Products({ searchQuery }) {
 }
 
 export default Products;
+
+

@@ -134,18 +134,20 @@ app.post("/api/add-to-cart", (req, res) => {
 
       // User is authenticated; you can access their user ID from the 'decoded' object
       const userId = decoded.userId;
-      let productName, price, productId, productImage;
+      let productName, price, productId, productImage, productRoute;
 
       if (product.title && product.price) {
         productName = product.title;
         price = product.price;
         productId = product.id;
         productImage = product.image;
+        productRoute = "products";
       } else if (product.name && product.price.raw) {
         productName = product.name;
         price = product.price.raw;
-        productId = product.price.raw;
+        productId = product.id;
         productImage = product.image.url;
+        productRoute = "product";
       } else {
         return res.status(400).json({ error: "Invalid product format" });
       }
@@ -188,8 +190,16 @@ app.post("/api/add-to-cart", (req, res) => {
           } else {
             // If the product is not in the cart, insert it
             db.query(
-              "INSERT INTO cart (user_id, product_name, price, quantity, product_image) VALUES (?, ?, ?, ?, ?)",
-              [userId, productName, price, 1, productImage],
+              "INSERT INTO cart (user_id, product_name, price, quantity, product_image, product_id, route) VALUES (?, ?, ?, ?, ?, ?, ?)",
+              [
+                userId,
+                productName,
+                price,
+                1,
+                productImage,
+                productId,
+                productRoute,
+              ],
               (insertError, insertResults) => {
                 if (insertError) {
                   console.error(

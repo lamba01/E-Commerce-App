@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import BackBtn from '../Components/BackBtn';
 import DeleteCartItemButton from '../Components/DeleteCartItemBtn';
 
@@ -9,8 +10,12 @@ function Cart() {
     width: '100px',
     height: '100px',
   };
+
   const token = localStorage.getItem('token');
   useEffect(() => {
+    if(!token) {
+      alert("pleae login!")
+    }
     // Retrieve the JWT token from local storage or another storage mechanism
     axios
       .get('/api/cart', { headers: {
@@ -52,10 +57,15 @@ function Cart() {
       <ul>
         {cartDetails.map((item) => (
           <li key={item.id}>
+            <Link to={`/${item.route}/${item.product_id}`}>
             Product: {item.product_name}, Price: ${item.price}, Quantity: {item.quantity}
             <img src={item.product_image} alt={item.product_name} style={mystyle} />
             <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
+            </Link>
           </li>
+          
+  
+        
         ))}
       </ul>
       <BackBtn />
