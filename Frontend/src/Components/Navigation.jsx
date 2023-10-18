@@ -1,11 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 import "../Styles/Navigation.css"
 
 function Navigation({  cartAmount }) {
+  const location = useLocation();
+
+  const pathsToHideNavbar = ["/login", "/Signup"];
+
+  // Check if the current path is in the array of paths to hide the navbar
+  const hideNavbar = pathsToHideNavbar.includes(location.pathname);
+
   // setCart({ CartAmount })
   return (
-    <div> <nav className="navbar">
+    <div> {!hideNavbar && (<nav className="navbar">
     <div className="navbar-container containerr">
       <input type="checkbox" name="" id="" />
       <div className="hamburger-lines">
@@ -20,7 +27,7 @@ function Navigation({  cartAmount }) {
       </ul>
       <h1 className ="logo">Logo</h1>
     </div>
-  </nav></div>
+  </nav>)}</div>
   )
 }
 

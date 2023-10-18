@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   width: 40vw;
-  height: 80vh;
+  padding: 50px 0;
   margin: 0 auto;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -69,6 +69,22 @@ form {
   display: flex;
   justify-content: space-between;
   margin: 20px 0px;
+}
+@media only screen and (max-width: 960px) {
+  .form-container {
+    width: 70vw;
+  }
+}
+@media only screen and (max-width: 520px) {
+  .form-container {
+    width: 85vw;
+    font-size: small;
+  }
+}
+@media only screen and (max-width: 374px) {
+  .form-container {
+    width: 90vw;
+  }
 }
 /* .input-container input {
   width: 25vw;
