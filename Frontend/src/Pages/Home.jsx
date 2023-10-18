@@ -4,7 +4,7 @@ import commerce from "../lib/Commerce";
 import ProductsList from "../Components/ProductsList";
 // import ProductSlider from "../Components/Slider";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navigation from "../Components/Navigation";
+// import Navigation from "../Components/Navigation";
 import Products from "../Components/Products";
 // import Test from "./Test";
 // import Cart from "./Cart";
@@ -87,7 +87,6 @@ function Home() {
 
   return (
     <div className="app">
-      <Navigation />
       <input
         type="text"
         placeholder="Search products"

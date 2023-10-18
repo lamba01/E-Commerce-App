@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import commerce from "../lib/Commerce";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
-import Navigation from "../Components/Navigation";
 import AddToCartButton from '../Components/Addtocart';
 import BackBtn from "../Components/BackBtn";
 import ProductQuantityControl from '../Components/ProductQuantityControl';
 
-function ProductDs() {
+function ProductDs({ updateCartAmount }) {
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   const [isInCart, setIsInCart] = useState(false);
@@ -42,6 +41,8 @@ function ProductDs() {
   
       if (response.status === 200) {
         const cartItems = response.data;
+        const newCartAmount = cartItems.length;
+        updateCartAmount(newCartAmount);
         const productIsInCart = cartItems.some((item) => item.product_id === productId);
         setIsInCart(productIsInCart);
       } else {
@@ -55,6 +56,8 @@ function ProductDs() {
     // After adding the product, set the isInCart state to true and update the quantity
     setIsInCart(true);// You can adjust the initial quantity if needed
     checkIfInCart();
+     // Call the updateCartAmount function here
+  // updateCartAmount(newCartAmount);
 
     // Display any success message if needed
     console.log('Product added to cart successfully');
@@ -74,7 +77,6 @@ function ProductDs() {
   return (
     
     <div>
-      <Navigation />
       <h1>Product Details</h1>
       <img src={product.image.url} alt={product.name} />
       <h2>{product.name}</h2>

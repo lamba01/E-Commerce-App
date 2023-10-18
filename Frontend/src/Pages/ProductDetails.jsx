@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Navigation from "../Components/Navigation";
+// import Navigation from "../Components/Navigation";
 import AddToCartButton from '../Components/Addtocart';
 import BackBtn from '../Components/BackBtn';
 import ProductQuantityControl from '../Components/ProductQuantityControl';
 
-function ProductDetails() {
+function ProductDetails({ updateCartAmount }) {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [isInCart, setIsInCart] = useState(false); // Check if the product is in the cart
@@ -41,6 +41,8 @@ function ProductDetails() {
   
       if (response.status === 200) {
         const cartItems = response.data;
+        const newCartAmount = cartItems.length;
+        updateCartAmount(newCartAmount);
         const productIsInCart = cartItems.some((item) => item.product_id === productId);
         setIsInCart(productIsInCart);
       } else {
@@ -71,7 +73,7 @@ function ProductDetails() {
 
   return (
     <div>
-      <Navigation />
+      {/* <Navigation cartAmount={cartAmount}/> */}
       <h1>Product Details</h1>
       <BackBtn />
       <img src={product.image} alt={product.title} />

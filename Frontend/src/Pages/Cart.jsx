@@ -3,10 +3,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BackBtn from '../Components/BackBtn';
 import DeleteCartItemButton from '../Components/DeleteCartItemBtn';
-import Navigation from "../Components/Navigation";
 
-function Cart() {
+function Cart({ cartAmount, setCartAmount }) {
   const [cartDetails, setCartDetails] = useState([]);
+  // const [CartAmount, setCartAmount] = useState([])
   const mystyle = {
     width: '100px',
     height: '100px',
@@ -24,11 +24,13 @@ function Cart() {
       }, })
       .then((response) => {
         setCartDetails(response.data);
+        const newCartAmount = response.data.length;
+        setCartAmount(newCartAmount)  
       })
       .catch((error) => {
         console.error('Error fetching cart details:', error);
       });
-  }, [token]);
+  });
 
   const onDeleteCartItem = (cartItemId) => {
     // Implement the logic to delete the cart item using an API request
@@ -41,7 +43,9 @@ function Cart() {
             Authorization: `Bearer ${token}`,
           }, }) 
           .then((response) => {
-            setCartDetails(response.data);
+            setCartDetails(response.data);  
+            const newCartAmount = response.data.length;
+            setCartAmount(newCartAmount)          
           })
           .catch((error) => {
             console.error('Error fetching cart details after deletion:', error);
@@ -54,7 +58,6 @@ function Cart() {
 
   return (
     <div>
-      <Navigation />
       <h1>Cart Details</h1>
       <ul>
         {cartDetails.map((item) => {
@@ -65,8 +68,8 @@ function Cart() {
               <Link to={`/${item.route}/${item.product_id}`}>
                 Product: {item.product_name}, Price: ${item.price}, Quantity: {productQuantity}
                 <img src={item.product_image} alt={item.product_name} style={mystyle} />
-                <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
               </Link>
+              <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
             </li>
           );
         })}

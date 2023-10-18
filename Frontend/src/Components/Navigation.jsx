@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import "../Styles/Navigation.css"
 
-function Navigation() {
+function Navigation({  cartAmount }) {
+  // setCart({ CartAmount })
   return (
     <div> <nav className="navbar">
     <div className="navbar-container containerr">
@@ -14,8 +15,8 @@ function Navigation() {
       </div>
       <ul className ="menu-items">
       <Link to={`/cart`} className="product-card-link"><li>cart</li></Link>
-        <li><a className ="links">Sign-In</a></li>
-
+        <li>Sign-In</li>
+        <li><p>Number of items in cart: {cartAmount}</p></li>
       </ul>
       <h1 className ="logo">Logo</h1>
     </div>
