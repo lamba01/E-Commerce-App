@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import commerce from "../lib/Commerce";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import AddToCartButton from '../Components/Addtocart';
-import BackBtn from "../Components/BackBtn";
-import ProductQuantityControl from '../Components/ProductQuantityControl';
+import AddToCartButton from '../../Components/Addtocart';
+import BackBtn from '../../Components/BackBtn';
+import ProductQuantityControl from '../../Components/ProductQuantityControl';
+import RelatedProducts from "../../Components/RelatedProducts"
+import "./productdetails.css"
 
-function ProductDs({ updateCartAmount }) {
-  const [product, setProduct] = useState(null);
+function ProductDetails({ updateCartAmount }) {
   const { productId } = useParams();
-  const [isInCart, setIsInCart] = useState(false);
+  const [product, setProduct] = useState(null);
+  const [isInCart, setIsInCart] = useState(false); // Check if the product is in the cart
 
   useEffect(() => {
-    commerce.products
-      .retrieve(productId) // Fetch the product by its ID
-      .then((retrievedProduct) => {
-        setProduct(retrievedProduct);
+    // Fetch product details using the productId
+    axios
+      .get(`https://fakestoreapi.com/products/${productId}`)
+      .then((response) => {
+        setProduct(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching product details:", error);
+        console.error('Error:', error);
       });
   }, [productId]);
   const token = localStorage.getItem('token');
@@ -56,8 +57,6 @@ function ProductDs({ updateCartAmount }) {
     // After adding the product, set the isInCart state to true and update the quantity
     setIsInCart(true);// You can adjust the initial quantity if needed
     checkIfInCart();
-     // Call the updateCartAmount function here
-  // updateCartAmount(newCartAmount);
 
     // Display any success message if needed
     console.log('Product added to cart successfully');
@@ -69,20 +68,22 @@ function ProductDs({ updateCartAmount }) {
     checkIfInCart();
   });
 
-
   if (!product) {
     return <div>Loading...</div>;
   }
+  const selectedProductCategory = product.category;
 
   return (
-    
-    <div>
-      <h1>Product Details</h1>
-      <img src={product.image.url} alt={product.name} />
-      <h2>{product.name}</h2>
-      <p>Category: {product.categories[0]?.name}</p>
-      <p>Price: {product.price.formatted_with_symbol}</p>
-      <BackBtn />
+    <div className='main'>
+    <BackBtn />
+    <div className='product-container'>   
+      <div className='item1'><img src={product.image} className='product-details-image' alt={product.title} /></div>
+      <div className='item2'>
+      <h3>{product.title}</h3>
+      <span className='product-details-price'>${product.price}</span>
+      {/* <p>Category: {product.category}</p> */}
+      <p className='product-details-description'>{product.description}</p>
+      
       {isInCart ? (
         <div>
           <p>Product is already in your cart</p>
@@ -90,14 +91,16 @@ function ProductDs({ updateCartAmount }) {
           <ProductQuantityControl product={product}/>
         </div>
       ) : (
-        <AddToCartButton product={product} onaddToCart={handleAddToCart}/>
+        <AddToCartButton product={product} onaddToCart={handleAddToCart} />
       )}
+      <RelatedProducts selectedProductCategory={ selectedProductCategory}/>
+      </div>
+    </div>
     </div>
   );
 }
 
-ProductDs.propTypes = {
-  match: PropTypes.object,
-};
+export default ProductDetails;
 
-export default ProductDs;
+
+

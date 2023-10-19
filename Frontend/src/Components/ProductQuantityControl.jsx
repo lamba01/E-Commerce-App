@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "../Styles/productquantity.css"
 
 const CartAmount = ({ product }) => {
   const [quantity, setQuantity] = useState(1); // Initial quantity is set to 1
@@ -30,7 +31,7 @@ const CartAmount = ({ product }) => {
   };
 
   return (
-    <div>
+    <div className='quantity-container'>
       <button onClick={decreaseQuantity}>-</button>
       <span>{quantity}</span>
       <button onClick={increaseQuantity}>+</button>

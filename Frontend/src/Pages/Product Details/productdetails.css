@@ -1,0 +1,39 @@
+.main2 {
+  background-color: rgba(238, 238, 238, 255);
+}
+.main {
+  background-color: white;
+}
+.product-container,
+.product-container2 {
+  display: flex;
+  align-items: flex-start;
+  background-color: white;
+  height: 100vh;
+  margin-top: 40px;
+  padding: 50px;
+}
+.product-container2 {
+  background-color: rgba(238, 238, 238, 255);
+}
+.product-details-image {
+  height: 65vh;
+  width: 50%;
+}
+.item1 {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+.item2 {
+  width: 40%;
+}
+.product-details-price {
+  color: rgb(214, 142, 7);
+  font-size: large;
+}
+.product-details-description {
+  font-size: small;
+  padding: 20px 0;
+  color: rgb(97, 96, 96);
+}

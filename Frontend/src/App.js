@@ -65,8 +65,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
-import ProductDetails from "./Pages/ProductDetails";
-import ProductDetailss from "./Pages/Productdits";
+import ProductDetails from "./Pages/Product Details/ProductDetails";
+import ProductDetailss from "./Pages/Product Details/Productdits";
 import Cart from "./Pages/Cart";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/Signup/Signup";

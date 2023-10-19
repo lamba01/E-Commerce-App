@@ -1,0 +1,14 @@
+.quantity-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+}
+.quantity-container button {
+  border: none;
+  padding: 10px;
+  margin: 0 10px;
+  background: none;
+  cursor: pointer;
+}

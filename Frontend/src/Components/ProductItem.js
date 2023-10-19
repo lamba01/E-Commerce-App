@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { stripHtml } from "string-strip-html";
 import "../Styles/ProductItem.css";
 
 const ProductItem = ({ product }) => {
-  const { result } = stripHtml(product.description);
-
   return (
     <div className="product__card">
       <img
@@ -15,10 +12,6 @@ const ProductItem = ({ product }) => {
       />
       <div className="product__info">
         <h4 className="product__name">{product.name}</h4>
-        <p className="product__description">
-          {/* product description stripped of html tags */}
-          {result}
-        </p>
         <div className="product__details">
           <p className="product__price">
             {product.price.formatted_with_symbol}

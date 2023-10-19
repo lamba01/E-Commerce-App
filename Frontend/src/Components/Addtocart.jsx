@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../Styles/AddToCartButton.css'
 
 const AddToCartButton = ({ product, onaddToCart }) => {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const AddToCartButton = ({ product, onaddToCart }) => {
     }
   };
 
-  return <button onClick={() => { addToCart(); onaddToCart(); }}>Add to cart</button>;
+  return <button className='addtocart-btn' onClick={() => { addToCart(); onaddToCart(); }}>Add to cart</button>;
 
 };
 

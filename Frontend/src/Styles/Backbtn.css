@@ -1,0 +1,12 @@
+.backbtn {
+  width: 200px;
+  padding: 10px;
+  margin-top: 100px;
+  cursor: pointer;
+  border: none;
+  background-color: gainsboro;
+}
+.backbtn:hover {
+  background-color: aliceblue;
+  border: none;
+}

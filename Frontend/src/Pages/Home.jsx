@@ -6,7 +6,7 @@ import ProductsList from "../Components/ProductsList";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Navigation from "../Components/Navigation";
 import Products from "../Components/Products";
-// import Test from "./Test";
+import Test from "../Components/Test";
 // import Cart from "./Cart";
 // import { Router } from "react-router-dom";
 // import ProductDetails from "./ProductDetails";
@@ -93,6 +93,7 @@ function Home() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      <Test />
       <Products searchQuery={searchQuery} />
       <ProductsList searchQuery={searchQuery} products={filteredProducts} /> 
     </div>

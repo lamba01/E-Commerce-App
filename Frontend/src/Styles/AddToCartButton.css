@@ -1,0 +1,11 @@
+.addtocart-btn {
+  width: 100%;
+  padding: 15px 0;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+.addtocart-btn:hover {
+  background-color: rgb(59, 58, 58);
+}
