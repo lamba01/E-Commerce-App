@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import AddToCartButton from '../../Components/Addtocart';
 import BackBtn from '../../Components/BackBtn';
 import ProductQuantityControl from '../../Components/ProductQuantityControl';
-import RelatedProducts from "../../Components/RelatedProducts"
+import RelatedProducts from "../../Components/RelatedProducts/RelatedProducts"
 import "./productdetails.css"
 
 function ProductDetails({ updateCartAmount }) {
@@ -93,9 +93,9 @@ function ProductDetails({ updateCartAmount }) {
       ) : (
         <AddToCartButton product={product} onaddToCart={handleAddToCart} />
       )}
-      <RelatedProducts selectedProductCategory={ selectedProductCategory}/>
       </div>
     </div>
+    <RelatedProducts selectedProductCategory={ selectedProductCategory} currentProductId={productId}/>
     </div>
   );
 }

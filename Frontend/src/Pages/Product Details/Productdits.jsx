@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import AddToCartButton from '../../Components/Addtocart';
 import BackBtn from "../../Components/BackBtn";
 import ProductQuantityControl from '../../Components/ProductQuantityControl';
+import RelatedPs from '../../Components/RelatedProducts/RelatedPs'
 import "./productdetails.css"
 
 function ProductDs({ updateCartAmount }) {
@@ -72,13 +73,15 @@ function ProductDs({ updateCartAmount }) {
     return <div>Loading...</div>;
   }
   const { result } = stripHtml(product.description);
+  const selectedCategory = product.categories[0]?.name
+
 
   return (
     <div className='main2'>
       <BackBtn />
     <div className='product-container2'>
     <div className='item1'><img src={product.image.url} className='product-details-image' alt={product.name} /></div>
-    <div className='item2'>
+    <div className='item22'>
       <h3>{product.name}</h3>
       <span className='product-details-price'>{product.price.formatted_with_symbol}</span>
       {/* <p>Category: {product.categories[0]?.name}</p> */}
@@ -94,6 +97,7 @@ function ProductDs({ updateCartAmount }) {
       )}
       </div>
     </div>
+    <RelatedPs selectedCategory={selectedCategory} currentProductId={productId}/>
     </div>
   );
 }

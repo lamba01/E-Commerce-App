@@ -87,7 +87,12 @@ const Login = () => {
         </div>
         <button className="submit-btn" type="submit">Sign In</button>
       </form>
-      <p className="or">or</p>
+      <div class="separator">
+      <div class="line"></div>
+      <p>or</p>
+      <div class="line"></div>
+      </div>
+      
       <Link to = {`/Signup`} className="btn-container">
         <button className="signup-btn" type="submit">Create an account</button>
         </Link>

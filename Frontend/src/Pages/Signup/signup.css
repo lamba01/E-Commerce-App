@@ -54,6 +54,22 @@
   margin: 0 auto;
   text-decoration: none;
 }
+.separator {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.separator .line {
+  height: 1px;
+  flex: 1;
+  background-color: #000;
+}
+
+.separator p {
+  padding: 0 2rem;
+  margin: 20px 0;
+}
 @media only screen and (max-width: 960px) {
   .sign-form-container {
     width: 70vw;

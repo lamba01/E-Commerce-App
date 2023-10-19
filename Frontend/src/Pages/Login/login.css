@@ -62,9 +62,23 @@ form {
 .submit-btn:hover {
   background-color: #323232;
 }
-.or {
-  margin: 20px 0px;
+.separator {
+  display: flex;
+  align-items: center;
+  width: 90%;
 }
+
+.separator .line {
+  height: 1px;
+  flex: 1;
+  background-color: #000;
+}
+
+.separator p {
+  padding: 0 2rem;
+  margin: 20px 0;
+}
+
 .pass {
   display: flex;
   justify-content: space-between;
