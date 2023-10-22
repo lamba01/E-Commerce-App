@@ -24,7 +24,7 @@ const AddToCartButton = ({ product, onaddToCart }) => {
       }, } );
 
       if (response.status === 200) {
-        alert('Product added successfully');
+        console.log('Product added successfully');
       }
     } catch (error) {
       console.error('Error adding product to cart:', error);

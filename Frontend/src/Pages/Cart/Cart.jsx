@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { AiFillCaretRight, AiFillCaretLeft } from 'react-icons/ai'
+import { Link, useNavigate } from 'react-router-dom';
+import { AiFillCaretRight, AiFillCaretLeft, AiOutlineClose } from 'react-icons/ai'
 import { BsArrowRight } from 'react-icons/bs'
 import BackBtn from '../../Components/BackBtn';
 import DeleteCartItemButton from '../../Components/DeleteCartItemBtn';
@@ -92,13 +92,34 @@ function Cart({ cartAmount, setCartAmount }) {
 
     setCartTotal(total);
   };
+  const navigate = useNavigate();
+  const goBackToShop = () => {
+    navigate('/'); // Use navigate to go back to the product list
+  };
+  const isCartEmpty = cartDetails.length === 0;
 
   return (
+    <div>
+    {isCartEmpty ? (
+      <div className='empty-cart-container'>
+        <div className='closee'><AiOutlineClose /></div>
+        <p>Your cart is currently empty</p>
+        <button className='emptycartbtn'onClick={goBackToShop}>Return to shop</button>
+      </div>
+    ) : (
     <div className='parent'>
       <BackBtn />
+
       <div className='cartpage'>
+        <div className="mobile-checkout">
+        <h4>Cart Summary</h4>
+        <div>
+          <p>subtotal</p><p> ${cartTotal.toFixed(2)}</p>
+        </div>
+        <h4 className='mobile-header'>Shopping Cart({cartAmount})</h4> 
+        </div>
       <div className='cart'>
-      <h1>Cart({cartAmount})</h1> 
+      <h4 className='header'>Shopping Cart({cartAmount})</h4> 
         <ul>
           {cartDetails.map((item) => {
             const productQuantity = localStorage.getItem(`product_${item.product_id}_quantity`) || 1;
@@ -138,6 +159,7 @@ function Cart({ cartAmount, setCartAmount }) {
         <button className='checkout-btn'>${cartTotal.toFixed(2)}<span>Checkout <BsArrowRight /></span></button>
       </div>
       </div>
+    </div>)}
     </div>
   );
 }

@@ -10,9 +10,40 @@
 .cart {
   width: 70vw;
   background-color: white;
+  position: relative;
 }
-.cart h1 {
-  padding: 10px 20px;
+.header {
+  padding: 10px 25px;
+}
+.empty-cart-container {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+.emptycartbtn {
+  margin-top: 20px;
+  width: 150px;
+  padding: 10px 0;
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  border: none;
+}
+.emptycartbtn:hover {
+  background-color: rgb(5, 94, 5);
+}
+.closee {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(238, 238, 238, 255);
 }
 .cart-item-container {
   position: relative;
@@ -49,11 +80,17 @@
 }
 .cart-item-text {
   color: #403f3f;
+  /* max-width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 .list {
   list-style-type: none;
 }
 .checkout {
+  position: sticky;
+  top: 70px;
   background-color: white;
   width: 25vw;
   height: fit-content;
@@ -85,8 +122,8 @@
   display: flex;
   justify-content: space-between;
 }
-.checkout-btn :hover {
-  background-color: rgb(226, 232, 226);
+.checkout-btn:hover {
+  background-color: rgb(5, 94, 5);
 }
 .checkout-btn span {
   display: flex;
@@ -94,4 +131,44 @@
 }
 .icon {
   cursor: pointer;
+}
+.mobile-checkout {
+  display: none;
+}
+@media only screen and (max-width: 767px) {
+  .cartpage {
+    flex-direction: column;
+  }
+  .cart {
+    width: 100vw;
+    margin: auto;
+  }
+  .checkout {
+    width: 100vw;
+    margin: auto;
+    /* position: fixed; */
+    bottom: 0px;
+  }
+  .checkout h4,
+  .checkout div {
+    display: none;
+  }
+  .mobile-checkout {
+    display: block;
+  }
+  .mobile-checkout h4 {
+    padding: 10px;
+  }
+  .mobile-checkout div {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+  }
+  .header {
+    display: none;
+  }
 }
