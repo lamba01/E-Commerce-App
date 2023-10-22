@@ -1,13 +1,15 @@
 import React from 'react';
+import "../Styles/DeleteCartBtn.css"
+import {AiOutlineCloseCircle } from 'react-icons/ai'
 
-function DeleteCartItemButton({ cartItemId, onDelete }) {
+function DeleteCartItemButton({ cartItemId, product_id,  onDelete }) {
   const handleDelete = () => {
     // Trigger the delete action
-    onDelete(cartItemId);
+    onDelete(cartItemId, product_id);
   };
 
   return (
-    <button onClick={handleDelete}>Delete</button>
+    <div onClick={handleDelete} className='s'> <AiOutlineCloseCircle size={'1.5em'}/></div>
   );
 }
 

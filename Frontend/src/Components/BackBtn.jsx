@@ -9,7 +9,7 @@ function BackBtn() {
       navigate('/'); // Use navigate to go back to the product list
     };
   return (
-    <div><button className='backbtn' onClick={goBackToList}>Go Back</button></div>
+    <div><button className='backbtn' onClick={goBackToList}>Continue Shopping</button></div>
   )
 }
 

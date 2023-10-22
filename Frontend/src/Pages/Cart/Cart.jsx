@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { AiFillCaretRight, AiFillCaretLeft } from 'react-icons/ai'
+import { BsArrowRight } from 'react-icons/bs'
 import BackBtn from '../../Components/BackBtn';
 import DeleteCartItemButton from '../../Components/DeleteCartItemBtn';
 import "./cart.css"
@@ -40,8 +42,10 @@ function Cart({ cartAmount, setCartAmount }) {
       });
   }, [token, setCartAmount]);
 
-  const onDeleteCartItem = (cartItemId) => {
+  const onDeleteCartItem = (cartItemId, product_id) => {
     // Implement the logic to delete the cart item using an API request
+    // Remove the product quantity from local storage
+    localStorage.removeItem(`product_${product_id}_quantity`);
     axios
       .delete(`/api/cart/${cartItemId}`)
       .then(() => {
@@ -90,10 +94,11 @@ function Cart({ cartAmount, setCartAmount }) {
   };
 
   return (
-    <div>
+    <div className='parent'>
       <BackBtn />
+      <div className='cartpage'>
       <div className='cart'>
-        <h1>Cart Details</h1>
+      <h1>Cart({cartAmount})</h1> 
         <ul>
           {cartDetails.map((item) => {
             const productQuantity = localStorage.getItem(`product_${item.product_id}_quantity`) || 1;
@@ -101,7 +106,7 @@ function Cart({ cartAmount, setCartAmount }) {
             const parsedQuantity = parseInt(productQuantity, 10);
 
             return (
-              <li key={item.id}>
+              <li key={item.id} className='list'>
                   <div className='cart-item-container'>
                   <Link to={`/${item.route}/${item.product_id}`} className='link'>
                     <img src={item.product_image} className='cart-item-image' alt={item.product_name} /></Link>
@@ -109,25 +114,29 @@ function Cart({ cartAmount, setCartAmount }) {
                     <Link to={`/${item.route}/${item.product_id}`} className='link'>
                        <h4 className='cart-item-text'>{item.product_name}</h4> </Link>
                       <div className='sub-text-div'>
-                        <span>Qty: {productQuantity}</span>
-                        <p>${itemTotal}</p>
+                        <div className='quantity'>
+                        <AiFillCaretLeft className='icon' onClick={() => updateCartItemQuantity(item.id, productQuantity > 1 ? parsedQuantity - 1 : 1, item.product_id)}/>
+                        {productQuantity}
+                        <AiFillCaretRight className='icon' onClick={() => updateCartItemQuantity(item.id, parsedQuantity + 1, item.product_id)}/>
+                        </div>
+                        <p>${itemTotal.toFixed(1)}</p>
                       </div>
-                      <button onClick={() => updateCartItemQuantity(item.id, parsedQuantity + 1, item.product_id)}>
-                        Increase Quantity
-                        </button>
-                      <button onClick={() => updateCartItemQuantity(item.id, productQuantity > 1 ? parsedQuantity - 1 : 1, item.product_id)}>
-                      Decrease Quantity
-                      </button>
                     </div>
-                    <DeleteCartItemButton cartItemId={item.id} onDelete={onDeleteCartItem} />
+                    <DeleteCartItemButton cartItemId={item.id} product_id={item.product_id} onDelete={onDeleteCartItem} />
                   </div>
                 
               </li>
             );
           })}
         </ul>
-        <p>Total: ${cartTotal.toFixed(2)}</p>
-        <BackBtn />
+      </div>
+      <div className="checkout">
+        <h4>Cart Summary</h4>
+        <div>
+          <p>subtotal</p><p> ${cartTotal.toFixed(2)}</p>
+        </div>
+        <button className='checkout-btn'>${cartTotal.toFixed(2)}<span>Checkout <BsArrowRight /></span></button>
+      </div>
       </div>
     </div>
   );
