@@ -71,7 +71,6 @@ import Cart from "./Pages/Cart/Cart";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/Signup/Signup";
 import Navigation from "./Components/Navigation";
-
 function App() {
   // Retrieve the cartAmount value from localStorage when the component loads
   const storedCartAmount = localStorage.getItem("cartAmount");

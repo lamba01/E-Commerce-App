@@ -7,6 +7,7 @@ import ProductsList from "../Components/ProductsList";
 // import Navigation from "../Components/Navigation";
 import Products from "../Components/Products";
 import Test from "../Components/Test";
+import PaymentSimulation from "../Components/PaymentSimulation/Payment";
 // import Cart from "./Cart";
 // import { Router } from "react-router-dom";
 // import ProductDetails from "./ProductDetails";
@@ -93,6 +94,7 @@ function Home() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      <PaymentSimulation />
       <Test />
       <Products searchQuery={searchQuery} />
       <ProductsList searchQuery={searchQuery} products={filteredProducts} /> 

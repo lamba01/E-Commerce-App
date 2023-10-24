@@ -15,7 +15,6 @@ const AddToCartButton = ({ product, onaddToCart }) => {
         alert('You are not logged in. Please log in to add products to your cart.');
         navigate('/login')
         return;
-        
       }
 
       // Make a request to your server to perform the action with the JWT token

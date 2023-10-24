@@ -5,6 +5,7 @@ import { AiFillCaretRight, AiFillCaretLeft, AiOutlineClose } from 'react-icons/a
 import { BsArrowRight } from 'react-icons/bs'
 import BackBtn from '../../Components/BackBtn';
 import DeleteCartItemButton from '../../Components/DeleteCartItemBtn';
+import PaymentSimulation from '../../Components/PaymentSimulation/Payment';
 import "./cart.css"
 
 function Cart({ cartAmount, setCartAmount }) {
@@ -108,8 +109,9 @@ function Cart({ cartAmount, setCartAmount }) {
       </div>
     ) : (
     <div className='parent'>
+      <PaymentSimulation />
       <BackBtn />
-
+      
       <div className='cartpage'>
         <div className="mobile-checkout">
         <h4>Cart Summary</h4>
