@@ -281,6 +281,92 @@ app.delete("/api/cart/:cartItemId", (req, res) => {
   });
 });
 
+// Route to place an order
+app.post("/api/place-order", (req, res) => {
+  const token = req.headers.authorization;
+
+  try {
+    // Check if the token is provided in the request headers
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    // Extract the JWT token from the "Authorization" header
+    const tokenParts = token.split(" "); // Split "Bearer {token}" into an array
+    if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+      return res.status(401).json({ error: "Invalid token format" });
+    }
+    const jwtToken = tokenParts[1];
+
+    // Verify the JWT token using the secret key
+    jwt.verify(jwtToken, secretKey, (jwtError, decoded) => {
+      if (jwtError) {
+        // JWT verification failed; return an unauthorized response
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      // User is authenticated; you can access their user ID from the 'decoded' object
+      const userId = decoded.userId;
+
+      // Retrieve the user's cart content
+      db.query(
+        "SELECT * FROM cart WHERE user_id = ?",
+        [userId],
+        (selectError, cartItems) => {
+          if (selectError) {
+            console.error("Error retrieving cart content:", selectError);
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+
+          // Insert the cart content into the orders table
+          // Modify the code that inserts orders from the cart
+          const orderItems = cartItems.map((item) => ({
+            user_id: item.user_id,
+            product_name: item.product_name,
+            price: item.price,
+            quantity: item.quantity,
+            product_image: item.product_image,
+            product_id: item.product_id,
+            route: item.route,
+            date: new Date(),
+            status: "pending",
+          }));
+
+          db.query(
+            "INSERT INTO orders (user_id, product_name, price, quantity, product_image, product_id, route, date, status) VALUES ?",
+            [orderItems.map((item) => Object.values(item))],
+            (insertError, insertResults) => {
+              if (insertError) {
+                console.error("Error inserting order data:", insertError);
+                return res.status(500).json({ error: "Internal Server Error" });
+              }
+
+              // Clear the user's cart
+              db.query(
+                "DELETE FROM cart WHERE user_id = ?",
+                [userId],
+                (deleteError) => {
+                  if (deleteError) {
+                    console.error("Error deleting cart content:", deleteError);
+                    return res
+                      .status(500)
+                      .json({ error: "Internal Server Error" });
+                  }
+
+                  return res.json({ message: "Order placed successfully" });
+                }
+              );
+            }
+          );
+        }
+      );
+    });
+  } catch (error) {
+    console.error("Error placing order:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {

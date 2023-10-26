@@ -4,6 +4,7 @@ import { BsPaypal } from 'react-icons/bs'
 import { BiLogoVisa } from 'react-icons/bi'
 import { FcSimCardChip } from 'react-icons/fc'
 import './payment.css';
+import OrderBtn from '../OrderBtn';
 
 const PaymentSimulation = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('creditCard');
@@ -301,7 +302,8 @@ const handleSubmit = (formIndex) => {
           <div className="check-container"><AiOutlineCheck size={'2em'} color='white'/></div>
           <h2>Success</h2>
           <p>Thank you for your order! Your payment was successful.</p>
-          <button className='formm2'>Complete</button>
+          <OrderBtn />
+          {/* <button className='formm2'>Complete</button> */}
         </div>
       </div>
     </div>
