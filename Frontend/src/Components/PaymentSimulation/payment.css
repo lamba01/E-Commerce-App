@@ -14,10 +14,12 @@
   border-radius: 10px;
   width: 50%;
   margin-top: 30px;
+  height: 80vh;
+  max-height: 500px;
   max-width: 600px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  padding: 20px;
+  padding: 10px;
   z-index: 99;
 }
 .step {
@@ -44,7 +46,7 @@ button {
   border-radius: 5px;
 }
 button {
-  background-color: #007bff;
+  background-color: #33a0ff;
   color: #fff;
   cursor: pointer;
   margin-top: 10px;
@@ -148,12 +150,14 @@ button:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #fff;
   padding: 0 10px;
+  margin: 10px 0;
 }
 .card-content {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-size: 10px;
   margin-top: 10px;
 }
 .card-number {
@@ -165,10 +169,13 @@ button:hover {
   text-transform: uppercase;
   font-weight: 400;
 }
-.card-content div {
+.card-content-sub {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+.expp {
+  display: flex;
 }
 .logoss {
   display: flex;
@@ -179,6 +186,7 @@ button:hover {
   display: flex;
   gap: 20px;
   width: 100%;
+  padding: 0 10px;
 }
 .sec-form {
   display: flex;
@@ -202,8 +210,35 @@ button:hover {
   display: flex;
   justify-content: space-between;
 }
-.cvv,
-.exp {
-  width: 45%;
+.cvv {
+  width: 40%;
   background-color: #dddede;
+}
+.expy {
+  width: 30%;
+}
+.expm {
+  width: 20%;
+}
+.formm2 {
+  margin-top: 70px;
+}
+.check-container {
+  width: 100px;
+  height: 100px;
+  background-color: #40bfff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40%;
+}
+.btns {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: #40bfff;
+  padding: 0 15px;
+}
+.iis {
+  cursor: pointer;
 }
