@@ -14,11 +14,16 @@ const PaymentSimulation = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
+    Firstname: '',
+    lastname: '',
     address: '',
+    phone: '',
     paymentMethod: '',
     cardNumber: '',
     expirationMonth: 1,
+    expirationYear: '',
     cvv: '',
+    holdername: '',
   });
   const formRefs = [useRef(null), useRef(null)]; 
 
@@ -146,11 +151,11 @@ const handleSubmit = (formIndex) => {
               name="Firstname"
               className='name'
               placeholder="First Name"
-              value={formData.firstname}
+              value={formData.Firstname}
               onChange={handleInputChange}
               required
             />
-            {/* <input
+            <input
               type="text"
               name="lastname"
               className='name'
@@ -158,7 +163,7 @@ const handleSubmit = (formIndex) => {
               value={formData.lastname}
               onChange={handleInputChange}
               required
-            /> */}
+            />
             <div>
             <h5 className='paymethod'>Select Method of Payment</h5>
             <div className={`radio-group ${selectedPaymentMethod === 'creditCard' ? 'checked' : ''}`}>
@@ -200,7 +205,7 @@ const handleSubmit = (formIndex) => {
            <div>
            <input
               type="text"
-              name="number"
+              name="phone"
               className='phone'
               placeholder="Mobile Phone"
               value={formData.phone}
@@ -296,14 +301,13 @@ const handleSubmit = (formIndex) => {
             </div>
           </form>
           </div>  
-          <button className='formm2' onClick={() => handleSubmit(1)}>Pay Now</button>    
+          <button className='formm2' onClick={() => handleSubmit(1)}>Pay Now</button>   
         </div>
         <div className={`step ${step === 3 ? 'active' : ''}`}>
           <div className="check-container"><AiOutlineCheck size={'2em'} color='white'/></div>
           <h2>Success</h2>
           <p>Thank you for your order! Your payment was successful.</p>
           <OrderBtn />
-          {/* <button className='formm2'>Complete</button> */}
         </div>
       </div>
     </div>

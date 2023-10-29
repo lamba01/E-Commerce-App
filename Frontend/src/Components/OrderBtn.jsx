@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../Styles/Orderbtn.css'
 
 const OrderBtn = () => {
     const placeOrder = async () => {
@@ -38,15 +40,20 @@ const OrderBtn = () => {
   
         if (response.status === 200) {
           console.log('Email confirmation sent:');
+          goBackToShop()
         }
       } catch (error) {
         console.error('Error sending email confirmation:', error);
         alert('Error sending email confirmation. Please try again or contact support.');
       }
     };
+    const navigate = useNavigate();
+    const goBackToShop = () => {
+      navigate('/'); // Use navigate to go back to the product list
+    };
   
     return (
-      <button className='place-order-btn' onClick={() => placeOrder()}>Place Order</button>
+      <button className='place-order-btn' onClick={() => placeOrder()}>Complete</button>
     );
   };
   

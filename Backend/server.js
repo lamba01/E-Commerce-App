@@ -379,7 +379,6 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URL = process.env.REDIRECT_URL;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-console.log(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -407,7 +406,7 @@ async function sendMail(userEmail, html) {
     const mailOptions = {
       from: "jamesspaul987@gmail.com",
       to: userEmail,
-      subject: "Helloo, this is a test",
+      subject: "Order Confirmation",
       html,
     };
 
@@ -454,7 +453,6 @@ app.post("/api/send-email-confirmation", async (req, res) => {
 
         // Retrieve cart data for the user from the cartStore
         const cartItems = cartStore[userId];
-        console.log(cartItems);
 
         // Render the EJS template and send the email
         ejs.renderFile(
