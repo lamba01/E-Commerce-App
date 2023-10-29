@@ -9,7 +9,8 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const ejs = require("ejs");
 const fs = require("fs");
-require("dotenv").config(); // Load environment variables from .env file
+const dotenv = require("dotenv");
+dotenv.config();
 const { transcode } = require("buffer");
 const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
@@ -378,6 +379,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URL = process.env.REDIRECT_URL;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+console.log(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
