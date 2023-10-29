@@ -21,6 +21,7 @@ const OrderBtn = () => {
   
         if (response.status === 200) {
           console.log('Order placed successfully');
+          goBackToShop()
           // After successfully placing the order, send the email confirmation
           await handleSendEmailConfirmation(token);
         }
@@ -40,7 +41,6 @@ const OrderBtn = () => {
   
         if (response.status === 200) {
           console.log('Email confirmation sent:');
-          goBackToShop()
         }
       } catch (error) {
         console.error('Error sending email confirmation:', error);
