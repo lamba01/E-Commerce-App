@@ -98,7 +98,7 @@ function App() {
           element={<ProductDetails updateCartAmount={updateCartAmount} />}
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/Signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route
           path="/cart"
           element={

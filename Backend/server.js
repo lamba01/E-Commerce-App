@@ -5,8 +5,15 @@ const jwt = require("jsonwebtoken"); // For generating JWT tokens
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const secretKey =
-  "LkRj7&9sd^9~[9T$^a2Gy3zN7f]8TrpFgWz9xJ6qE0!KsUcN1vPwO5xR9aG3tZ";
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
+const ejs = require("ejs");
+const fs = require("fs");
+require("dotenv").config(); // Load environment variables from .env file
+const { transcode } = require("buffer");
+const { error } = require("console");
+const secretKey = process.env.SECRET_KEY;
+
 // const sseExpress = require("sse-express"); // Adjust the path as needed
 
 // Enable CORS for all routes or specify origins explicitly
@@ -15,10 +22,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "2004",
-  database: "myfirstdatabase",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 // Connect to the database
@@ -36,8 +43,6 @@ app.post("/api/signup", async (req, res) => {
   // Here, you can access user data from req.body
   const userData = req.body;
   const Encpass = await bcrypt.hash(userData.password, 10);
-
-  // TODO: Validate and sanitize user data
 
   db.query(
     "INSERT INTO user (name, email, password) VALUES (?, ?, ?)",
@@ -281,6 +286,7 @@ app.delete("/api/cart/:cartItemId", (req, res) => {
   });
 });
 
+const cartStore = {};
 // Route to place an order
 app.post("/api/place-order", (req, res) => {
   const token = req.headers.authorization;
@@ -317,6 +323,8 @@ app.post("/api/place-order", (req, res) => {
             console.error("Error retrieving cart content:", selectError);
             return res.status(500).json({ error: "Internal Server Error" });
           }
+          // Store the order details in a variable or database
+          cartStore[userId] = cartItems;
 
           // Insert the cart content into the orders table
           // Modify the code that inserts orders from the cart
@@ -329,7 +337,7 @@ app.post("/api/place-order", (req, res) => {
             product_id: item.product_id,
             route: item.route,
             date: new Date(),
-            status: "pending",
+            status: "Shipped",
           }));
 
           db.query(
@@ -365,6 +373,108 @@ app.post("/api/place-order", (req, res) => {
     console.error("Error placing order:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
+});
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URL = process.env.REDIRECT_URL;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URL
+);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+async function sendMail(userEmail, html) {
+  try {
+    const accessToken = await oAuth2Client.getAccessToken();
+
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "jamesspaul987@gmail.com",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
+
+    const mailOptions = {
+      from: "jamesspaul987@gmail.com",
+      to: userEmail,
+      subject: "Helloo, this is a test",
+      html,
+    };
+
+    const result = await transport.sendMail(mailOptions);
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+app.post("/api/send-email-confirmation", async (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const tokenParts = token.split(" ");
+  if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+    return res.status(401).json({ error: "Invalid token format" });
+  }
+  const jwtToken = tokenParts[1];
+
+  // Verify the JWT token using your secret key
+  jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
+    if (jwtError) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const userId = decoded.userId;
+
+    // Fetch the user's email using their user ID
+    db.query(
+      "SELECT email, name FROM user WHERE id = ?",
+      [userId],
+      (emailErr, emailResults) => {
+        if (emailErr) {
+          console.error("Error fetching user email:", emailErr);
+          return;
+        }
+
+        const userEmail = emailResults[0].email;
+        const userName = emailResults[0].name;
+
+        // Retrieve cart data for the user from the cartStore
+        const cartItems = cartStore[userId];
+        console.log(cartItems);
+
+        // Render the EJS template and send the email
+        ejs.renderFile(
+          "./views/OrderConfirmation.ejs",
+          {
+            cartItems,
+            userName,
+          },
+          (renderErr, html) => {
+            if (renderErr) {
+              console.error("Error rendering EJS template:", renderErr);
+              return;
+            }
+
+            sendMail(userEmail, html)
+              .then((result) => console.log("email sent", result))
+              .catch((error) => console.log(error.message));
+          }
+        );
+      }
+    );
+  });
 });
 
 const PORT = process.env.PORT || 3001;

@@ -150,7 +150,7 @@ const handleSubmit = (formIndex) => {
               onChange={handleInputChange}
               required
             />
-            <input
+            {/* <input
               type="text"
               name="lastname"
               className='name'
@@ -158,7 +158,7 @@ const handleSubmit = (formIndex) => {
               value={formData.lastname}
               onChange={handleInputChange}
               required
-            />
+            /> */}
             <div>
             <h5 className='paymethod'>Select Method of Payment</h5>
             <div className={`radio-group ${selectedPaymentMethod === 'creditCard' ? 'checked' : ''}`}>
