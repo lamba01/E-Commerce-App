@@ -404,7 +404,7 @@ async function sendMail(userEmail, html) {
     });
 
     const mailOptions = {
-      from: "Boom Commerce",
+      from: "Boom Commerce <jamesspaul987@gmail.com> ",
       to: userEmail,
       subject: "Order Confirmation",
       html,
@@ -460,7 +460,6 @@ app.post("/api/send-email-confirmation", async (req, res) => {
           {
             cartItems,
             userName,
-            cartItemQuantities,
           },
           (renderErr, html) => {
             if (renderErr) {

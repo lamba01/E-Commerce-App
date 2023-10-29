@@ -12,6 +12,15 @@ function Cart({ cartAmount, setCartAmount }) {
   const [cartDetails, setCartDetails] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
   const token = localStorage.getItem('token');
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+  const handleCheckoutClick = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsPaymentModalOpen(false);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -109,9 +118,10 @@ function Cart({ cartAmount, setCartAmount }) {
       </div>
     ) : (
     <div className='parent'>
-      <PaymentSimulation />
+      {/* <PaymentSimulation /> */}
+      {isPaymentModalOpen && <PaymentSimulation onClose={closeModal} />}
+
       <BackBtn />
-      
       <div className='cartpage'>
         <div className="mobile-checkout">
         <h4>Cart Summary</h4>
@@ -158,9 +168,10 @@ function Cart({ cartAmount, setCartAmount }) {
         <div>
           <p>subtotal</p><p> ${cartTotal.toFixed(2)}</p>
         </div>
-        <button className='checkout-btn'>${cartTotal.toFixed(2)}<span>Checkout <BsArrowRight /></span></button>
+        <button onClick={handleCheckoutClick} className='checkout-btn'>${cartTotal.toFixed(2)}<span>Checkout <BsArrowRight /></span></button>
       </div>
       </div>
+
     </div>)}
     </div>
   );

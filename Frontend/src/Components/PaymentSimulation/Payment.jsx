@@ -3,10 +3,11 @@ import { AiFillCreditCard, AiOutlineBank, AiOutlineArrowLeft, AiOutlineCheck, Ai
 import { BsPaypal } from 'react-icons/bs'
 import { BiLogoVisa } from 'react-icons/bi'
 import { FcSimCardChip } from 'react-icons/fc'
+import { useNavigate } from 'react-router-dom';
 import './payment.css';
 import OrderBtn from '../OrderBtn';
 
-const PaymentSimulation = () => {
+const PaymentSimulation = ({ onClose }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('creditCard');
   const handlePaymentMethodChange = (event) => {
     setSelectedPaymentMethod(event.target.value);
@@ -26,6 +27,7 @@ const PaymentSimulation = () => {
     holdername: '',
   });
   const formRefs = [useRef(null), useRef(null)]; 
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -135,12 +137,19 @@ const handleSubmit = (formIndex) => {
   }
 };
 
+const navigate = useNavigate();
+
+const goBackToShop = () => {
+  navigate('/'); // Use navigate to go back to the product list
+};
+
+
 
   return (
     <div className="payment-simulation">
       <div className="payment-container">
       <div className='btns'><AiOutlineArrowLeft className='iis' size={'1.5em'} onClick={handlePreviousStep}/>
-      <AiOutlineClose size={'1.5em'} className='iis'/></div>
+      <AiOutlineClose onClick={onClose} size={'1.5em'} className='iis'/></div>
       <h2 className='paymentheader'>Make Payment</h2>
       {renderProgressBar()}
         <div className={`step ${step === 1 ? 'active' : ''}`}>       
@@ -221,7 +230,7 @@ const handleSubmit = (formIndex) => {
             onChange={handleInputChange} id="" cols="30" rows="10"></textarea>
            </div>                    
           </form>
-          <button onClick={() => handleSubmit(0)}>Go to Payment</button> 
+          <button className='formm1' onClick={() => handleSubmit(0)}>Go to Payment</button> 
         </div>
 
         <div className={`step ${step === 2 ? 'active' : ''}`}>
@@ -274,7 +283,7 @@ const handleSubmit = (formIndex) => {
               min={new Date().getFullYear()} // Minimum year is the current year
               required
               className='expy'
-              onKeyDown={handleKeyDown}
+              // onKeyDown={handleKeyDown}
             />
             <input
               type="text"
@@ -301,13 +310,16 @@ const handleSubmit = (formIndex) => {
             </div>
           </form>
           </div>  
-          <button className='formm2' onClick={() => handleSubmit(1)}>Pay Now</button>   
+          
+          <div onClick={() => handleSubmit(1)}><OrderBtn /> </div>
         </div>
         <div className={`step ${step === 3 ? 'active' : ''}`}>
+          <div className='third'>
           <div className="check-container"><AiOutlineCheck size={'2em'} color='white'/></div>
           <h2>Success</h2>
           <p>Thank you for your order! Your payment was successful.</p>
-          <OrderBtn />
+          <button className='formm2' onClick={goBackToShop} >Complete</button>  
+        </div>
         </div>
       </div>
     </div>

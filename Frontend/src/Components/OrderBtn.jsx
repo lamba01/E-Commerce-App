@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import '../Styles/Orderbtn.css'
 
 const OrderBtn = () => {
@@ -21,7 +20,6 @@ const OrderBtn = () => {
   
         if (response.status === 200) {
           console.log('Order placed successfully');
-          goBackToShop()
           // After successfully placing the order, send the email confirmation
           await handleSendEmailConfirmation(token);
         }
@@ -47,13 +45,10 @@ const OrderBtn = () => {
         alert('Error sending email confirmation. Please try again or contact support.');
       }
     };
-    const navigate = useNavigate();
-    const goBackToShop = () => {
-      navigate('/'); // Use navigate to go back to the product list
-    };
+
   
     return (
-      <button className='place-order-btn' onClick={() => placeOrder()}>Complete</button>
+      <button className='place-order-btn' onClick={() => placeOrder()}>Pay Now</button>
     );
   };
   
