@@ -283,7 +283,6 @@ const goBackToShop = () => {
               min={new Date().getFullYear()} // Minimum year is the current year
               required
               className='expy'
-              // onKeyDown={handleKeyDown}
             />
             <input
               type="text"
@@ -311,15 +310,14 @@ const goBackToShop = () => {
           </form>
           </div>  
           
-          <div onClick={() => handleSubmit(1)}><OrderBtn /> </div>
+          <div onClick={() => handleSubmit(1)}><OrderBtn handleSubmit={handleSubmit} /> </div>
         </div>
         <div className={`step ${step === 3 ? 'active' : ''}`}>
-          <div className='third'>
+        <div className='check'>
           <div className="check-container"><AiOutlineCheck size={'2em'} color='white'/></div>
           <h2>Success</h2>
-          <p>Thank you for your order! Your payment was successful.</p>
-          <button className='formm2' onClick={goBackToShop} >Complete</button>  
-        </div>
+          <p>Thank you for your order! Your payment was successful.</p></div>
+          <div><button className='formm2' onClick={goBackToShop} >Complete</button></div>  
         </div>
       </div>
     </div>

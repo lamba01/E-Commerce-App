@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import '../Styles/Orderbtn.css'
+import "../Styles/Orderbtn.css"
 
-const OrderBtn = () => {
+const OrderBtn = ({ handleSubmit }) => {
     const placeOrder = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -10,6 +10,7 @@ const OrderBtn = () => {
           alert('You are not logged in. Please log in to place an order.');
           return;
         }
+        handleSubmit(1)
   
         // Make a request to your server to place the order with the JWT token
         const response = await axios.post('/api/place-order', null, {

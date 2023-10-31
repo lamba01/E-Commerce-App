@@ -341,9 +341,11 @@ app.post("/api/place-order", (req, res) => {
             status: "Shipped",
           }));
 
+          const values = orderItems.map((item) => Object.values(item));
+
           db.query(
             "INSERT INTO orders (user_id, product_name, price, quantity, product_image, product_id, route, date, status) VALUES ?",
-            [orderItems.map((item) => Object.values(item))],
+            [values],
             (insertError, insertResults) => {
               if (insertError) {
                 console.error("Error inserting order data:", insertError);

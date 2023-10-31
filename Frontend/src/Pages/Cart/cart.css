@@ -139,6 +139,9 @@
   .cartpage {
     flex-direction: column;
   }
+  .cart-item-container {
+    min-height: 120px;
+  }
   .cart {
     width: 100vw;
     margin: auto;
@@ -170,5 +173,10 @@
   }
   .header {
     display: none;
+  }
+}
+@media only screen and (max-width: 520px) {
+  .cart-item-container {
+    min-height: 140px;
   }
 }

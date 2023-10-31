@@ -21,6 +21,7 @@
   text-align: center;
   padding: 10px;
   z-index: 100;
+  position: relative;
 }
 .step {
   display: none;
@@ -29,7 +30,7 @@
 .step.active {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
 }
@@ -291,23 +292,31 @@ button:hover {
   .card {
     height: 170px;
   }
-  .formm2 {
-    margin: 0;
-  }
   .card-content {
     font-size: 15px;
   }
   .card-number {
     font-size: 25px;
   }
-  .third {
-    padding: 10px;
-    width: 100%;
+  .progress-bar {
+    width: 35%;
+  }
+  .step.active {
+    justify-content: space-between;
+    height: 80%;
+  }
+  .formm2 {
+    margin: 0;
+  }
+  .check {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
   }
-  .progress-bar {
-    width: 35%;
+}
+@media only screen and (max-width: 340px) {
+  .card-content-sub {
+    font-size: 10px;
   }
 }
