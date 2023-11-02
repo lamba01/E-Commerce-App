@@ -179,4 +179,8 @@
   .cart-item-container {
     min-height: 140px;
   }
+  .cart-item-image {
+    height: 70px;
+    width: 70px;
+  }
 }

@@ -1,32 +1,34 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import { AiFillCreditCard, AiOutlineBank, AiOutlineArrowLeft, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
 import { BsPaypal } from 'react-icons/bs'
 import { BiLogoVisa } from 'react-icons/bi'
 import { FcSimCardChip } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom';
 import './payment.css';
-import OrderBtn from '../OrderBtn';
+// import OrderBtn from '../OrderBtn';
 
 const PaymentSimulation = ({ onClose }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('creditCard');
+  // const [isFirstFormValid, setIsFirstFormValid] = useState(false);  
   const handlePaymentMethodChange = (event) => {
     setSelectedPaymentMethod(event.target.value);
   };
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: '',
     Firstname: '',
     lastname: '',
     address: '',
     phone: '',
     paymentMethod: '',
     cardNumber: '',
-    expirationMonth: 1,
+    expirationMonth: '',
     expirationYear: '',
     cvv: '',
     holdername: '',
   });
   const formRefs = [useRef(null), useRef(null)]; 
+  const [isSecondFormValid, setIsSecondFormValid] = useState(false);
 
 
   const handleInputChange = (event) => {
@@ -50,39 +52,13 @@ const PaymentSimulation = ({ onClose }) => {
           cardNumberSpan.textContent = formattedValue;
       }
     }
-  };
-  const handleMonthChange = (event) => {
-    const { name, value } = event.target;
-    
-    // Ensure the value is a number and within the allowed range (1-12)
-    const numericValue = parseInt(value, 10);
-    if (!isNaN(numericValue) && numericValue >= 1 && numericValue <= 12) {
-      setFormData({ ...formData, [name]: numericValue });
-      const expMonth = document.getElementById('exp-month')
-      // Format the month with a leading zero if needed
-      const formattedMonth = numericValue.toString().padStart(2, '0');
-      expMonth.textContent = formattedMonth;
+    if(name === 'expirationMonth') {
+      const month = document.getElementById('exp-month')
+      month.textContent = value
     }
-  };
-  const handleKeyDown = (event) => {
-    if (
-      (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') || 
-      (parseInt(event.target.value) === 1 && event.key === 'ArrowDown') ||
-      (parseInt(event.target.value) === 12 && event.key === 'ArrowUp')
-    ) {
-      event.preventDefault();
-    }
-  };
-
-  const handleYearChange = (event) => {
-    const { name, value } = event.target;
-  
-    // Ensure the value is a number
-    const numericValue = parseInt(value, 10);
-    if (!isNaN(numericValue)) {
-      setFormData({ ...formData, [name]: numericValue });
-      const expyear = document.getElementById('exp-year')
-      expyear.textContent = numericValue
+    if(name === 'expirationYear') {
+      const yearr = document.getElementById('exp-year')
+      yearr.textContent = value
     }
   };
 
@@ -95,16 +71,18 @@ const PaymentSimulation = ({ onClose }) => {
     
   };
 
+  const handlePreviousStep = () => {
+    if(step > 1){
+      setStep(step - 1);
+    }
+  };
   const handleNextStep = () => {
     // event.preventDefault();
     setStep(step + 1);
   };
 
-  const handlePreviousStep = () => {
-    if(step === 2){
-      setStep(step - 1);
-    }
-  };
+
+
 
   const renderProgressBar = () => {
     const progressBarItems = ['1', '2', '3'];
@@ -129,13 +107,64 @@ const handleSubmit = (formIndex) => {
   const form = formRefs[formIndex].current;
 
   if (form.checkValidity()) {
-    // If the form is valid, proceed to the next step
+    if (formIndex === 1) {
+      setIsSecondFormValid(true);
+      placeOrder()
+    }
+
+    // Proceed to the next step
     handleNextStep();
   } else {
+    if (formIndex === 1) {
+      setIsSecondFormValid(false);
+    }
+
     // Handle validation errors or provide feedback to the user
-    form.reportValidity()
+    form.reportValidity();
   }
 };
+const placeOrder = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('You are not logged in. Please log in to place an order.');
+        return;
+      }
+
+      // Make a request to your server to place the order with the JWT token
+      const response = await axios.post('/api/place-order', null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Order placed successfully');
+        // After successfully placing the order, send the email confirmation
+        await handleSendEmailConfirmation(token);
+      }
+    } catch (error) {
+      console.error('Error placing the order:', error);
+      alert('Error placing the order. Please try again or contact support.');
+    } 
+};
+const handleSendEmailConfirmation = async (token) => {
+  try {
+    const response = await axios.post('/api/send-email-confirmation', null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      console.log('Email confirmation sent:');
+    }
+  } catch (error) {
+    console.error('Error sending email confirmation:', error);
+    alert('Error sending email confirmation. Please try again or contact support.');
+  }
+}
+
 
 const navigate = useNavigate();
 
@@ -160,6 +189,7 @@ const goBackToShop = () => {
               name="Firstname"
               className='name'
               placeholder="First Name"
+              pattern="[A-Za-z ]+"
               value={formData.Firstname}
               onChange={handleInputChange}
               required
@@ -168,6 +198,7 @@ const goBackToShop = () => {
               type="text"
               name="lastname"
               className='name'
+              pattern="[A-Za-z ]+"
               placeholder="Last Name"
               value={formData.lastname}
               onChange={handleInputChange}
@@ -217,6 +248,7 @@ const goBackToShop = () => {
               name="phone"
               className='phone'
               placeholder="Mobile Phone"
+              pattern="[0-9]*"
               value={formData.phone}
               onChange={handleInputChange}
               required
@@ -230,7 +262,7 @@ const goBackToShop = () => {
             onChange={handleInputChange} id="" cols="30" rows="10"></textarea>
            </div>                    
           </form>
-          <button className='formm1' onClick={() => handleSubmit(0)}>Go to Payment</button> 
+          <button type='submit' className='formm1' onClick={() => handleSubmit(0)}>Go to Payment</button> 
         </div>
 
         <div className={`step ${step === 2 ? 'active' : ''}`}>
@@ -262,26 +294,26 @@ const goBackToShop = () => {
               required
             /></div>
             <div className='aa'>
-            <input type="number"
+            <input type="text"
              maxLength={2}
-            max={12}
-            min={1}
             placeholder='0'
-            value={formData.expirationMonth.toString().padStart(2, '0')}
-            onChange={handleMonthChange}
+            pattern="[0-9]*"
+            value={formData.expirationMonth}
+            onChange={handleInputChange}
             name="expirationMonth"
             required
             className='expm'
-            onKeyDown={handleKeyDown}
             />
             <input
-              type="number"
+              type="text"
               name="expirationYear"
               placeholder="YYYY"
               value={formData.expirationYear}
-              onChange={handleYearChange}
+              pattern="[0-9]*"
+              maxLength={4}
               min={new Date().getFullYear()} // Minimum year is the current year
               required
+              onChange={handleInputChange}
               className='expy'
             />
             <input
@@ -301,16 +333,16 @@ const goBackToShop = () => {
               name="holdername"
               className='hn'
               placeholder="Holder Name"
-              pattern="[A-Za-z ]+"
+              pattern="[A-Za-z ]*"
               value={formData.holdername}
               onChange={handleCardNameChange}
               required
+              title="Please enter a valid first name (only alphabetic characters and spaces)."
             />
             </div>
           </form>
           </div>  
-          
-          <div onClick={() => handleSubmit(1)}><OrderBtn handleSubmit={handleSubmit} /> </div>
+          <div onClick={() => handleSubmit(1)}><button className='formm2' onClick={() => handleSubmit(1)}>Go to Confirmation</button></div>
         </div>
         <div className={`step ${step === 3 ? 'active' : ''}`}>
         <div className='check'>
@@ -323,9 +355,4 @@ const goBackToShop = () => {
     </div>
   );
 };
-
-
-
-
-
 export default PaymentSimulation;
