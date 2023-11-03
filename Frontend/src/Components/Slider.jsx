@@ -37,7 +37,7 @@ function ProductSlider({ products }) {
     <Slider {...settings}>
       {categoryProducts.map((product) => (
         <div key={product.id} className="slider">
-          <div className="product__card">
+          <div className="product_card">
             <img
               className="slider-product__image"
               src={product.image}

@@ -6,36 +6,8 @@ import ProductSlider from "../Components/Slider";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Navigation from "../Components/Navigation";
 import Products from "../Components/Products";
-import Test from "../Components/Test";
-// import Cart from "./Cart";
-// import { Router } from "react-router-dom";
-// import ProductDetails from "./ProductDetails";
-// import object from "prop-types";
-
-// function Home() {
-
-
-
-
-
-//   return (
-//     <div className="app">
-//       <Navigation />
-      
-//       {/* <Login /> */}
-//       {/* <ProductDetails /> */}
-//       {/* <Cart /> */}
-      // {/* <SignUp /> */}
-//       <ProductsList products={products} />
-//       <Products />
-//       {/* <Test /> */}
-//     </div>
-//   );
-// };
-
-// export default Home;
-
-// import React, { useState, useEffect } from 'react';
+import Test from "../Components/BestSeller";
+import './Home.css'
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');

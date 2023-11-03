@@ -11,7 +11,7 @@
   width: 25%;
   border: none;
 }
-.product__card {
+.product_card {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -26,6 +26,11 @@
   padding: 10px 0;
   cursor: pointer;
   width: fit-content;
+}
+.slick-arrow.slick-next {
+  position: absolute;
+  right: 10px;
+  visibility: hidden;
 }
 @media only screen and (max-width: 1024px) and (min-height: 800px) {
   .slider-product__image {
