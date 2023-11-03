@@ -45,9 +45,7 @@ function ProductSlider({ products }) {
             />
             <div className="product__info">
               <h4 className="product__name">{product.title}</h4>
-              <div className="product__details">
-                <p className="product__price">${product.price}</p>
-              </div>
+              <p className='product__category'>{product.category}</p>
             </div>
           </div>
         </div>
