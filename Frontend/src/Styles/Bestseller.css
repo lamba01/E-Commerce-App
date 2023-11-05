@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 .products-div {
   display: grid;
@@ -40,6 +40,9 @@
 }
 .selectedCategory {
   background-color: black;
+}
+.mobile-toggle-button {
+  display: none;
 }
 .category-button-div {
   width: 100%;
@@ -92,8 +95,96 @@
   text-transform: uppercase;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+  margin-top: 50px;
 }
 .load-more-button:hover {
   background: none;
   text-decoration: underline;
+}
+.slick-dots {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: 150px;
+}
+
+@media only screen and (max-width: 767px) {
+  .slick-dots {
+    position: relative;
+    margin: 10px 0;
+    width: 95vw;
+    padding: 10px;
+    border-top: 0.5px solid rgb(124, 121, 121);
+    border-bottom: 0.5px solid rgb(124, 121, 121);
+  }
+  .slick-slider .slick-dots li.slick-active button::before {
+    color: #40bfff;
+  }
+  .products-div {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    row-gap: 50px;
+    column-gap: 10px;
+  }
+  .bestseller-container {
+    padding: 0 10px;
+  }
+  .product-cards {
+    height: 200px;
+  }
+  .product_info {
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 520px) {
+  .category-button-div {
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+  .category-button {
+    margin-bottom: 20px;
+  }
+  .category-button-div.show {
+    height: 300px;
+    animation-name: slideIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+  .category-button-div.hide {
+    height: 0;
+    animation-name: slideOut;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+  .mobile-toggle-button {
+    display: block;
+  }
+  /* CSS Animation Keyframes for Slide-In */
+  @keyframes slideIn {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 300px; /* Adjust to your content's max height */
+    }
+  }
+
+  /* CSS Animation Keyframes for Slide-Out */
+  @keyframes slideOut {
+    0% {
+      height: 300px; /* Adjust to your content's max height */
+    }
+    100% {
+      height: 0;
+    }
+  }
+}
+@media only screen and (max-width: 329px) {
+  .products-div {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    row-gap: 50px;
+    column-gap: 10px;
+  }
 }

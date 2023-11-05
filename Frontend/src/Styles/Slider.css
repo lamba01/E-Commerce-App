@@ -8,7 +8,7 @@
 .slider-product__image {
   height: 70%;
   max-height: 70%;
-  width: 25%;
+  width: 30%;
   border: none;
 }
 .product_card {
@@ -32,25 +32,41 @@
   right: 10px;
   visibility: hidden;
 }
+
 @media only screen and (max-width: 1024px) and (min-height: 800px) {
+  .slider {
+    height: 40vh;
+    margin-top: 20px;
+  }
   .slider-product__image {
-    width: 60%;
+    width: 45%;
   }
 }
 @media only screen and (max-width: 767px) {
-  .product__card {
+  .product_card {
     flex-direction: column;
   }
   .slider-product__image {
     width: 60%;
   }
   .slider {
-    margin-top: 50px;
+    margin-top: 70px;
+    height: 50vh;
   }
 }
 @media only screen and (max-width: 520px) {
   .slider-product__image {
-    width: 90%;
+    width: 60%;
     height: 50%;
+  }
+  .product_card {
+    flex-direction: column;
+  }
+  .product__info {
+    /* background-color: rgba(238, 238, 238, 255); */
+    width: 100%;
+  }
+  .slider {
+    height: 50vh;
   }
 }

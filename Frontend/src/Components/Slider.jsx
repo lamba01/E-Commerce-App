@@ -30,7 +30,7 @@ function ProductSlider({ products }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 100000,
   };
 
   return (
@@ -43,7 +43,7 @@ function ProductSlider({ products }) {
               src={product.image}
               alt={product.title}
             />
-            <div className="product__info">
+            <div className="productinfo">
               <h4 className="product__name">{product.title}</h4>
               <p className='product__category'>{product.category}</p>
             </div>

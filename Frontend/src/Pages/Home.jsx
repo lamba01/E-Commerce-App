@@ -48,13 +48,13 @@ function Home() {
   return (
     <div className="app">
       <ProductSlider products={commerceProducts} /> 
+      <Test />
       <input
         type="text"
         placeholder="Search products"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <Test />
       <Products searchQuery={searchQuery} />
       <ProductsList searchQuery={searchQuery} products={filteredProducts} /> 
     </div>

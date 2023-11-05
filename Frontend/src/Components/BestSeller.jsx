@@ -8,6 +8,11 @@ function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [productsToShow, setProductsToShow] = useState(8);
+  const [showButtons, setShowButtons] = useState(false);
+
+  const toggleButtons = () => {
+    setShowButtons(!showButtons);
+  };
 
   useEffect(() => {
     // Fetch product data from an API or source
@@ -42,13 +47,17 @@ function ProductList() {
     <div className="bestseller-container">
       <h1 className='bestseller-header'>Best Seller</h1>
 
+      <button className="mobile-toggle-button" onClick={toggleButtons}>
+        Toggle Categories
+      </button>
+
       {/* Category filter buttons */}
-      <div className='category-button-div'>
+      <div className={`category-button-div ${showButtons ? 'show' : 'hide'}`}>
       <button onClick={() => filterByCategory('all')} className={`category-button ${selectedCategory === 'all' ? 'active' : ''}`}>All</button>
       <button onClick={() => filterByCategory('electronics')} className={`category-button ${selectedCategory === 'electronics' ? 'active' : ''}`}>Electronics</button>
       <button onClick={() => filterByCategory("men's clothing")} className={`category-button ${selectedCategory === "men's clothing" ? 'active' : ''}`}>Men's Clothing</button>
       <button onClick={() => filterByCategory("women's clothing")} className={`category-button ${selectedCategory === "women's clothing" ? 'active' : ''}`}>Women's Clothing</button>
-      <button onClick={() => filterByCategory("jewelery")} className={`category-button ${selectedCategory === "jewelery" ? 'active' : ''}`}>jewelery</button>
+      <button onClick={() => filterByCategory("jewelery")} className={`category-button ${selectedCategory === "jewelery" ? 'active' : ''}`}>Jewelery</button>
         {/* Add more buttons for other categories */}
       </div>
 
