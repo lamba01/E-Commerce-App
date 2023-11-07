@@ -25,7 +25,8 @@ function Navigation({  cartAmount }) {
         <li>Sign-In</li>
         <li><p>Number of items in cart: {cartAmount}</p></li>
       </ul>
-      <h1 className ="logo">Logo</h1>
+      <h1 className ="logo">Logos</h1>
+      <h1 className='logo'>Cart</h1>
     </div>
   </nav>)}</div>
   )

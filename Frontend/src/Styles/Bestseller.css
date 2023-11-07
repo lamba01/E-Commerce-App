@@ -60,9 +60,11 @@
   font-size: 16px;
   border-radius: 5px;
   margin-bottom: 50px;
+  cursor: pointer;
 }
 .category-button:hover {
   background: none;
+  color: #40bfff;
 }
 .active {
   text-decoration: underline #40bfff;
@@ -140,44 +142,60 @@
     display: flex;
     flex-direction: column;
     height: 0;
+    opacity: 0;
     overflow: hidden;
     flex-wrap: wrap;
+    margin-top: -30px;
   }
   .category-button {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
   .category-button-div.show {
-    height: 300px;
+    height: 250px;
     animation-name: slideIn;
-    animation-duration: 0.5s;
+    animation-duration: 1s;
     animation-fill-mode: both;
+    opacity: 1;
   }
   .category-button-div.hide {
     height: 0;
+    opacity: 0;
     animation-name: slideOut;
-    animation-duration: 0.5s;
+    animation-duration: 1s;
     animation-fill-mode: both;
   }
   .mobile-toggle-button {
     display: block;
+    border: none;
+    width: fit-content;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 50px;
   }
   /* CSS Animation Keyframes for Slide-In */
   @keyframes slideIn {
     0% {
       height: 0;
+      opacity: 0;
     }
     100% {
-      height: 300px; /* Adjust to your content's max height */
+      height: 250px;
+      opacity: 1;
     }
   }
 
   /* CSS Animation Keyframes for Slide-Out */
   @keyframes slideOut {
     0% {
-      height: 300px; /* Adjust to your content's max height */
+      height: 250px;
+      opacity: 1;
     }
     100% {
       height: 0;
+      opacity: 0;
     }
   }
 }

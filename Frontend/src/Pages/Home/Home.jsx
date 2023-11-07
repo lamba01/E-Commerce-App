@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import commerce from "../lib/Commerce";
-import ProductsList from "../Components/ProductsList";
-import ProductSlider from "../Components/Slider";
+import commerce from "../../lib/Commerce";
+import ProductsList from "../../Components/ProductsList";
+import ProductSlider from "../../Components/Slider";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Navigation from "../Components/Navigation";
-import Products from "../Components/Products";
-import Test from "../Components/BestSeller";
+import Products from "../../Components/Products";
+import Test from "../../Components/BestSeller";
 import './Home.css'
 
 function Home() {

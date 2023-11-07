@@ -47,9 +47,9 @@ function ProductList() {
     <div className="bestseller-container">
       <h1 className='bestseller-header'>Best Seller</h1>
 
-      <button className="mobile-toggle-button" onClick={toggleButtons}>
-        Toggle Categories
-      </button>
+      <span className="mobile-toggle-button" onClick={toggleButtons}>
+         Categories
+      </span>
 
       {/* Category filter buttons */}
       <div className={`category-button-div ${showButtons ? 'show' : 'hide'}`}>

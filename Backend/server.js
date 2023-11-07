@@ -87,7 +87,7 @@ app.post("/api/login", async (req, res) => {
       }
 
       if (bcryptResult) {
-        const tokenExpiration = rememberMe ? "3d" : "3h";
+        const tokenExpiration = rememberMe ? "3d" : "1d";
         // Passwords match, create a JWT token for authentication
         const token = jwt.sign({ userId: user.id }, secretKey, {
           expiresIn: tokenExpiration, // You can adjust the token expiration time

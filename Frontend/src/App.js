@@ -1,13 +1,14 @@
 // App.js or a separate routing component
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
+import Home from "./Pages/Home/Home";
 import ProductDetails from "./Pages/Product Details/ProductDetails";
 import ProductDetailss from "./Pages/Product Details/Productdits";
 import Cart from "./Pages/Cart/Cart";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/Signup/Signup";
 import Navigation from "./Components/Navigation";
+import Footer from "./Components/Footer/Footer";
 function App() {
   // Retrieve the cartAmount value from localStorage when the component loads
   const storedCartAmount = localStorage.getItem("cartAmount");
@@ -43,6 +44,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </Router>
   );
 }
