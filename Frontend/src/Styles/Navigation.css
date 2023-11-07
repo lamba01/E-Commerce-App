@@ -56,9 +56,11 @@ body {
   position: relative;
   list-style: none;
   margin-left: 2.5rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
 }
-.menu-items li a::before {
+.menu-items li::before {
   content: "";
   position: absolute;
   bottom: -1px;
@@ -68,12 +70,31 @@ body {
   background-color: #444;
   transition: width 0.3s ease-in-out;
 }
-
+.desktop-cart {
+  color: #403f3f;
+}
+.cartamount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  background-color: #fb7181;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .menu-items li:hover a::before {
   width: 100%;
 }
-
-@media (max-width: 768px) {
+.mobile-cart,
+.home,
+.mobilelogo {
+  display: none;
+}
+@media (max-width: 767px) {
   .navbar {
     opacity: 0.95;
   }
@@ -178,9 +199,31 @@ body {
   .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
     transform: rotate(-45deg);
   }
+  .desktop-cart {
+    display: none;
+  }
+  .mobile-cart {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+  }
+  .mobilelogo {
+    display: block;
+  }
+  .home {
+    display: block;
+  }
+  .logo {
+    display: none;
+  }
+  /* .cartamount {
+    top: 0;
+    right: 0;
+  } */
 }
 
-@media (max-width: 500px) {
+@media only screen and (max-width: 520px) {
   .navbar-container input[type="checkbox"]:checked ~ .logo {
     display: none;
   }

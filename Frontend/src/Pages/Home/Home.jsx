@@ -7,6 +7,7 @@ import ProductSlider from "../../Components/Slider";
 // import Navigation from "../Components/Navigation";
 import Products from "../../Components/Products";
 import Test from "../../Components/BestSeller";
+import PlaceHolders from "../../Components/PlaceHolders";
 import './Home.css'
 
 function Home() {
@@ -49,14 +50,15 @@ function Home() {
     <div className="app">
       <ProductSlider products={commerceProducts} /> 
       <Test />
-      <input
+      {/* <input
         type="text"
         placeholder="Search products"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <Products searchQuery={searchQuery} />
-      <ProductsList searchQuery={searchQuery} products={filteredProducts} /> 
+      /> */}
+      <PlaceHolders />
+      {/* <Products searchQuery={searchQuery} />
+      <ProductsList searchQuery={searchQuery} products={filteredProducts} />  */}
     </div>
   );
 }

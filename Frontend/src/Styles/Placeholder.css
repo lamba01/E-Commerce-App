@@ -1,0 +1,38 @@
+.placeholder-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+}
+.placeholder-header {
+  font-weight: 500;
+}
+.dummy {
+  font-weight: 300;
+  font-size: 14px;
+}
+.placeholder {
+  width: 25%;
+  text-align: center;
+}
+.placeholder-icon {
+  color: #ff6875;
+}
+@media only screen and (max-width: 767px) {
+  .placeholder-container {
+    padding: 50px 20px;
+  }
+  .placeholder {
+    width: 30%;
+  }
+}
+@media only screen and (max-width: 520px) {
+  .placeholder-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+  }
+  .placeholder {
+    width: 100%;
+  }
+}

@@ -92,9 +92,10 @@ ul {
   transition: all 0.5s ease;
 }
 
-.footer-col .social-links a:hover {
+.footer-col .social-links div:hover {
   color: #151515;
   background-color: #fff;
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {
