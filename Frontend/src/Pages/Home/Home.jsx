@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import commerce from "../../lib/Commerce";
-import ProductsList from "../../Components/ProductsList";
+
 import ProductSlider from "../../Components/Slider";
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Navigation from "../Components/Navigation";
-import Products from "../../Components/Products";
-import Test from "../../Components/BestSeller";
+
+import BestSeller from "../../Components/BestSeller";
 import PlaceHolders from "../../Components/PlaceHolders";
 import './Home.css'
 
@@ -41,24 +41,11 @@ function Home() {
       });
   };
 
-  // Filter products based on the search query
-  const filteredProducts = products.filter((product) => {
-    return product.name.toLowerCase().includes(searchQuery.toLowerCase());
-  });
-
   return (
     <div className="app">
       <ProductSlider products={commerceProducts} /> 
-      <Test />
-      {/* <input
-        type="text"
-        placeholder="Search products"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      /> */}
+      <BestSeller />
       <PlaceHolders />
-      {/* <Products searchQuery={searchQuery} />
-      <ProductsList searchQuery={searchQuery} products={filteredProducts} />  */}
     </div>
   );
 }

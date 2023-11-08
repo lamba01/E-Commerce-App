@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ProductItem from "./ProductItem";
+import ProductItem from "./ProductList/ProductItem";
 import { Link } from "react-router-dom";
 
 const ProductsList = ({ products }) => {

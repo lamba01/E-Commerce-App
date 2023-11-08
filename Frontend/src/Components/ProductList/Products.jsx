@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../Styles/Products.css';
+import './Products.css';
 
 function Products({ searchQuery }) {
   const [products, setProducts] = useState([]);

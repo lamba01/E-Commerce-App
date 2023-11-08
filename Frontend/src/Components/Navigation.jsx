@@ -29,7 +29,7 @@ function Navigation({  cartAmount }) {
         <li>Shop</li>
       </ul>
       <h1 className ="logo">Logos</h1>
-      <div className='mobile-cart'><AiOutlineShoppingCart size={'2em'}  /><div className='cartamount'>{cartAmount}</div></div>
+      <Link to={`/cart`} className='mobile-cart'><AiOutlineShoppingCart size={'2em'}  /><div className='cartamount'>{cartAmount}</div></Link>
     </div>
   </nav>)}</div>
   )

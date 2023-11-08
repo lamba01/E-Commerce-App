@@ -9,6 +9,7 @@ import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/Signup/Signup";
 import Navigation from "./Components/Navigation";
 import Footer from "./Components/Footer/Footer";
+import Shop from "./Pages/Shop/Shop";
 function App() {
   // Retrieve the cartAmount value from localStorage when the component loads
   const storedCartAmount = localStorage.getItem("cartAmount");
@@ -43,6 +44,7 @@ function App() {
             <Cart cartAmount={cartAmount} setCartAmount={updateCartAmount} />
           }
         />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
       <Footer />
     </Router>
