@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ProductItem from "./ProductList/ProductItem";
+import ProductItem from "./ProductItem";
 import { Link } from "react-router-dom";
+import "./Products.css";
 
 const ProductsList = ({ products }) => {
   return (
@@ -10,7 +11,7 @@ const ProductsList = ({ products }) => {
         <Link
           to={`/product/${product.id}`} // Link to the product details page using the product's ID
           key={product.id}
-          className="product-link"
+          className="product-card-link"
         >
           <ProductItem product={product} />
         </Link>

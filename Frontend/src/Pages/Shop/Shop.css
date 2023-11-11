@@ -1,3 +1,39 @@
+.shop {
+  padding: 20px;
+}
 .searchh {
-  margin-top: 70px;
+  margin: 70px 0 40px 0;
+  padding: 20px;
+  width: 40%;
+}
+.grid-template {
+  display: flex;
+}
+.left-grid ul li {
+  display: flex;
+  flex-direction: column;
+}
+.left-grid {
+  width: 20%;
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+}
+.left-grid h5 {
+  padding: 0 0 20px 0;
+}
+.right-grid {
+  width: 80%;
+}
+.categories-button {
+  background: none;
+  color: black;
+  width: 150px;
+}
+.categories-button:hover {
+  background-color: #40bfff;
+}
+.active {
+  background-color: #40bfff;
+  text-decoration: none;
 }

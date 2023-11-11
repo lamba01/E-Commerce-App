@@ -58,7 +58,6 @@ function ProductList() {
       <button onClick={() => filterByCategory("men's clothing")} className={`category-button ${selectedCategory === "men's clothing" ? 'active' : ''}`}>Men's Clothing</button>
       <button onClick={() => filterByCategory("women's clothing")} className={`category-button ${selectedCategory === "women's clothing" ? 'active' : ''}`}>Women's Clothing</button>
       <button onClick={() => filterByCategory("jewelery")} className={`category-button ${selectedCategory === "jewelery" ? 'active' : ''}`}>Jewelery</button>
-        {/* Add more buttons for other categories */}
       </div>
 
       {/* Products */}

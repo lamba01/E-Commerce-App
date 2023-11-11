@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./ProductItem.css";
+import "./Products.css";
 
 const ProductItem = ({ product }) => {
   return (
-    <div className="product__card">
-      <img
-        className="product__image"
-        src={product.image.url}
-        alt={product.name}
-      />
+    <div className="product-card2">
+      <div className="imgs">
+        <img
+          className="product-image"
+          src={product.image.url}
+          alt={product.name}
+        />
+      </div>
       <div className="product__info">
         <h4 className="product__name">{product.name}</h4>
         <div className="product__details">

@@ -7,7 +7,6 @@ function Products({ searchQuery, selectedCategory }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    console.log('Selected Category:', selectedCategory);
     axios
       .get('https://fakestoreapi.com/products')
       .then((response) => {
@@ -34,10 +33,10 @@ function Products({ searchQuery, selectedCategory }) {
       {filteredProducts.map((product) => (
         <div className="product-card" key={product.id}>
           <Link to={`/products/${product.id}`} className="product-card-link">
-            <img className="product-image" src={product.image} alt={product.name} />
+            <div className="imgs">
+            <img className="product-image" src={product.image} alt={product.name} /></div>
             <div className="product__info">
               <h4 className="product__name">{product.title}</h4>
-              <p className="product__description">{product.category}</p>
               <div className="product__details">
                 <p className="product__price">${product.price}</p>
               </div>

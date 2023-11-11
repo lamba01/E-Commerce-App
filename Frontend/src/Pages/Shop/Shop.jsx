@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
 import commerce from "../../lib/Commerce"; // Assuming this is your Commerce library
 import Products from "../../Components/ProductList/Products";
-import ProductsList from "../../Components/ProductsList";
+import ProductsList from "../../Components/ProductList/ProductsList";
 import "./Shop.css";
 
 function Shop() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all'); // Default to 'all'
   const [products, setProducts] = useState([]);
-  // const [categories, setCategories] = useState([]);
-
-  // const fetchCategories = () => {
-  //   commerce.categories
-  //     .list()
-  //     .then((categories) => {
-  //       setCategories(categories.data);
-  //       console.log(categories)
-  //     })
-  //     .catch((error) => {
-  //       console.log("There was an error fetching the categories", error);
-  //     });
-  // };
 
 
   const fetchProducts = () => {
@@ -28,7 +15,6 @@ function Shop() {
       .list()
       .then((products) => {
         setProducts(products.data);
-        console.log(products.data)
       })
       .catch((error) => {
         console.log("There was an error fetching the products", error);
@@ -52,7 +38,7 @@ function Shop() {
   });
 
   return (
-    <div>
+    <div className="shop">
       <input
         type="text"
         placeholder="Search products"
@@ -60,15 +46,24 @@ function Shop() {
         onChange={(e) => setSearchQuery(e.target.value)}
         className="searchh"
       />
-      <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-        <option value="all">All</option>
-        <option value="men's clothing">men's clothing</option>
-        <option value="women's clothing">Women's clothing</option>
-        <option value="electronics">Electronics</option>
-        <option value="jewelery">Jewelery</option>
-      </select>
+      <div className="grid-template">
+        <div className="left-grid">
+          <h5>Categories</h5>
+       <ul>
+        <li>
+          <button className={`categories-button ${selectedCategory === "all" ? 'active' : ''}`}  onClick={() => setSelectedCategory('all')}>All</button>
+          <button className={`categories-button ${selectedCategory === "men's clothing" ? 'active' : ''}`}  onClick={() => setSelectedCategory("men's clothing")}>Men's clothing</button>
+          <button className={`categories-button ${selectedCategory === "women's clothing" ? 'active' : ''}`}  onClick={() => setSelectedCategory("women's clothing")}>Women's clothing</button>
+          <button className={`categories-button ${selectedCategory === "electronics" ? 'active' : ''}`}  onClick={() => setSelectedCategory("electronics")}>Electronics</button>
+          <button className={`categories-button ${selectedCategory === "jewelery" ? 'active' : ''}`}  onClick={() => setSelectedCategory("jewelery")}>Jewelery</button>
+        </li>
+        </ul>
+        </div>
+        <div className="right-grid">
       <Products searchQuery={searchQuery} selectedCategory={selectedCategory} />
       <ProductsList searchQuery={searchQuery} products={filteredProducts} />
+      </div>
+      </div>
     </div>
   );
 }
