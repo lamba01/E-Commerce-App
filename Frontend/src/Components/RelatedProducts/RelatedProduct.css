@@ -17,6 +17,12 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
+.related-prod:hover {
+  transform: scale(1.07);
+}
+.related-prod:hover .product__name {
+  color: #33a0ff;
+}
 .related-product-sub-container {
   text-decoration: none;
   height: 200px;

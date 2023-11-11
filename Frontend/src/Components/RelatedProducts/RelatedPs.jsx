@@ -29,7 +29,7 @@ function ProductCategoryList({ selectedCategory, currentProductId }) {
     <h2>Similar Products</h2>
     <div className='related-product-main'>
       {products.map((product) => (
-        <div key={product.id}>
+        <div className='related-prod' key={product.id}>
            <Link to={`/product/${product.id}`} className='related-product-sub-container' > 
           <div className='image2'>
             <img

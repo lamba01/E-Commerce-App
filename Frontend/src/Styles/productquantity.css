@@ -10,5 +10,9 @@
   padding: 10px;
   margin: 0 10px;
   background: none;
-  cursor: pointer;
+  color: black;
+}
+.quantity-container button:hover {
+  background: none;
+  color: #33a0ff;
 }

@@ -418,7 +418,6 @@ async function sendMail(userEmail, html) {
     return error;
   }
 }
-
 app.post("/api/send-email-confirmation", async (req, res) => {
   const token = req.headers.authorization;
 

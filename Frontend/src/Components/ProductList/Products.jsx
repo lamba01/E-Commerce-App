@@ -3,10 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Products.css';
 
-function Products({ searchQuery }) {
+function Products({ searchQuery, selectedCategory }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    console.log('Selected Category:', selectedCategory);
     axios
       .get('https://fakestoreapi.com/products')
       .then((response) => {
@@ -15,17 +16,23 @@ function Products({ searchQuery }) {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, []);
+  }, [selectedCategory]);
 
   const filteredProducts = products.filter((product) => {
-    return product.title.toLowerCase().includes(searchQuery.toLowerCase());
+    if (selectedCategory === 'all') {
+      return product.title.toLowerCase().includes(searchQuery.toLowerCase());
+    } else {
+      return (
+        product.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        product.category === selectedCategory
+      );
+    }
   });
 
   return (
-    <div>
-      <h1>Product List</h1>
+    <div className='productslisttt'>
       {filteredProducts.map((product) => (
-        <div className="product-card" key={product.id} >
+        <div className="product-card" key={product.id}>
           <Link to={`/products/${product.id}`} className="product-card-link">
             <img className="product-image" src={product.image} alt={product.name} />
             <div className="product__info">
@@ -43,5 +50,3 @@ function Products({ searchQuery }) {
 }
 
 export default Products;
-
-

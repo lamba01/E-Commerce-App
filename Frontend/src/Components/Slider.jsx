@@ -30,7 +30,7 @@ function ProductSlider({ products }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 100000,
+    autoplaySpeed: 10000,
   };
 
   return (
