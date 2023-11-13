@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import commerce from "../../lib/Commerce"; // Assuming this is your Commerce library
+import commerce from "../../lib/Commerce";
 import Products from "../../Components/ProductList/Products";
 import ProductsList from "../../Components/ProductList/ProductsList";
+import { HiOutlineMenuAlt1 } from "react-icons/hi"
 import "./Shop.css";
 
 function Shop() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all'); // Default to 'all'
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [products, setProducts] = useState([]);
-
+  const [showCategories, setShowCategories] = useState(false); // Step 1
 
   const fetchProducts = () => {
     commerce.products
@@ -25,7 +26,6 @@ function Shop() {
     fetchProducts();
   }, []);
 
-  // Filter products based on the selected category and search query
   const filteredProducts = products.filter((product) => {
     if (selectedCategory === 'all') {
       return product.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -36,6 +36,10 @@ function Shop() {
       );
     }
   });
+
+  const toggleCategories = () => {
+    setShowCategories(!showCategories);
+  }; 
 
   return (
     <div className="shop">
@@ -48,21 +52,21 @@ function Shop() {
       />
       <div className="grid-template">
         <div className="left-grid">
-          <h5>Categories</h5>
-       <ul>
-        <li>
-          <button className={`categories-button ${selectedCategory === "all" ? 'active' : ''}`}  onClick={() => setSelectedCategory('all')}>All</button>
-          <button className={`categories-button ${selectedCategory === "men's clothing" ? 'active' : ''}`}  onClick={() => setSelectedCategory("men's clothing")}>Men's clothing</button>
-          <button className={`categories-button ${selectedCategory === "women's clothing" ? 'active' : ''}`}  onClick={() => setSelectedCategory("women's clothing")}>Women's clothing</button>
-          <button className={`categories-button ${selectedCategory === "electronics" ? 'active' : ''}`}  onClick={() => setSelectedCategory("electronics")}>Electronics</button>
-          <button className={`categories-button ${selectedCategory === "jewelery" ? 'active' : ''}`}  onClick={() => setSelectedCategory("jewelery")}>Jewelery</button>
-        </li>
-        </ul>
+          <span className="filter-btn" onClick={toggleCategories}>Filter <HiOutlineMenuAlt1 /></span> 
+          <ul className={showCategories ? 'show-categories' : 'hide-categories'}>
+            <li>
+              <button className={`categories-button ${selectedCategory === "all" ? 'active' : ''}`} onClick={() => setSelectedCategory('all')}>All</button>
+              <button className={`categories-button ${selectedCategory === "men's clothing" ? 'active' : ''}`} onClick={() => setSelectedCategory("men's clothing")}>Men's clothing</button>
+              <button className={`categories-button ${selectedCategory === "women's clothing" ? 'active' : ''}`} onClick={() => setSelectedCategory("women's clothing")}>Women's clothing</button>
+              <button className={`categories-button ${selectedCategory === "electronics" ? 'active' : ''}`} onClick={() => setSelectedCategory("electronics")}>Electronics</button>
+              <button className={`categories-button ${selectedCategory === "jewelery" ? 'active' : ''}`} onClick={() => setSelectedCategory("jewelery")}>Jewelery</button>
+            </li>
+          </ul>
         </div>
         <div className="right-grid">
-      <Products searchQuery={searchQuery} selectedCategory={selectedCategory} />
-      <ProductsList searchQuery={searchQuery} products={filteredProducts} />
-      </div>
+          <Products searchQuery={searchQuery} selectedCategory={selectedCategory} />
+          <ProductsList searchQuery={searchQuery} products={filteredProducts} />
+        </div>
       </div>
     </div>
   );
