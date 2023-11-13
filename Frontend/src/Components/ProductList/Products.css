@@ -51,3 +51,24 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media only screen and (max-width: 520px) {
+  .product-card,
+  .product-card2 {
+    height: 300px;
+  }
+  .imgs {
+    height: 60%;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .product-card,
+  .product-card2 {
+    height: 250px;
+  }
+  .product__name {
+    font-size: 10px;
+  }
+  .product__price {
+    font-size: 10px;
+  }
+}

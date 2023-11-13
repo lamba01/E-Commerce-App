@@ -5,6 +5,7 @@
   margin: 70px 0 40px 0;
   padding: 20px;
   width: 40%;
+  border-radius: 5px;
 }
 .grid-template {
   display: flex;
@@ -42,7 +43,6 @@
   font-weight: 500;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 @media only screen and (max-width: 1024px) and (min-height: 800px) {
   .searchh {
@@ -74,13 +74,13 @@
     flex-direction: column;
   }
   .hide-categories {
-    display: none;
+    height: 0;
     animation-name: slideOut;
     animation-duration: 1s;
     animation-fill-mode: both;
   }
   .show-categories {
-    display: block;
+    height: fit-content;
     animation-name: slideIn;
     animation-duration: 1s;
     animation-fill-mode: both;
@@ -111,5 +111,11 @@
       height: 0;
       opacity: 0;
     }
+  }
+}
+@media only screen and (max-width: 520px) {
+  .searchh {
+    width: 100%;
+    padding: 15px;
   }
 }
