@@ -77,6 +77,10 @@ function ProductDs({ updateCartAmount }) {
   useEffect(() => {
     checkIfInCart();
   });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
 
 
   if (!product) {
@@ -91,7 +95,7 @@ function ProductDs({ updateCartAmount }) {
       <BackBtn />
     <div className='product-container2'>
     {loading ? (
-            <div><Loading /></div> // Display loading message or animation
+            <div className='mobileee'><Loading /></div> // Display loading message or animation
           ) : (
             <>
             <div className='item1'><img src={product.image.url} className='product-details-image' alt={product.name} /></div>

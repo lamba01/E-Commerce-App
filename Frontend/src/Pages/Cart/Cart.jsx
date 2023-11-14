@@ -104,7 +104,7 @@ function Cart({ cartAmount, setCartAmount }) {
   };
   const navigate = useNavigate();
   const goBackToShop = () => {
-    navigate('/'); // Use navigate to go back to the product list
+    navigate('/shop'); // Use navigate to go back to the product list
   };
   const isCartEmpty = cartDetails.length === 0;
 

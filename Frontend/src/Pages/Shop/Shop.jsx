@@ -40,6 +40,9 @@ function Shop() {
   const toggleCategories = () => {
     setShowCategories(!showCategories);
   }; 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="shop">

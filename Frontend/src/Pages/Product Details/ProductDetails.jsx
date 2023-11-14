@@ -78,6 +78,10 @@ function ProductDetails({ updateCartAmount }) {
   useEffect(() => {
     checkIfInCart();
   });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
 
   if (!product) {
     return <div className='loader'><Loading /></div>;
@@ -89,7 +93,7 @@ function ProductDetails({ updateCartAmount }) {
     <BackBtn />
     <div className='product-container'>  
     {loading ? (
-            <div><Loading /></div> // Display loading message or animation
+            <div className='mobileee'><Loading /></div> // Display loading message or animation
           ) : (
             <>
             <div className='item1'><img src={product.image} className='product-details-image' alt={product.title} /></div>
