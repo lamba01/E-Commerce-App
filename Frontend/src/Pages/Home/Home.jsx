@@ -11,7 +11,6 @@ import PlaceHolders from "../../Components/PlaceHolders";
 import './Home.css'
 
 function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
   const [commerceProducts, setCommerceProducts] = useState([]); // Change the variable name
 

@@ -4,7 +4,7 @@ import './RelatedProduct.css'
 import commerce from "../../lib/Commerce";
 
 
-function ProductCategoryList({ selectedCategory, currentProductId }) {
+function ProductCategoryList({ selectedCategory, currentProductId, scrollToTop }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     fetchProducts();
@@ -30,7 +30,7 @@ function ProductCategoryList({ selectedCategory, currentProductId }) {
     <div className='related-product-main'>
       {products.map((product) => (
         <div className='related-prod' key={product.id}>
-           <Link to={`/product/${product.id}`} className='related-product-sub-container' > 
+           <Link to={`/product/${product.id}`} className='related-product-sub-container' onClick={scrollToTop}> 
           <div className='image2'>
             <img
             className="producttt-image"

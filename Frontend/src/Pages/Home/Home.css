@@ -1,3 +1,4 @@
 .app {
   background-color: rgba(238, 238, 238, 255);
+  overflow-y: auto;
 }

@@ -8,18 +8,22 @@ import AddToCartButton from '../../Components/Addtocart';
 import BackBtn from "../../Components/BackBtn";
 import ProductQuantityControl from '../../Components/ProductQuantityControl';
 import RelatedPs from '../../Components/RelatedProducts/RelatedPs'
+import Loading from '../../Components/LoadingAnimation/Loading';
 import "./productdetails.css"
 
 function ProductDs({ updateCartAmount }) {
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   const [isInCart, setIsInCart] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     commerce.products
       .retrieve(productId) // Fetch the product by its ID
       .then((retrievedProduct) => {
         setProduct(retrievedProduct);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching product details:", error);
@@ -54,6 +58,12 @@ function ProductDs({ updateCartAmount }) {
       console.error('Error checking cart:', error);
     }
   };
+
+  const scrollToTop = () => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }; 
+
   const handleAddToCart = () => {
     // After adding the product, set the isInCart state to true and update the quantity
     setIsInCart(true);// You can adjust the initial quantity if needed
@@ -70,7 +80,7 @@ function ProductDs({ updateCartAmount }) {
 
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className="loader"><Loading /></div>;
   }
   const { result } = stripHtml(product.description);
   const selectedCategory = product.categories[0]?.name
@@ -80,24 +90,28 @@ function ProductDs({ updateCartAmount }) {
     <div className='main2'>
       <BackBtn />
     <div className='product-container2'>
-    <div className='item1'><img src={product.image.url} className='product-details-image' alt={product.name} /></div>
+    {loading ? (
+            <div><Loading /></div> // Display loading message or animation
+          ) : (
+            <>
+            <div className='item1'><img src={product.image.url} className='product-details-image' alt={product.name} /></div>
     <div className='item22'>
       <h3>{product.name}</h3>
       <span className='product-details-price'>{product.price.formatted_with_symbol}</span>
-      {/* <p>Category: {product.categories[0]?.name}</p> */}
       <p className='product-details-description'>{result}</p>
       {isInCart ? (
         <div>
           <p>Product is already in your cart</p>
-          {/* Include the logic for increasing and decreasing quantity here */}
           <ProductQuantityControl product={product}/>
         </div>
       ) : (
         <AddToCartButton product={product} onaddToCart={handleAddToCart}/>
       )}
       </div>
+            </>
+          )}
     </div>
-    <RelatedPs selectedCategory={selectedCategory} currentProductId={productId}/>
+    <RelatedPs selectedCategory={selectedCategory} currentProductId={productId} scrollToTop={scrollToTop}/>
     </div>
   );
 }

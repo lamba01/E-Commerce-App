@@ -27,7 +27,7 @@
   display: none;
   margin: 20px 0;
 }
-.step.active {
+.step.active3 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

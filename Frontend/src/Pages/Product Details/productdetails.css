@@ -31,13 +31,16 @@
   width: 40%;
 }
 .product-details-price {
-  color: rgb(214, 142, 7);
+  color: #40bfff;
   font-size: large;
 }
 .product-details-description {
   font-size: small;
   padding: 20px 0;
   color: rgb(97, 96, 96);
+}
+.loader {
+  height: 100vh;
 }
 @media only screen and (max-width: 1024px) and (min-height: 800px) {
   .product-container,

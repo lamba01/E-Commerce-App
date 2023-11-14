@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './RelatedProduct.css'
 
-function RelatedProducts({ selectedProductCategory, currentProductId }) {
+function RelatedProducts({ selectedProductCategory, currentProductId, scrollToTop }) {
   const [products, setProducts] = useState([]);
   
   useEffect(() => {
@@ -20,13 +20,14 @@ function RelatedProducts({ selectedProductCategory, currentProductId }) {
       });
   }, [selectedProductCategory, currentProductId]);
 
+
   return (
     <div className='related-product'>
     <h2>Similar Products</h2>
     <div className='related-product-main'>
       {products.map((product) => (
         <div className='related-prod' key={product.id}>
-           <Link to={`/products/${product.id}`} className='related-product-sub-container' > 
+           <Link to={`/products/${product.id}`} className='related-product-sub-container' onClick={scrollToTop}> 
           <div className='image'><img
             className="product-image"
             src={product.image}

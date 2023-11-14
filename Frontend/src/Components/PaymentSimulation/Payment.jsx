@@ -124,30 +124,80 @@ const handleSubmit = (formIndex) => {
   }
 };
 const placeOrder = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        alert('You are not logged in. Please log in to place an order.');
-        return;
-      }
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('You are not logged in. Please log in to place an order.');
+      return;
+    }
 
-      // Make a request to your server to place the order with the JWT token
-      const response = await axios.post('/api/place-order', null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // Make a request to your server to place the order with the JWT token
+    const response = await axios.post('/api/place-order', null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      if (response.status === 200) {
-        console.log('Order placed successfully');
-        // After successfully placing the order, send the email confirmation
-        await handleSendEmailConfirmation(token);
-      }
-    } catch (error) {
-      console.error('Error placing the order:', error);
-      alert('Error placing the order. Please try again or contact support.');
-    } 
+    if (response.status === 200) {
+      console.log('Order placed successfully');
+
+      // Clear all quantities from local storage
+      clearAllQuantities();
+
+      // After successfully placing the order, send the email confirmation
+      await handleSendEmailConfirmation(token);
+    }
+  } catch (error) {
+    console.error('Error placing the order:', error);
+    alert('Error placing the order. Please try again or contact support.');
+  } 
 };
+
+// Function to clear all quantities from local storage
+const clearAllQuantities = () => {
+  // Iterate through all keys in local storage and remove those related to quantities
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('product_') && key.endsWith('_quantity')) {
+      localStorage.removeItem(key);
+    }
+  }
+};
+// const placeOrder = async () => {
+//     try {
+//       const token = localStorage.getItem('token');
+//       if (!token) {
+//         alert('You are not logged in. Please log in to place an order.');
+//         return;
+//       }
+
+//       // Make a request to your server to place the order with the JWT token
+//       const response = await axios.post('/api/place-order', null, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+
+//       if (response.status === 200) {
+//         console.log('Order placed successfully');
+//         // After successfully placing the order, send the email confirmation
+//         await handleSendEmailConfirmation(token);
+//       }
+//     } catch (error) {
+//       console.error('Error placing the order:', error);
+//       alert('Error placing the order. Please try again or contact support.');
+//     } 
+//     // Function to clear all quantities from local storage
+// const clearAllQuantities = () => {
+//   // Iterate through all keys in local storage and remove those related to quantities
+//   for (let i = 0; i < localStorage.length; i++) {
+//     const key = localStorage.key(i);
+//     if (key && key.startsWith('product_') && key.endsWith('_quantity')) {
+//       localStorage.removeItem(key);
+//     }
+//   }
+// }
+// };
 const handleSendEmailConfirmation = async (token) => {
   try {
     const response = await axios.post('/api/send-email-confirmation', null, {
@@ -181,7 +231,7 @@ const goBackToShop = () => {
       <AiOutlineClose onClick={onClose} size={'1.5em'} className='iis'/></div>
       <h2 className='paymentheader'>Make Payment</h2>
       {renderProgressBar()}
-        <div className={`step ${step === 1 ? 'active' : ''}`}>       
+        <div className={`step ${step === 1 ? 'active3' : ''}`}>       
           <form className='forms' ref={formRefs[0]}>
             <div>
               <input
@@ -265,7 +315,7 @@ const goBackToShop = () => {
           <button type='submit' className='formm1' onClick={() => handleSubmit(0)}>Go to Payment</button> 
         </div>
 
-        <div className={`step ${step === 2 ? 'active' : ''}`}>
+        <div className={`step ${step === 2 ? 'active3' : ''}`}>
           <div className="second">
           <div className='card-containeer'>
             <div className="card">
@@ -344,7 +394,7 @@ const goBackToShop = () => {
           </div>  
           <div onClick={() => handleSubmit(1)}><button className='formm2' onClick={() => handleSubmit(1)}>Go to Confirmation</button></div>
         </div>
-        <div className={`step ${step === 3 ? 'active' : ''}`}>
+        <div className={`step ${step === 3 ? 'active3' : ''}`}>
         <div className='check'>
           <div className="check-container"><AiOutlineCheck size={'2em'} color='white'/></div>
           <h2>Success</h2>

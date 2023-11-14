@@ -5,24 +5,30 @@ import AddToCartButton from '../../Components/Addtocart';
 import BackBtn from '../../Components/BackBtn';
 import ProductQuantityControl from '../../Components/ProductQuantityControl';
 import RelatedProducts from "../../Components/RelatedProducts/RelatedProducts"
+import Loading from '../../Components/LoadingAnimation/Loading';
 import "./productdetails.css"
 
 function ProductDetails({ updateCartAmount }) {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [isInCart, setIsInCart] = useState(false); // Check if the product is in the cart
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => { 
+    setLoading(true);
     // Fetch product details using the productId
     axios
       .get(`https://fakestoreapi.com/products/${productId}`)
       .then((response) => {
         setProduct(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
+      
   }, [productId]);
+
   const token = localStorage.getItem('token');
   // Function to check if the product is in the user's cart
   const checkIfInCart = async () => {
@@ -61,6 +67,11 @@ function ProductDetails({ updateCartAmount }) {
     // Display any success message if needed
     console.log('Product added to cart successfully');
   };
+
+  const scrollToTop = () => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
 
   // Call the function to check if the product is in the cart
@@ -69,33 +80,37 @@ function ProductDetails({ updateCartAmount }) {
   });
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className='loader'><Loading /></div>;
   }
   const selectedProductCategory = product.category;
 
   return (
     <div className='main'>
     <BackBtn />
-    <div className='product-container'>   
-      <div className='item1'><img src={product.image} className='product-details-image' alt={product.title} /></div>
+    <div className='product-container'>  
+    {loading ? (
+            <div><Loading /></div> // Display loading message or animation
+          ) : (
+            <>
+            <div className='item1'><img src={product.image} className='product-details-image' alt={product.title} /></div>
       <div className='item2'>
       <h3>{product.title}</h3>
       <span className='product-details-price'>${product.price}</span>
-      {/* <p>Category: {product.category}</p> */}
       <p className='product-details-description'>{product.description}</p>
       
       {isInCart ? (
         <div>
           <p>Product is already in your cart</p>
-          {/* Include the logic for increasing and decreasing quantity here */}
           <ProductQuantityControl product={product}/>
         </div>
       ) : (
         <AddToCartButton product={product} onaddToCart={handleAddToCart} />
       )}
-      </div>
+      </div> 
+            </>
+          )} 
     </div>
-    <RelatedProducts selectedProductCategory={ selectedProductCategory} currentProductId={productId}/>
+    <RelatedProducts selectedProductCategory={ selectedProductCategory} currentProductId={productId} scrollToTop={scrollToTop}/>
     </div>
   );
 }

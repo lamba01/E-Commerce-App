@@ -53,11 +53,11 @@ function ProductList() {
 
       {/* Category filter buttons */}
       <div className={`category-button-div ${showButtons ? 'show' : 'hide'}`}>
-      <button onClick={() => filterByCategory('all')} className={`category-button ${selectedCategory === 'all' ? 'active' : ''}`}>All</button>
-      <button onClick={() => filterByCategory('electronics')} className={`category-button ${selectedCategory === 'electronics' ? 'active' : ''}`}>Electronics</button>
-      <button onClick={() => filterByCategory("men's clothing")} className={`category-button ${selectedCategory === "men's clothing" ? 'active' : ''}`}>Men's Clothing</button>
-      <button onClick={() => filterByCategory("women's clothing")} className={`category-button ${selectedCategory === "women's clothing" ? 'active' : ''}`}>Women's Clothing</button>
-      <button onClick={() => filterByCategory("jewelery")} className={`category-button ${selectedCategory === "jewelery" ? 'active' : ''}`}>Jewelery</button>
+      <button onClick={() => filterByCategory('all')} className={`category-button ${selectedCategory === 'all' ? 'active2' : ''}`}>All</button>
+      <button onClick={() => filterByCategory('electronics')} className={`category-button ${selectedCategory === 'electronics' ? 'active2' : ''}`}>Electronics</button>
+      <button onClick={() => filterByCategory("men's clothing")} className={`category-button ${selectedCategory === "men's clothing" ? 'active2' : ''}`}>Men's Clothing</button>
+      <button onClick={() => filterByCategory("women's clothing")} className={`category-button ${selectedCategory === "women's clothing" ? 'active2' : ''}`}>Women's Clothing</button>
+      <button onClick={() => filterByCategory("jewelery")} className={`category-button ${selectedCategory === "jewelery" ? 'active2' : ''}`}>Jewelery</button>
       </div>
 
       {/* Products */}
