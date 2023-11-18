@@ -123,6 +123,7 @@ const handleSubmit = (formIndex) => {
     form.reportValidity();
   }
 };
+
 const placeOrder = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -140,10 +141,8 @@ const placeOrder = async () => {
 
     if (response.status === 200) {
       console.log('Order placed successfully');
-
       // Clear all quantities from local storage
       clearAllQuantities();
-
       // After successfully placing the order, send the email confirmation
       await handleSendEmailConfirmation(token);
     }
@@ -152,52 +151,6 @@ const placeOrder = async () => {
     alert('Error placing the order. Please try again or contact support.');
   } 
 };
-
-// Function to clear all quantities from local storage
-const clearAllQuantities = () => {
-  // Iterate through all keys in local storage and remove those related to quantities
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('product_') && key.endsWith('_quantity')) {
-      localStorage.removeItem(key);
-    }
-  }
-};
-// const placeOrder = async () => {
-//     try {
-//       const token = localStorage.getItem('token');
-//       if (!token) {
-//         alert('You are not logged in. Please log in to place an order.');
-//         return;
-//       }
-
-//       // Make a request to your server to place the order with the JWT token
-//       const response = await axios.post('/api/place-order', null, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-
-//       if (response.status === 200) {
-//         console.log('Order placed successfully');
-//         // After successfully placing the order, send the email confirmation
-//         await handleSendEmailConfirmation(token);
-//       }
-//     } catch (error) {
-//       console.error('Error placing the order:', error);
-//       alert('Error placing the order. Please try again or contact support.');
-//     } 
-//     // Function to clear all quantities from local storage
-// const clearAllQuantities = () => {
-//   // Iterate through all keys in local storage and remove those related to quantities
-//   for (let i = 0; i < localStorage.length; i++) {
-//     const key = localStorage.key(i);
-//     if (key && key.startsWith('product_') && key.endsWith('_quantity')) {
-//       localStorage.removeItem(key);
-//     }
-//   }
-// }
-// };
 const handleSendEmailConfirmation = async (token) => {
   try {
     const response = await axios.post('/api/send-email-confirmation', null, {
@@ -211,9 +164,19 @@ const handleSendEmailConfirmation = async (token) => {
     }
   } catch (error) {
     console.error('Error sending email confirmation:', error);
-    alert('Error sending email confirmation. Please try again or contact support.');
   }
 }
+
+// Function to clear all quantities from local storage
+const clearAllQuantities = () => {
+  // Iterate through all keys in local storage and remove those related to quantities
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('product_') && key.endsWith('_quantity')) {
+      localStorage.removeItem(key);
+    }
+  }
+};
 
 
 const navigate = useNavigate();
@@ -361,7 +324,6 @@ const goBackToShop = () => {
               value={formData.expirationYear}
               pattern="[0-9]*"
               maxLength={4}
-              min={new Date().getFullYear()} // Minimum year is the current year
               required
               onChange={handleInputChange}
               className='expy'

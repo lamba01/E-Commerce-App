@@ -406,7 +406,7 @@ async function sendMail(userEmail, html) {
     });
 
     const mailOptions = {
-      from: "Boom Commerce <jamesspaul987@gmail.com> ",
+      from: "Commerce <jamesspaul987@gmail.com> ",
       to: userEmail,
       subject: "Order Confirmation",
       html,
