@@ -35,6 +35,10 @@ db.query("SELECT 1", (error, results, fields) => {
   console.log("Example query result:", results);
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello, this is the root path!");
+});
+
 // API endpoint for user registration
 app.post("/api/signup", async (req, res) => {
   // Here, you can access user data from req.body
