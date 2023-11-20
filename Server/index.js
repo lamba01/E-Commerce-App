@@ -37,23 +37,6 @@ db.query("SELECT 1", (error, results, fields) => {
 
 db.end();
 
-// const db = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE,
-// });
-
-// // Connect to the database
-// db.connect((err) => {
-//   if (err) {
-//     console.error("Database connection failed:", err);
-//     process.exit(1);
-//   } else {
-//     console.log("Connected to the database");
-//   }
-// });
-
 // API endpoint for user registration
 app.post("/api/signup", async (req, res) => {
   // Here, you can access user data from req.body
@@ -494,7 +477,9 @@ app.post("/api/send-email-confirmation", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
+// Define the HTTP server
+module.exports = app;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
