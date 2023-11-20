@@ -81,9 +81,6 @@ const PaymentSimulation = ({ onClose }) => {
     setStep(step + 1);
   };
 
-
-
-
   const renderProgressBar = () => {
     const progressBarItems = ['1', '2', '3'];
   return (
