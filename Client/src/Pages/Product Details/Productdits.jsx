@@ -70,7 +70,7 @@ function ProductDs({ updateCartAmount }) {
     setIsInCart(true);// You can adjust the initial quantity if needed
     checkIfInCart();
     // Display any success message if needed
-    console.log('Product added to cart successfully');
+    // console.log('Product added to cart successfully');
   };
   
 

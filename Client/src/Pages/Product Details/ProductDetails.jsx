@@ -66,7 +66,7 @@ function ProductDetails({ updateCartAmount }) {
     checkIfInCart();
 
     // Display any success message if needed
-    console.log('Product added to cart successfully');
+    // console.log('Product added to cart successfully');
   };
 
   const scrollToTop = () => {

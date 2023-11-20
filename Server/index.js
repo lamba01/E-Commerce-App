@@ -18,15 +18,33 @@ const postmark = require("postmark");
 
 // Enable CORS for all routes or specify origins explicitly
 // app.use(cors());
-const corsOptions = {
-  origin: "https://commeercee.vercel.app",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-  allowedHeaders: "Content-Type, Authorization",
-};
+// const corsOptions = {
+//   origin: "https://commeercee.vercel.app",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+//   allowedHeaders: "Content-Type, Authorization",
+// };
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://commeercee.vercel.app");
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
 
-app.use(cors(corsOptions));
+// // app.use(cors(corsOptions));
+// app.use(express.json());
+// app.use(cookieParser());
+
+// CORS middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://commeercee.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
+// Other middleware
 app.use(express.json());
 app.use(cookieParser());
 const db = mysql.createConnection(process.env.DATABASE_URL);
