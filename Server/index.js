@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
-const bcrypt = require("bcrypt"); // For password hashing
+const bcrypt = require("bcryptjs"); // For password hashing
 const jwt = require("jsonwebtoken"); // For generating JWT tokens
 const app = express();
 const cors = require("cors");
@@ -34,8 +34,6 @@ db.query("SELECT 1", (error, results, fields) => {
   console.log("Connected to PlanetScale!");
   console.log("Example query result:", results);
 });
-
-db.end();
 
 // API endpoint for user registration
 app.post("/api/signup", async (req, res) => {
