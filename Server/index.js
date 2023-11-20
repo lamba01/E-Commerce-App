@@ -18,7 +18,14 @@ const secretKey = process.env.SECRET_KEY;
 // const sseExpress = require("sse-express"); // Adjust the path as needed
 
 // Enable CORS for all routes or specify origins explicitly
-app.use(cors());
+// app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000", // Replace with the actual origin of your frontend
+  credentials: true, // Enable credentials
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -482,6 +489,6 @@ const PORT = process.env.PORT || 3001;
 // Define the HTTP server
 module.exports = app;
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

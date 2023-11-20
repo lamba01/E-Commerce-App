@@ -12,6 +12,7 @@ const Login = () => {
   });
 
   const [error, setError] = useState("");
+  const apiUrl = 'https://app-chi-pink.vercel.app'; 
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -27,7 +28,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/login", formData, {
+      const response = await axios.post(`${apiUrl}/api/login`, formData, {
         withCredentials: true,
       });
       if (response.status === 200) {
