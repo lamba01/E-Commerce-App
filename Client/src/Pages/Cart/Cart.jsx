@@ -21,6 +21,7 @@ function Cart({ cartAmount, setCartAmount }) {
   const closeModal = () => {
     setIsPaymentModalOpen(false);
   };
+  const apiUrl = 'https://app-chi-pink.vercel.app'; 
 
   useEffect(() => {
     if (!token) {
@@ -29,7 +30,7 @@ function Cart({ cartAmount, setCartAmount }) {
 
     // Retrieve cart details from the server
     axios
-      .get('/api/cart', {
+      .get(`${apiUrl}/api/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

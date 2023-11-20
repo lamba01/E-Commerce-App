@@ -30,6 +30,7 @@ function ProductDetails({ updateCartAmount }) {
   }, [productId]);
 
   const token = localStorage.getItem('token');
+  const apiUrl = 'https://app-chi-pink.vercel.app'; 
   // Function to check if the product is in the user's cart
   const checkIfInCart = async () => {
     try {
@@ -40,7 +41,7 @@ function ProductDetails({ updateCartAmount }) {
       }
   
       // Make the request to check the cart
-      const response = await axios.get('/api/cart', {
+      const response = await axios.get(`${apiUrl}/api/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

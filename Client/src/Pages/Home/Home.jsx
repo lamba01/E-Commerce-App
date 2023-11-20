@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import commerce from "../../lib/Commerce";
-
 import ProductSlider from "../../Components/Slider";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Navigation from "../Components/Navigation";
-
 import BestSeller from "../../Components/BestSeller";
 import PlaceHolders from "../../Components/PlaceHolders";
 import './Home.css'

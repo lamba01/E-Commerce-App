@@ -123,6 +123,7 @@ const handleSubmit = (formIndex) => {
     form.reportValidity();
   }
 };
+const apiUrl = 'https://app-chi-pink.vercel.app'; 
 
 const placeOrder = async () => {
   try {
@@ -133,7 +134,7 @@ const placeOrder = async () => {
     }
 
     // Make a request to your server to place the order with the JWT token
-    const response = await axios.post('/api/place-order', null, {
+    const response = await axios.post(`${apiUrl}/api/place-order`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -153,7 +154,7 @@ const placeOrder = async () => {
 };
 const handleSendEmailConfirmation = async (token) => {
   try {
-    const response = await axios.post('/api/send-email-confirmation', null, {
+    const response = await axios.post(`${apiUrl}/api/send-email-confirmation`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

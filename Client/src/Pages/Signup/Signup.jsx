@@ -17,11 +17,12 @@ const SignUp = () => {
     });
   };
 
+  const apiUrl = 'https://app-chi-pink.vercel.app'; 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Send a POST request to your API endpoint
-      const response = await fetch('/api/signup', {
+      const response = await fetch(`${apiUrl}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

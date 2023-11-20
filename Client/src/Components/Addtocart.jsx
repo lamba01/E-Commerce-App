@@ -6,6 +6,7 @@ import '../Styles/AddToCartButton.css'
 
 const AddToCartButton = ({ product, onaddToCart }) => {
   const navigate = useNavigate()
+  const apiUrl = 'https://app-chi-pink.vercel.app'; 
   const addToCart = async () => {
     try {
 
@@ -18,7 +19,7 @@ const AddToCartButton = ({ product, onaddToCart }) => {
       }
 
       // Make a request to your server to perform the action with the JWT token
-      const response = await axios.post('/api/add-to-cart', product,  {  headers: {
+      const response = await axios.post(`${apiUrl}/api/add-to-cart`, product,  {  headers: {
         Authorization: `Bearer ${token}`,
       }, } );
 
