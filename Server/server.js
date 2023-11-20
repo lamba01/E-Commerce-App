@@ -35,6 +35,8 @@ db.query("SELECT 1", (error, results, fields) => {
   console.log("Example query result:", results);
 });
 
+db.end();
+
 // const db = mysql.createConnection({
 //   host: process.env.DB_HOST,
 //   user: process.env.DB_USER,
