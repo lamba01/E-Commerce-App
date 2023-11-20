@@ -20,7 +20,7 @@ const secretKey = process.env.SECRET_KEY;
 // Enable CORS for all routes or specify origins explicitly
 // app.use(cors());
 const corsOptions = {
-  origin: "http://localhost:3000", // Replace with the actual origin of your frontend
+  origin: "https://commeercee.vercel.app", // Replace with the actual origin of your frontend
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Enable credentials
 };
