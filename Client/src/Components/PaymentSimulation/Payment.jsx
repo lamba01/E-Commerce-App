@@ -154,7 +154,9 @@ const placeOrder = async () => {
 };
 const handleSendEmailConfirmation = async (token) => {
   try {
-    const response = await axios.post(`${apiUrl}/api/send-email-confirmation`, null, {
+    const response = await axios.post(`${apiUrl}/api/send-email-confirmation`, 
+    {}, {
+      withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`,
       },
