@@ -15,12 +15,10 @@ const { transcode } = require("buffer");
 const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
 
-// const sseExpress = require("sse-express"); // Adjust the path as needed
-
 // Enable CORS for all routes or specify origins explicitly
 // app.use(cors());
 const corsOptions = {
-  origin: "http://localhost:3000", // Replace with the actual origin of your frontend https://commeercee.vercel.app
+  origin: "https://commeercee.vercel.app", // Replace with the actual origin of your frontend
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Enable credentials
 };
@@ -422,69 +420,65 @@ async function sendMail(userEmail, html) {
     return error;
   }
 }
-app.post(
-  "/api/send-email-confirmation",
-  cors(corsOptions),
-  async (req, res) => {
-    const token = req.headers.authorization;
+app.post("/api/send-email-confirmation", async (req, res) => {
+  const token = req.headers.authorization;
 
-    if (!token) {
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const tokenParts = token.split(" ");
+  if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+    return res.status(401).json({ error: "Invalid token format" });
+  }
+  const jwtToken = tokenParts[1];
+
+  // Verify the JWT token using your secret key
+  jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
+    if (jwtError) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const tokenParts = token.split(" ");
-    if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
-      return res.status(401).json({ error: "Invalid token format" });
-    }
-    const jwtToken = tokenParts[1];
+    const userId = decoded.userId;
 
-    // Verify the JWT token using your secret key
-    jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
-      if (jwtError) {
-        return res.status(401).json({ error: "Unauthorized" });
-      }
-
-      const userId = decoded.userId;
-
-      // Fetch the user's email using their user ID
-      db.query(
-        "SELECT email, name FROM user WHERE id = ?",
-        [userId],
-        (emailErr, emailResults) => {
-          if (emailErr) {
-            console.error("Error fetching user email:", emailErr);
-            return;
-          }
-
-          const userEmail = emailResults[0].email;
-          const userName = emailResults[0].name;
-
-          // Retrieve cart data for the user from the cartStore
-          const cartItems = cartStore[userId];
-
-          // Render the EJS template and send the email
-          ejs.renderFile(
-            "./views/OrderConfirmation.ejs",
-            {
-              cartItems,
-              userName,
-            },
-            (renderErr, html) => {
-              if (renderErr) {
-                console.error("Error rendering EJS template:", renderErr);
-                return;
-              }
-
-              sendMail(userEmail, html)
-                .then((result) => console.log("email sent", result))
-                .catch((error) => console.log(error.message));
-            }
-          );
+    // Fetch the user's email using their user ID
+    db.query(
+      "SELECT email, name FROM user WHERE id = ?",
+      [userId],
+      (emailErr, emailResults) => {
+        if (emailErr) {
+          console.error("Error fetching user email:", emailErr);
+          return;
         }
-      );
-    });
-  }
-);
+
+        const userEmail = emailResults[0].email;
+        const userName = emailResults[0].name;
+
+        // Retrieve cart data for the user from the cartStore
+        const cartItems = cartStore[userId];
+
+        // Render the EJS template and send the email
+        ejs.renderFile(
+          "./views/OrderConfirmation.ejs",
+          {
+            cartItems,
+            userName,
+          },
+          (renderErr, html) => {
+            if (renderErr) {
+              console.error("Error rendering EJS template:", renderErr);
+              return;
+            }
+
+            sendMail(userEmail, html)
+              .then((result) => console.log("email sent", result))
+              .catch((error) => console.log(error.message));
+          }
+        );
+      }
+    );
+  });
+});
 
 const PORT = process.env.PORT || 3001;
 // Define the HTTP server

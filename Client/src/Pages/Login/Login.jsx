@@ -88,10 +88,10 @@ const Login = () => {
         </div>
         <button className="submit-btn" type="submit">Sign In</button>
       </form>
-      <div class="separator">
-      <div class="line"></div>
+      <div className="separator">
+      <div className="line"></div>
       <p>or</p>
-      <div class="line"></div>
+      <div className="line"></div>
       </div>
       
       <Link to = {`/Signup`} className="btn-container">

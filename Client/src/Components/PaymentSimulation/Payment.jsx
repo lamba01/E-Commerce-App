@@ -72,7 +72,7 @@ const PaymentSimulation = ({ onClose }) => {
   };
 
   const handlePreviousStep = () => {
-    if(step > 1){
+    if(step === 2){
       setStep(step - 1);
     }
   };

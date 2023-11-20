@@ -289,7 +289,7 @@ button:hover {
     padding: 0 20px;
   }
   .card {
-    height: 170px;
+    height: 200px;
   }
   .card-content {
     font-size: 15px;
@@ -300,12 +300,9 @@ button:hover {
   .progress-bar {
     width: 35%;
   }
-  .step.active {
+  .step.active3 {
     justify-content: space-between;
     height: 80%;
-  }
-  .formm2 {
-    margin: 0;
   }
   .check {
     padding: 20px;
@@ -314,5 +311,11 @@ button:hover {
 @media only screen and (max-width: 340px) {
   .card-content-sub {
     font-size: 10px;
+  }
+  .card-number {
+    font-size: 20px;
+  }
+  .card {
+    height: 170px;
   }
 }
