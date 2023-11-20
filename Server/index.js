@@ -14,11 +14,12 @@ dotenv.config();
 const { transcode } = require("buffer");
 const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
+const postmark = require("postmark");
 
 // Enable CORS for all routes or specify origins explicitly
 // app.use(cors());
 const corsOptions = {
-  origin: "http://localhost:3000", // Replace with the actual origin of your frontend https://commeercee.vercel.app
+  origin: "https://commeercee.vercel.app", // Replace with the actual origin of your frontend
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Enable credentials
 };
@@ -379,45 +380,126 @@ app.post("/api/place-order", (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URL = process.env.REDIRECT_URL;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+// const CLIENT_ID = process.env.CLIENT_ID;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// const REDIRECT_URL = process.env.REDIRECT_URL;
+// const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URL
+// const oAuth2Client = new google.auth.OAuth2(
+//   CLIENT_ID,
+//   CLIENT_SECRET,
+//   REDIRECT_URL
+// );
+// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+// async function sendMail(userEmail, html) {
+//   try {
+//     const accessToken = await oAuth2Client.getAccessToken();
+
+//     const transport = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         type: "OAuth2",
+//         user: "jamesspaul987@gmail.com",
+//         clientId: CLIENT_ID,
+//         clientSecret: CLIENT_SECRET,
+//         refreshToken: REFRESH_TOKEN,
+//         accessToken: accessToken,
+//       },
+//     });
+
+//     const mailOptions = {
+//       from: "Commerce <jamesspaul987@gmail.com> ",
+//       to: userEmail,
+//       subject: "Order Confirmation",
+//       html,
+//     };
+
+//     const result = await transport.sendMail(mailOptions);
+//     return result;
+//   } catch (error) {
+//     return error;
+//   }
+// }
+// app.post("/api/send-email-confirmation", async (req, res) => {
+//   const token = req.headers.authorization;
+
+//   if (!token) {
+//     return res.status(401).json({ error: "Unauthorized" });
+//   }
+
+//   const tokenParts = token.split(" ");
+//   if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+//     return res.status(401).json({ error: "Invalid token format" });
+//   }
+//   const jwtToken = tokenParts[1];
+
+//   // Verify the JWT token using your secret key
+//   jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
+//     if (jwtError) {
+//       return res.status(401).json({ error: "Unauthorized" });
+//     }
+
+//     const userId = decoded.userId;
+
+//     // Fetch the user's email using their user ID
+//     db.query(
+//       "SELECT email, name FROM user WHERE id = ?",
+//       [userId],
+//       (emailErr, emailResults) => {
+//         if (emailErr) {
+//           console.error("Error fetching user email:", emailErr);
+//           return;
+//         }
+
+//         const userEmail = emailResults[0].email;
+//         const userName = emailResults[0].name;
+
+//         // Retrieve cart data for the user from the cartStore
+//         const cartItems = cartStore[userId];
+
+//         // Render the EJS template and send the email
+//         ejs.renderFile(
+//           "./views/OrderConfirmation.ejs",
+//           {
+//             cartItems,
+//             userName,
+//           },
+//           (renderErr, html) => {
+//             if (renderErr) {
+//               console.error("Error rendering EJS template:", renderErr);
+//               return;
+//             }
+
+//             sendMail(userEmail, html)
+//               .then((result) => console.log("email sent", result))
+//               .catch((error) => console.log(error.message));
+//           }
+//         );
+//       }
+//     );
+//   });
+// });
+
+// const client = new postmark.ServerClient('your-api-key');
+
+const postmarkClient = new postmark.ServerClient(
+  "2606ffdd-db04-48c2-bd4b-b962e073d36f"
 );
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 async function sendMail(userEmail, html) {
   try {
-    const accessToken = await oAuth2Client.getAccessToken();
-
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: "jamesspaul987@gmail.com",
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken: accessToken,
-      },
-    });
-
-    const mailOptions = {
-      from: "Commerce <jamesspaul987@gmail.com> ",
-      to: userEmail,
-      subject: "Order Confirmation",
-      html,
+    const message = {
+      From: "Commerce <jamesspaul987@gmail.com> ",
+      To: userEmail,
+      Subject: "Order Confirmation",
+      HtmlBody: html,
     };
 
-    const result = await transport.sendMail(mailOptions);
-    return result;
+    const response = await postmarkClient.sendEmail(message);
+    console.log("Email sent successfully:", response);
   } catch (error) {
-    return error;
+    console.error("Error sending email:", error.message);
   }
 }
 app.post("/api/send-email-confirmation", async (req, res) => {
@@ -457,7 +539,7 @@ app.post("/api/send-email-confirmation", async (req, res) => {
         // Retrieve cart data for the user from the cartStore
         const cartItems = cartStore[userId];
 
-        // Render the EJS template and send the email
+        // Render the EJS template and send the email using Postmark
         ejs.renderFile(
           "./views/OrderConfirmation.ejs",
           {
@@ -470,9 +552,8 @@ app.post("/api/send-email-confirmation", async (req, res) => {
               return;
             }
 
-            sendMail(userEmail, html)
-              .then((result) => console.log("email sent", result))
-              .catch((error) => console.log(error.message));
+            // Send the email using Postmark
+            sendMail(userEmail, html);
           }
         );
       }
