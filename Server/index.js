@@ -20,18 +20,14 @@ const secretKey = process.env.SECRET_KEY;
 // Enable CORS for all routes or specify origins explicitly
 // app.use(cors());
 const corsOptions = {
-  origin: "https://commeercee.vercel.app", // Replace with the actual origin of your frontend
+  origin: "http://localhost:3000", // Replace with the actual origin of your frontend https://commeercee.vercel.app
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Enable credentials
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.json());
 app.use(cookieParser());
-
-// const connection = mysql.createConnection(process.env.DATABASE_URL);
-
 const db = mysql.createConnection(process.env.DATABASE_URL);
 
 db.query("SELECT 1", (error, results, fields) => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./signup.css"
 
 const SignUp = () => {
@@ -16,6 +16,7 @@ const SignUp = () => {
       [name]: value,
     });
   };
+  const navigate = useNavigate()
 
   const apiUrl = 'https://app-chi-pink.vercel.app'; 
   const handleSubmit = async (e) => {
@@ -34,6 +35,7 @@ const SignUp = () => {
         // User signed up successfully
         console.log('User signed up successfully');
         // Redirect to a login page or perform other actions
+        navigate('/login')
       } else {
         // Handle sign-up errors
         console.error('Sign-up failed');
