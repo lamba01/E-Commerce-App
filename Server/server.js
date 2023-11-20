@@ -22,22 +22,35 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+// const connection = mysql.createConnection(process.env.DATABASE_URL);
+
+const db = mysql.createConnection(process.env.DATABASE_URL);
+
+db.query("SELECT 1", (error, results, fields) => {
+  if (error) {
+    console.error("Error connecting to PlanetScale:", error);
+    throw error;
+  }
+  console.log("Connected to PlanetScale!");
+  console.log("Example query result:", results);
 });
 
-// Connect to the database
-db.connect((err) => {
-  if (err) {
-    console.error("Database connection failed:", err);
-    process.exit(1);
-  } else {
-    console.log("Connected to the database");
-  }
-});
+// const db = mysql.createConnection({
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_DATABASE,
+// });
+
+// // Connect to the database
+// db.connect((err) => {
+//   if (err) {
+//     console.error("Database connection failed:", err);
+//     process.exit(1);
+//   } else {
+//     console.log("Connected to the database");
+//   }
+// });
 
 // API endpoint for user registration
 app.post("/api/signup", async (req, res) => {
