@@ -46,17 +46,29 @@ const Footer = () => {
         </div>
         <div className="footer-col">
           <h4>follow us</h4>
-          <div className="social-links">
-            <div>< BiLogoFacebook /></div>
-            <div><RiTwitterXFill /></div>
-            <div><AiOutlineInstagram /></div>
-            <div><FaLinkedinIn /></div>
-          </div>
+          {newFunction()}
         </div>
       </div>
     </footer>)}
     </div>
   );
+
+  function newFunction() {
+    return <div className="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61553319431267&mibextid=ZbWKwL">
+        <div><BiLogoFacebook /></div>
+        </a>
+      <a href="https://www.twitter.com/lambacodes">
+        <div><RiTwitterXFill /></div>
+        </a>
+        <a href="https://instagram.com/la.mba7006?igshid=NzZlODBkYWE4Ng==">
+          <div><AiOutlineInstagram /></div>
+          </a>
+          <a href="https://www.linkedin.com/in/john-moyinoluwa-720585243">
+            <div><FaLinkedinIn /></div>
+            </a>
+    </div>;
+  }
 };
 
 export default Footer;

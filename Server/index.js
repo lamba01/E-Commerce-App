@@ -380,114 +380,46 @@ app.post("/api/place-order", (req, res) => {
   }
 });
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URL = process.env.REDIRECT_URL;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+//Route to get orders
+app.get("/api/orders", (req, res) => {
+  const token = req.headers.authorization;
 
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URL
-);
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-async function sendMail(userEmail, html) {
   try {
-    const accessToken = await oAuth2Client.getAccessToken();
-
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: "jamesspaul987@gmail.com",
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken: accessToken,
-      },
-    });
-
-    const mailOptions = {
-      from: "Commerce <jamesspaul987@gmail.com> ",
-      to: userEmail,
-      subject: "Order Confirmation",
-      html,
-    };
-
-    const result = await transport.sendMail(mailOptions);
-    return result;
-  } catch (error) {
-    return error;
-  }
-}
-// app.post("/api/send-email-confirmation", async (req, res) => {
-app.post(
-  "/api/send-email-confirmation",
-  cors(corsOptions),
-  async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Credentials", true);
-    // Your route handling logic
-    const token = req.headers.authorization;
-
-    if (!token) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    const tokenParts = token.split(" ");
+    // Extract the JWT token from the "Authorization" header
+    const tokenParts = token.split(" "); // Split "Bearer {token}" into an array
     if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
       return res.status(401).json({ error: "Invalid token format" });
     }
     const jwtToken = tokenParts[1];
 
-    // Verify the JWT token using your secret key
-    jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
+    // Verify the JWT token using the secret key
+    jwt.verify(jwtToken, secretKey, (jwtError, decoded) => {
       if (jwtError) {
+        // JWT verification failed; return an unauthorized response
         return res.status(401).json({ error: "Unauthorized" });
       }
 
       const userId = decoded.userId;
 
-      // Fetch the user's email using their user ID
+      // Execute a SELECT query to retrieve orders for the specific user
       db.query(
-        "SELECT email, name FROM user WHERE id = ?",
+        "SELECT * FROM orders WHERE user_id = ?",
         [userId],
-        (emailErr, emailResults) => {
-          if (emailErr) {
-            console.error("Error fetching user email:", emailErr);
-            return;
+        (error, results) => {
+          if (error) {
+            console.error("Error retrieving orders:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
           }
-
-          const userEmail = emailResults[0].email;
-          const userName = emailResults[0].name;
-
-          // Retrieve cart data for the user from the cartStore
-          const cartItems = cartStore[userId];
-
-          // Render the EJS template and send the email
-          ejs.renderFile(
-            "./views/OrderConfirmation.ejs",
-            {
-              cartItems,
-              userName,
-            },
-            (renderErr, html) => {
-              if (renderErr) {
-                console.error("Error rendering EJS template:", renderErr);
-                return;
-              }
-
-              sendMail(userEmail, html)
-                .then((result) => console.log("email sent", result))
-                .catch((error) => console.log(error.message));
-            }
-          );
+          // Send the retrieved orders as a JSON response
+          return res.json(results);
         }
       );
     });
+  } catch (error) {
+    console.error("Error retrieving orders:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
-);
+});
 
 const PORT = process.env.PORT || 3001;
 // Define the HTTP server
