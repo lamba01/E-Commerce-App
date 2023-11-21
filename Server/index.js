@@ -16,36 +16,15 @@ const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
 
 // Enable CORS for all routes or specify origins explicitly
+const corsOptions = {
+  origin: "https://commeercee.vercel.app",
+  credentials: true,
+};
 
-// const corsOptions = {
-//   origin: "https://commeercee.vercel.app",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-//   optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-//   allowedHeaders: "Content-Type, Authorization",
-// };
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://commeercee.vercel.app");
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   next();
-// });
-
-// // app.use(cors(corsOptions));
-// app.use(express.json());
-// app.use(cookieParser());
-
-// CORS middleware
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://commeercee.vercel.app");
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
+app.use(cors(corsOptions));
+app.options("/api/send-email-confirmation", cors(corsOptions));
 
 // Other middleware
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 const db = mysql.createConnection(process.env.DATABASE_URL);
