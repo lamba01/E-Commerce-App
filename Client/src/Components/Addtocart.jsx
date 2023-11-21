@@ -28,7 +28,6 @@ const AddToCartButton = ({ product, onaddToCart }) => {
       }
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      alert('You are not logged in. Please log in to add products to your cart.');
       navigate('/login')
     }
   };

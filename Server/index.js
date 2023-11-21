@@ -17,7 +17,7 @@ const secretKey = process.env.SECRET_KEY;
 
 // Enable CORS for all routes or specify origins explicitly
 const corsOptions = {
-  origin: "https://commeercee.vercel.app/",
+  origin: "https://commeercee.vercel.app",
   credentials: true,
 };
 
