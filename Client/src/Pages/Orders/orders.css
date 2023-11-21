@@ -1,0 +1,36 @@
+/* orders.css */
+
+.listt {
+  list-style-type: none;
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+.ordermain {
+  font-size: 12px;
+}
+.loo {
+  height: 100vh;
+}
+.order-images {
+  width: 50px;
+  height: 100%;
+  margin-right: 15px;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+.status {
+  background-color: green;
+  width: fit-content;
+  color: white;
+  font-size: 10px;
+  padding: 2px;
+}
+.order-header {
+  padding-top: 70px;
+}

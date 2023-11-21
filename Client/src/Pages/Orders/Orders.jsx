@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./orders.css"
 import Loading from '../../Components/LoadingAnimation/Loading';
 
 const Orders = () => {
@@ -32,9 +33,9 @@ const Orders = () => {
   }, []); // Empty dependency array ensures the effect runs only once on component mount
 
   return (
-    <div>
-      <h2>Your Orders</h2>
-      {loading && <Loading />}
+    <div className='order-header'>
+      <h2 >Orders</h2>
+      {loading && <div className="loo"><Loading /></div>}
       {error && <p>Error: {error}</p>}
       {!loading && !error && (
         <div>
@@ -43,10 +44,13 @@ const Orders = () => {
           ) : (
             <ul>
               {orders.map((order) => (
-                <li key={order.order_id}>
+                <li className='listt' key={order.order_id}>
                   {/* Display order information as needed */}
-                  <p>Order ID: {order.order_id}</p>
-                  <p>Order name: {order.product_name}</p>
+                  <img className='order-images' src={order.product_image} alt="" />
+                  <div className="details"><p className='ordermain'>{order.product_name}</p>
+                  <p className='ordermain'>Order {order.order_id}</p>
+                  <div className="status">{order.status}</div>
+                  <h6>{order.date}</h6></div>
                   {/* Add more details based on your data structure */}
                 </li>
               ))}
