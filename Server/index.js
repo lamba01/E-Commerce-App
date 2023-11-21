@@ -14,10 +14,9 @@ dotenv.config();
 const { transcode } = require("buffer");
 const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
-const postmark = require("postmark");
 
 // Enable CORS for all routes or specify origins explicitly
-// app.use(cors());
+
 // const corsOptions = {
 //   origin: "https://commeercee.vercel.app",
 //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -37,15 +36,16 @@ const postmark = require("postmark");
 // app.use(cookieParser());
 
 // CORS middleware
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://commeercee.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://commeercee.vercel.app");
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 // Other middleware
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 const db = mysql.createConnection(process.env.DATABASE_URL);
@@ -402,23 +402,45 @@ app.post("/api/place-order", (req, res) => {
   }
 });
 
-const postmarkClient = new postmark.ServerClient(
-  "2606ffdd-db04-48c2-bd4b-b962e073d36f"
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URL = process.env.REDIRECT_URL;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URL
 );
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 async function sendMail(userEmail, html) {
   try {
-    const message = {
-      From: "Commerce <jamesspaul987@gmail.com> ",
-      To: userEmail,
-      Subject: "Order Confirmation",
-      HtmlBody: html,
+    const accessToken = await oAuth2Client.getAccessToken();
+
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "jamesspaul987@gmail.com",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
+
+    const mailOptions = {
+      from: "Commerce <jamesspaul987@gmail.com> ",
+      to: userEmail,
+      subject: "Order Confirmation",
+      html,
     };
 
-    const response = await postmarkClient.sendEmail(message);
-    console.log("Email sent successfully:", response);
+    const result = await transport.sendMail(mailOptions);
+    return result;
   } catch (error) {
-    console.error("Error sending email:", error.message);
+    return error;
   }
 }
 app.post("/api/send-email-confirmation", async (req, res) => {
@@ -458,7 +480,7 @@ app.post("/api/send-email-confirmation", async (req, res) => {
         // Retrieve cart data for the user from the cartStore
         const cartItems = cartStore[userId];
 
-        // Render the EJS template and send the email using Postmark
+        // Render the EJS template and send the email
         ejs.renderFile(
           "./views/OrderConfirmation.ejs",
           {
@@ -471,8 +493,9 @@ app.post("/api/send-email-confirmation", async (req, res) => {
               return;
             }
 
-            // Send the email using Postmark
-            sendMail(userEmail, html);
+            sendMail(userEmail, html)
+              .then((result) => console.log("email sent", result))
+              .catch((error) => console.log(error.message));
           }
         );
       }

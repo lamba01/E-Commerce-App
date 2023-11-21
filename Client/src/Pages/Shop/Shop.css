@@ -108,8 +108,9 @@
       opacity: 1;
     }
     100% {
-      height: 0;
+      height: 0px;
       opacity: 0;
+      display: none;
     }
   }
 }
