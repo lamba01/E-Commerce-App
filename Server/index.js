@@ -16,18 +16,12 @@ const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
 
 // Enable CORS for all routes or specify origins explicitly
-app.post(
-  "/api/send-email-confirmation",
-  cors(corsOptions),
-  async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Credentials", true);
-    // Your route handling logic
-  }
-);
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
 
 app.use(cors(corsOptions));
-app.options("/api/send-email-confirmation", cors(corsOptions));
 
 // Other middleware
 app.use(express.json());
