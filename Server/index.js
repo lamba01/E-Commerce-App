@@ -16,10 +16,15 @@ const { error } = require("console");
 const secretKey = process.env.SECRET_KEY;
 
 // Enable CORS for all routes or specify origins explicitly
-const corsOptions = {
-  origin: "https://commeercee.vercel.app",
-  credentials: true,
-};
+app.post(
+  "/api/send-email-confirmation",
+  cors(corsOptions),
+  async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Credentials", true);
+    // Your route handling logic
+  }
+);
 
 app.use(cors(corsOptions));
 app.options("/api/send-email-confirmation", cors(corsOptions));
@@ -422,65 +427,73 @@ async function sendMail(userEmail, html) {
     return error;
   }
 }
-app.post("/api/send-email-confirmation", async (req, res) => {
-  const token = req.headers.authorization;
+// app.post("/api/send-email-confirmation", async (req, res) => {
+app.post(
+  "/api/send-email-confirmation",
+  cors(corsOptions),
+  async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Credentials", true);
+    // Your route handling logic
+    const token = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  const tokenParts = token.split(" ");
-  if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
-    return res.status(401).json({ error: "Invalid token format" });
-  }
-  const jwtToken = tokenParts[1];
-
-  // Verify the JWT token using your secret key
-  jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
-    if (jwtError) {
+    if (!token) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const userId = decoded.userId;
+    const tokenParts = token.split(" ");
+    if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+      return res.status(401).json({ error: "Invalid token format" });
+    }
+    const jwtToken = tokenParts[1];
 
-    // Fetch the user's email using their user ID
-    db.query(
-      "SELECT email, name FROM user WHERE id = ?",
-      [userId],
-      (emailErr, emailResults) => {
-        if (emailErr) {
-          console.error("Error fetching user email:", emailErr);
-          return;
-        }
-
-        const userEmail = emailResults[0].email;
-        const userName = emailResults[0].name;
-
-        // Retrieve cart data for the user from the cartStore
-        const cartItems = cartStore[userId];
-
-        // Render the EJS template and send the email
-        ejs.renderFile(
-          "./views/OrderConfirmation.ejs",
-          {
-            cartItems,
-            userName,
-          },
-          (renderErr, html) => {
-            if (renderErr) {
-              console.error("Error rendering EJS template:", renderErr);
-              return;
-            }
-
-            sendMail(userEmail, html)
-              .then((result) => console.log("email sent", result))
-              .catch((error) => console.log(error.message));
-          }
-        );
+    // Verify the JWT token using your secret key
+    jwt.verify(jwtToken, secretKey, async (jwtError, decoded) => {
+      if (jwtError) {
+        return res.status(401).json({ error: "Unauthorized" });
       }
-    );
-  });
-});
+
+      const userId = decoded.userId;
+
+      // Fetch the user's email using their user ID
+      db.query(
+        "SELECT email, name FROM user WHERE id = ?",
+        [userId],
+        (emailErr, emailResults) => {
+          if (emailErr) {
+            console.error("Error fetching user email:", emailErr);
+            return;
+          }
+
+          const userEmail = emailResults[0].email;
+          const userName = emailResults[0].name;
+
+          // Retrieve cart data for the user from the cartStore
+          const cartItems = cartStore[userId];
+
+          // Render the EJS template and send the email
+          ejs.renderFile(
+            "./views/OrderConfirmation.ejs",
+            {
+              cartItems,
+              userName,
+            },
+            (renderErr, html) => {
+              if (renderErr) {
+                console.error("Error rendering EJS template:", renderErr);
+                return;
+              }
+
+              sendMail(userEmail, html)
+                .then((result) => console.log("email sent", result))
+                .catch((error) => console.log(error.message));
+            }
+          );
+        }
+      );
+    });
+  }
+);
 
 const PORT = process.env.PORT || 3001;
 // Define the HTTP server
