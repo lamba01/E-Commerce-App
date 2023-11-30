@@ -58,11 +58,11 @@ function Cart({ cartAmount, setCartAmount }) {
     // Remove the product quantity from local storage
     localStorage.removeItem(`product_${product_id}_quantity`);
     axios
-      .delete(`/api/cart/${cartItemId}`)
+      .delete(`${apiUrl}/api/cart/${cartItemId}`)
       .then(() => {
         // Reload the cart data after deletion
         axios
-          .get('/api/cart', {
+          .get(`${apiUrl}/api/cart`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
