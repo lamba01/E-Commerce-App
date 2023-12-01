@@ -54,6 +54,7 @@ function Cart({ cartAmount, setCartAmount }) {
   }, [token, setCartAmount]);
 
   const onDeleteCartItem = (cartItemId, product_id) => {
+    console.log('Deleting cart item with ID:', cartItemId);
     // Implement the logic to delete the cart item using an API request
     // Remove the product quantity from local storage
     localStorage.removeItem(`product_${product_id}_quantity`);
