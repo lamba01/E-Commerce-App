@@ -157,7 +157,7 @@ function Cart({ cartAmount, setCartAmount }) {
                         <p>${itemTotal.toFixed(1)}</p>
                       </div>
                     </div>
-                    <DeleteCartItemButton cartItemId={item.id} product_id={item.product_id} onDelete={onDeleteCartItem} />
+                    <DeleteCartItemButton cartItemId={item.cart_id} product_id={item.product_id} onDelete={onDeleteCartItem} />
                   </div>
                 
               </li>
