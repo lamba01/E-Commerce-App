@@ -277,7 +277,6 @@ app.get("/api/cart", (req, res) => {
 // Route to delete from cart
 app.delete("/api/cart/:cartItemId", (req, res) => {
   const cartItemId = req.params.cartItemId;
-  console.log("Received request to delete cart item with ID:", cartItemId);
 
   // Implement the deletion logic to remove the item from the cart table
   db.query(
