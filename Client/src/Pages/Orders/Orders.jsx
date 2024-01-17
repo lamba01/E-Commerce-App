@@ -29,6 +29,7 @@ const Orders = () => {
         setLoading(false);
       } catch (error) {
         setError(error.message);
+        navigate('/login')
         setLoading(false);
       }
     };
@@ -40,7 +41,6 @@ const Orders = () => {
     <div className='order-header'>
       <h2 >Orders</h2>
       {loading && <div className="loo"><Loading /></div>}
-      {error && <p>Error: {error}</p>}
       {!loading && !error && (
         <div>
           {orders.length === 0 ? (

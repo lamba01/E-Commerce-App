@@ -6,7 +6,7 @@ function BackBtn() {
     const navigate = useNavigate();
 
     const goBackToList = () => {
-      navigate('/'); // Use navigate to go back to the product list
+      navigate('/shop'); // Use navigate to go back to the product list
     };
   return (
     <div><button className='backbtn' onClick={goBackToList}>Continue Shopping</button></div>
