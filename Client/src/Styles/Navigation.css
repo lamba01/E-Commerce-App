@@ -41,11 +41,20 @@ Link {
   order: 2;
   display: flex;
 }
-.logo {
+.logo-container {
   order: 1;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-container h4 {
+  text-transform: capitalize;
+  color: #000;
+}
+.logo {
   width: 70px;
-  height: 70px;
+  height: 60px;
 }
 .navbar a {
   text-decoration: none;
@@ -99,6 +108,9 @@ Link {
 .mobilelogo {
   display: none;
 }
+.s {
+  color: #000;
+}
 @media (max-width: 767px) {
   .navbar {
     opacity: 0.95;
@@ -121,7 +133,7 @@ Link {
     height: 32px;
     width: 30px;
     top: 20px;
-    left: 20px;
+    right: 20px;
     z-index: 5;
     opacity: 0;
     cursor: pointer;
@@ -132,7 +144,8 @@ Link {
     width: 30px;
     position: absolute;
     top: 20px;
-    left: 20px;
+    right: 10px;
+    left: auto;
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -167,7 +180,7 @@ Link {
     margin-left: -40px;
     padding-left: 40px;
     transition: transform 0.5s ease-in-out;
-    box-shadow: 5px 0px 10px 0px #aaa;
+    box-shadow: -5px 0px 10px 0px #aaa;
     overflow: scroll;
   }
   .navbar .menu-items li {
@@ -194,7 +207,7 @@ Link {
     display: block;
     position: absolute;
     top: 10px;
-    right: 15px;
+    right: 60px;
   }
   .mobilelogo {
     display: block;
@@ -202,11 +215,13 @@ Link {
   .home {
     display: block;
   }
-  .logo {
-    display: block;
+  .logo-container {
+    display: flex;
     position: absolute;
     top: 5px;
-    right: 45%;
+    left: 10px;
+  }
+  .logo {
     width: 50px;
     height: 50px;
   }

@@ -29,8 +29,8 @@ function Navigation({  cartAmount }) {
        <Link to={'/shop'} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}> <li>Shop</li> </Link>
        <Link to={`/cart`} className='desktop-cart'><li><AiOutlineShoppingCart size={'1.5em'}  /> <div className='cartamount'>{cartAmount}</div></li></Link>
       </ul>
-      <Link to={`/`} style={{ textDecoration: 'none', textTransform: 'none'}}><img className ="logo" src={logoImage} alt="" /> </Link>
-      <Link to={`/cart`} className='mobile-cart'><AiOutlineShoppingCart size={'2em'}  /><div className='cartamount'>{cartAmount}</div></Link>
+      <Link to={`/`} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}> <div className="logo-container"><h4>ShopEase</h4><img className='logo' src={logoImage} alt="" /></div> </Link>
+      <Link to={`/cart`} className='mobile-cart'><AiOutlineShoppingCart size={'2em'}  />{cartAmount > 0 && <div className='cartamount'>{cartAmount}</div>}</Link>
     </div>
   </nav>)}</div>
   )
