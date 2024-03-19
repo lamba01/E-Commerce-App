@@ -84,6 +84,10 @@ form {
   justify-content: space-between;
   margin: 20px 0px;
 }
+.error-msg {
+  color: red;
+  font-weight: 600;
+}
 @media only screen and (max-width: 960px) {
   .form-container {
     width: 70vw;

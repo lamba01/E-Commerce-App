@@ -52,7 +52,7 @@ const Login = () => {
     <div className="form">
       <div className="form-container">
       <h2 className="header">Sign In</h2>
-      {error && <p>{error}</p>}
+      {error && <p className="error-msg">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="input">
           <label>Email address<span>*</span></label>
