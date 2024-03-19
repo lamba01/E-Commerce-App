@@ -30,10 +30,10 @@ const db = mysql.createConnection(process.env.DATABASE_URL);
 
 db.query("SELECT 1", (error, results, fields) => {
   if (error) {
-    console.error("Error connecting to PlanetScale:", error);
+    console.error("Error connecting to Aiven:", error);
     throw error;
   }
-  console.log("Connected to PlanetScale!");
+  console.log("Connected to Aiven!");
   console.log("Example query result:", results);
 });
 
