@@ -3,16 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../Styles/Bestseller.css';
 
-function ProductList() {
+function BestSellingProducts() {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [productsToShow, setProductsToShow] = useState(8);
-  const [showButtons, setShowButtons] = useState(false);
-
-  const toggleButtons = () => {
-    setShowButtons(!showButtons);
-  };
+  const [productsToShow, setProductsToShow] = useState(4);
 
   useEffect(() => {
     // Fetch product data from an API or source
@@ -20,77 +13,54 @@ function ProductList() {
       .get('https://fakestoreapi.com/products')
       .then((response) => {
         setProducts(response.data);
-        setFilteredProducts(response.data);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   }, []);
 
-  const filterByCategory = (category) => {
-    if (category === 'all') {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter((product) => product.category === category);
-      setFilteredProducts(filtered);
-    }
-    setSelectedCategory(category);
-    setProductsToShow(8); // Reset to display 8 products when category changes
-  };
-
   const loadMoreProducts = () => {
-    const newProductsToShow = productsToShow + 8;
+    const newProductsToShow = productsToShow + 4; // Load 4 more products
     setProductsToShow(newProductsToShow);
   };
 
   return (
     <div className="bestseller-container">
-      <h1 className='bestseller-header'>Best Seller</h1>
-
-      <span className="mobile-toggle-button" onClick={toggleButtons}>
-         Categories
-      </span>
-
-      {/* Category filter buttons */}
-      <div className={`category-button-div ${showButtons ? 'show' : 'hide'}`}>
-      <button onClick={() => filterByCategory('all')} className={`category-button ${selectedCategory === 'all' ? 'active2' : ''}`}>All</button>
-      <button onClick={() => filterByCategory('electronics')} className={`category-button ${selectedCategory === 'electronics' ? 'active2' : ''}`}>Electronics</button>
-      <button onClick={() => filterByCategory("men's clothing")} className={`category-button ${selectedCategory === "men's clothing" ? 'active2' : ''}`}>Men's Clothing</button>
-      <button onClick={() => filterByCategory("women's clothing")} className={`category-button ${selectedCategory === "women's clothing" ? 'active2' : ''}`}>Women's Clothing</button>
-      <button onClick={() => filterByCategory("jewelery")} className={`category-button ${selectedCategory === "jewelery" ? 'active2' : ''}`}>Jewelery</button>
+      <div className='thismonth-container'>
+        <div className="thismonth-design"></div>
+        <span className='thismonth-text'>this month</span>
+        {/* trying to make the bar in the design that says"this month" */}
       </div>
-
-      {/* Products */}
-      <div className="products-div">
-        {filteredProducts.slice(0, productsToShow).map((product, index) => (
-          <Link to={`/products/${product.id}`} className="product-card-link" key={product.id}>
-       <div className="product-cards" key={product.id}><div className='img'>
-      <img
-        className="product--image"
-        src={product.image}
-        alt={product.name}
-      /></div>
-      <div className="product_info">
-        <h4 className="product-name">{product.title}</h4>
-        <div className="product__details">
-          <p className="product_price">
-           ${product.price}
-          </p>
-        </div>
-      </div>
-    </div> 
-          </Link>
-        ))}
-      </div>
-
+    <div className='bestseller-header-container'>
+      <h1 className="bestseller-header">Best Selling products</h1>
       {/* Load More Button */}
-      {selectedCategory === 'all' && productsToShow < filteredProducts.length && (
+       {productsToShow < products.length && (
         <button className="load-more-button" onClick={loadMoreProducts}>
           Load More
         </button>
       )}
+      </div>
+      {/* Products */}
+      <div className="products-div">
+        {products.slice(0, productsToShow).map((product) => (
+          <Link to={`/products/${product.id}`} className="product-card-link" key={product.id}>
+            <div className="product-cards">
+              <div className="img">
+                <img className="product--image" src={product.image} alt={product.title} />
+              </div>
+              <div className="product_info">
+                <h4 className="product-name">{product.title}</h4>
+                <div className="product__details">
+                  <p className="product_price">${product.price}</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default ProductList;
+export default BestSellingProducts;
+
