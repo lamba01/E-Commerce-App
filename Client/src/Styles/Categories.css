@@ -1,0 +1,40 @@
+.categories-container {
+    padding: 30px 50px;
+    margin: 20px 0px;
+    border-top: 1px solid black; /* Add top border */
+    border-bottom: 1px solid black; /* Bottom border */
+    box-sizing: border-box; /* Ensures border is included in the box model */
+  }
+  
+  .categories-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .categories-list {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .category-item {
+    padding: 30px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    transition: background-color 0.3s;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .category-item:hover {
+    background-color: #40bfff;
+    color: white;
+  }
+  

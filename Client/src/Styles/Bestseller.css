@@ -4,7 +4,6 @@
   justify-content: center;
   width: 100%;
   padding: 20px 50px;
-  /* background-color: white; */
 }
 .product-cards {
   display: flex;
@@ -26,7 +25,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 20px 0px;
+  margin-bottom: 20px;
 }
 .bestseller-header {
   width: 100%;

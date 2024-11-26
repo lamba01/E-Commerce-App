@@ -3,6 +3,7 @@ import axios from "axios";
 import ProductSlider from "../../Components/Slider";
 import BestSeller from "../../Components/BestSeller";
 import PlaceHolders from "../../Components/PlaceHolders";
+import Categories from "../../Components/Categories";
 import './Home.css'
 
 function Home() {
@@ -23,6 +24,7 @@ function Home() {
   return (
     <div className="app">
       <ProductSlider products={commerceProducts} /> 
+      <Categories />
       <BestSeller />
       <PlaceHolders />
     </div>

@@ -29,7 +29,6 @@ function BestSellingProducts() {
       <div className='thismonth-container'>
         <div className="thismonth-design"></div>
         <span className='thismonth-text'>this month</span>
-        {/* trying to make the bar in the design that says"this month" */}
       </div>
     <div className='bestseller-header-container'>
       <h1 className="bestseller-header">Best Selling products</h1>
