@@ -1,9 +1,9 @@
 .categories-container {
     padding: 30px 50px;
     margin: 20px 0px;
-    border-top: 1px solid black; /* Add top border */
-    border-bottom: 1px solid black; /* Bottom border */
-    box-sizing: border-box; /* Ensures border is included in the box model */
+    border-top: 1px solid black; 
+    border-bottom: 1px solid black; 
+    box-sizing: border-box; 
   }
   
   .categories-header {
@@ -37,4 +37,16 @@
     background-color: #40bfff;
     color: white;
   }
-  
+
+  @media only screen and (max-width: 767px) {
+    .categories-container {
+      padding: 30px 10px;
+    }
+  }
+  @media only screen and (max-width: 520px) {
+    .categories-list {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }

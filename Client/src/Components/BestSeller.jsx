@@ -1,45 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { ProductsContext } from '../context/ProductsContext';
 import { Link } from 'react-router-dom';
 import '../Styles/Bestseller.css';
 
 function BestSellingProducts() {
-  const [products, setProducts] = useState([]);
+  const products = useContext(ProductsContext);
   const [productsToShow, setProductsToShow] = useState(4);
 
-  useEffect(() => {
-    // Fetch product data from an API or source
-    axios
-      .get('https://fakestoreapi.com/products')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, []);
-
   const loadMoreProducts = () => {
-    const newProductsToShow = productsToShow + 4; // Load 4 more products
-    setProductsToShow(newProductsToShow);
+    setProductsToShow(productsToShow + 4); // Load 4 more products
   };
 
   return (
     <div className="bestseller-container">
-      <div className='thismonth-container'>
+      <div className="thismonth-container">
         <div className="thismonth-design"></div>
-        <span className='thismonth-text'>this month</span>
+        <span className="thismonth-text">this month</span>
       </div>
-    <div className='bestseller-header-container'>
-      <h1 className="bestseller-header">Best Selling products</h1>
-      {/* Load More Button */}
-       {productsToShow < products.length && (
-        <button className="load-more-button" onClick={loadMoreProducts}>
-          Load More
-        </button>
-      )}
+      <div className="bestseller-header-container">
+        <h1 className="bestseller-header">Best Selling products</h1>
+        {productsToShow < products.length && (
+          <button className="load-more-button" onClick={loadMoreProducts}>
+            Load More
+          </button>
+        )}
       </div>
-      {/* Products */}
       <div className="products-div">
         {products.slice(0, productsToShow).map((product) => (
           <Link to={`/products/${product.id}`} className="product-card-link" key={product.id}>
@@ -62,4 +47,3 @@ function BestSellingProducts() {
 }
 
 export default BestSellingProducts;
-

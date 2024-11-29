@@ -4,6 +4,7 @@ import ProductSlider from "../../Components/Slider";
 import BestSeller from "../../Components/BestSeller";
 import PlaceHolders from "../../Components/PlaceHolders";
 import Categories from "../../Components/Categories";
+import FlashSales from "../../Components/FlashSales";
 import './Home.css'
 
 function Home() {
@@ -24,6 +25,7 @@ function Home() {
   return (
     <div className="app">
       <ProductSlider products={commerceProducts} /> 
+      <FlashSales />
       <Categories />
       <BestSeller />
       <PlaceHolders />

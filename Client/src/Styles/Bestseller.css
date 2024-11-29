@@ -67,38 +67,6 @@
 .product-card-link {
   text-decoration: none;
 }
-.selectedCategory {
-  background-color: black;
-}
-.mobile-toggle-button {
-  display: none;
-}
-.category-button-div {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-.category-button {
-  background: none;
-  color: black;
-  border: none;
-  padding: 0;
-  margin-right: 20px;
-  width: fit-content;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-  margin-bottom: 50px;
-  cursor: pointer;
-}
-.category-button:hover {
-  background: none;
-  color: #40bfff;
-}
-.active2 {
-  text-decoration: underline #40bfff;
-  color: #40bfff;
-}
 .product--image {
   width: 80%;
   height: 60%;
@@ -123,25 +91,12 @@
   border-radius: 0;
   text-transform: capitalize;
 }
-.slick-dots {
-  position: absolute;
-  left: 10px;
-  bottom: 0;
-  width: 150px;
+.load-more-button:hover {
+  background-color: rgb(59, 58, 58);
 }
 
+
 @media only screen and (max-width: 767px) {
-  .slick-dots {
-    position: relative;
-    margin: 10px 0;
-    width: 95vw;
-    padding: 10px;
-    border-top: 0.5px solid rgb(124, 121, 121);
-    border-bottom: 0.5px solid rgb(124, 121, 121);
-  }
-  .slick-slider .slick-dots li.slick-active button::before {
-    color: #40bfff;
-  }
   .products-div {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     row-gap: 50px;
@@ -158,67 +113,12 @@
   }
 }
 @media only screen and (max-width: 520px) {
-  .category-button-div {
-    display: flex;
+  .bestseller-header-container {
     flex-direction: column;
-    height: 0;
-    opacity: 0;
-    overflow: hidden;
-    flex-wrap: wrap;
-    margin-top: -30px;
-  }
-  .category-button {
-    margin-bottom: 15px;
-  }
-  .category-button-div.show {
-    height: 250px;
-    animation-name: slideIn;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    opacity: 1;
-  }
-  .category-button-div.hide {
-    height: 0;
-    opacity: 0;
-    animation-name: slideOut;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-  }
-  .mobile-toggle-button {
-    display: block;
-    border: none;
-    width: fit-content;
-    cursor: pointer;
-    font-size: 20px;
-    border-radius: 5px;
-    color: black;
-    font-weight: 600;
-    margin-bottom: 50px;
-  }
-  /* CSS Animation Keyframes for Slide-In */
-  @keyframes slideIn {
-    0% {
-      height: 0;
-      opacity: 0;
-    }
-    100% {
-      height: 250px;
-      opacity: 1;
-    }
-  }
-
-  /* CSS Animation Keyframes for Slide-Out */
-  @keyframes slideOut {
-    0% {
-      height: 250px;
-      opacity: 1;
-    }
-    100% {
-      height: 0;
-      opacity: 0;
-    }
+    align-items: flex-start;
   }
 }
+
 @media only screen and (max-width: 329px) {
   .products-div {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
