@@ -117,12 +117,12 @@ function FlashSales() {
         {electronics.map((product) => (
           <div key={product.id} className="flashsale-product-card">
             <div className="img-container">
+                <span className='percentage'>-20%</span>
             <img
               className="product--image"
               src={product.image}
               alt={product.title}
             />
-
             </div>
             <div className="flashsale-product-info">
               <h4>{product.title}</h4>
