@@ -1,0 +1,157 @@
+.featured-container {
+    padding: 20px 50px;
+    width: 100%;
+    min-height: 100vh;
+}
+.featured-header {
+    text-transform: capitalize;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+}
+.grid-container {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    height: 90vh;
+}
+.other-items {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 90%;
+    gap: 30px;
+}
+.bottom-items {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    height: 50%;
+}
+.featured-grid-item1, 
+.featured-grid-item2, 
+.featured-grid-item3, 
+.featured-grid-item4 {
+    background-color: black;
+}
+.featured-grid-item1 {
+    width: 50%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+}
+.featured-grid-item2 {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+.featured-grid-item3, .featured-grid-item4 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.featured-image1 {
+    width: 80%;
+    height: 80%;
+}
+.featured-image3, 
+.featured-image4 {
+    width: 70%;
+    height: 80%;
+}
+
+.featured-text1, 
+.featured-text3,
+.featured-text2 {
+    color: white;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 50%;
+}
+.featured-text3 {
+    width: 100%;
+}
+.featured-text1 h3, 
+.featured-text2 h3, 
+.featured-text3 h3 {
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.featured-text1 p,
+.featured-text2 p,
+.featured-text3 p {
+    font-size: 12px;
+    font-weight: 300;
+}
+.featured-btn {
+    background: none;
+    padding: 0;
+    width: fit-content;
+    border: none;
+    text-transform: capitalize;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.featured-btn:hover {
+    background: none;
+    color: #40bfff;
+}  
+
+@media only screen and (max-width: 1024px) and (min-height: 800px) {
+    .grid-container {
+        flex-direction: column;
+        width: 100%;
+    }
+    .featured-grid-item1, .other-items {
+        width: 100%;
+        height: 50%;
+    }
+    .featured-image2 {
+        height: 90%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .featured-container {
+        padding: 30px 10px;
+        padding-bottom: 0px;
+    }
+    .grid-container {
+        flex-direction: column;
+        height: 100vh;
+    }
+    .featured-grid-item1, .other-items {
+        width: 100%;
+        height: 50%;
+    }
+    .featured-text2 {
+        width: 100%;
+    }
+    .featured-image3, 
+    .featured-image4 {
+        width: 60%;
+        height: 80%;
+    }
+}
+@media only screen and (max-width: 520px) {
+    .featured-grid-item1 {
+        height: 40%;
+    }
+    .featured-image1 {
+        height: 90%;
+    }
+    .featured-image2 {
+        height: 90%;
+    }
+    .featured-text2 {
+        width: 60%;
+    }
+}

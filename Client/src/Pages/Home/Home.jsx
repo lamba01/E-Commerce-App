@@ -5,6 +5,7 @@ import BestSeller from "../../Components/BestSeller";
 import PlaceHolders from "../../Components/PlaceHolders";
 import Categories from "../../Components/Categories";
 import FlashSales from "../../Components/FlashSales";
+import Featured from "../../Components/Featured";
 import './Home.css'
 
 function Home() {
@@ -28,6 +29,7 @@ function Home() {
       <FlashSales />
       <Categories />
       <BestSeller />
+      <Featured />
       <PlaceHolders />
     </div>
   );

@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { ProductsContext } from '../context/ProductsContext';
 import '../Styles/FlashSales.css';
-import AddToCartButton from './Addtocart';
+// import AddToCartButton from './Addtocart';
+import { Link } from 'react-router-dom';
 
 function FlashSales() {
   const products = useContext(ProductsContext);
@@ -129,12 +130,15 @@ function FlashSales() {
               <p>${product.price}</p>
             </div>
             <div className="add-to-cart-container">
-                <AddToCartButton
+            <Link to={`/products/${product.id}`} key={product.id}>
+                {/* <AddToCartButton
                     product={product}
                     onaddToCart={() => console.log('Product added:', product)}
-                />
+                /> */}
+                <button className='product-btn'>view product</button>
+            </Link>
             </div>
-          </div>
+          </div> 
         ))}
       </Slider>
     </div>

@@ -136,6 +136,18 @@
   z-index: 60;
   font-size: 10px;
 }
+.product-btn {
+  width: 100%;
+  padding: 15px 0;
+  background-color: #33a0ff;
+  color: white;
+  cursor: pointer;
+  border: none;
+  text-transform: capitalize;
+}
+.product-btn:hover {
+  background-color: rgb(59, 58, 58);
+}
 @media only screen and (max-width: 767px) {
   .flashsale-product-card {
     width: 150px;
