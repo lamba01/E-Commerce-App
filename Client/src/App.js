@@ -10,6 +10,7 @@ import Navigation from "./Components/Navigation";
 import Footer from "./Components/Footer/Footer";
 import Shop from "./Pages/Shop/Shop";
 import Orders from "./Pages/Orders/Orders";
+import About from "./Pages/About/About";
 function App() {
   // Retrieve the cartAmount value from localStorage when the component loads
   const storedCartAmount = localStorage.getItem("cartAmount");
@@ -42,6 +43,7 @@ function App() {
         />
         <Route path="/shop" element={<Shop />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </Router>

@@ -24,6 +24,7 @@ function Navigation({  cartAmount }) {
       </div>
       <ul className ="menu-items">
        <Link to={`/`} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}> <li className='home'>Home</li></Link>
+       <Link to={`/about`} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}> <li>About</li></Link>
       <Link to={'/Login'} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}><li>Sign-In</li></Link>
       <Link to={'/orders'} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}> <li>Orders</li> </Link>
        <Link to={'/shop'} style={{ textDecoration: 'none', textTransform: 'none', color: 'black'}}> <li>Shop</li> </Link>
