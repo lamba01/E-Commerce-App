@@ -22,10 +22,18 @@ function Home() {
       });
   }, []);
 
+  const scrollToTop = () => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 
   return (
     <div className="app">
-      <ProductSlider products={commerceProducts} /> 
+      <ProductSlider products={commerceProducts} scrollToTop={scrollToTop} /> 
       <FlashSales />
       <Categories />
       <BestSeller />

@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-function ProductSlider({ products }) {
+function ProductSlider({ products, scrollToTop  }) {
   const [categoryProducts, setCategoryProducts] = useState([]);
 
   useEffect(() => {

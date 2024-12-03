@@ -49,7 +49,7 @@ function About() {
                     </div>
                     <div>
                         <h3>45.5k</h3>
-                        <p>active customers</p>
+                        <p>Active customers</p>
                     </div>
                 </div>
                 <div className='achievement-div'>
@@ -58,7 +58,7 @@ function About() {
                     </div>
                     <div>
                         <h3>25k</h3>
-                        <p>annual gross sale</p>
+                        <p>Annual gross sale</p>
                     </div>
                 </div>
             </div>
