@@ -17,6 +17,7 @@ const secretKey = process.env.SECRET_KEY;
 
 // Enable CORS for all routes or specify origins explicitly
 const corsOptions = {
+  // origin: ["http://localhost:3000", "https://commeercee.vercel.app"],
   origin: "https://commeercee.vercel.app",
   credentials: true,
 };
@@ -39,6 +40,15 @@ db.query("SELECT 1", (error, results, fields) => {
 
 app.get("/", (req, res) => {
   res.send("Hello, this is the root path!");
+});
+
+// Nodemailer Transporter
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 // API endpoint for user registration
@@ -113,6 +123,99 @@ app.post("/api/login", async (req, res) => {
       }
     });
   });
+});
+
+// Forgot Password Route
+app.post("/api/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Check if user exists in MySQL
+    db.query(
+      "SELECT * FROM user WHERE email = ?",
+      [email],
+      async (err, results) => {
+        if (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+        if (results.length === 0) {
+          return res.status(400).json({ error: "User not found" });
+        }
+
+        const user = results[0]; // Get the user from MySQL
+
+        // Generate Token
+        const token = jwt.sign({ id: user.id }, secretKey, {
+          expiresIn: "15m",
+        });
+
+        // Store the token in the database (optional)
+        db.query("UPDATE user SET reset_token = ? WHERE id = ?", [
+          token,
+          user.id,
+        ]);
+
+        // Send Reset Email
+        const resetLink = `https://commeercee.vercel.app/reset-password/${token}`;
+        // const resetLink = `http://localhost:3000/reset-password/${token}`;
+
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: user.email,
+          subject: "Password Reset Request",
+          html: `<p>Click <a href="${resetLink}">here</a> to reset your password. The link expires in 15 minutes.</p>`,
+        });
+
+        res.json({ message: "Reset link sent to your email." });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Reset password route
+app.post("/api/reset-password/:token", async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+
+    // Check if user exists
+    db.query(
+      "SELECT * FROM user WHERE id = ?",
+      [decoded.id],
+      async (err, results) => {
+        if (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+        if (results.length === 0) {
+          return res
+            .status(400)
+            .json({ error: "Invalid token or user not found" });
+        }
+
+        // Hash new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Update password in MySQL
+        db.query(
+          "UPDATE user SET password = ?, reset_token = NULL WHERE id = ?",
+          [hashedPassword, decoded.id]
+        );
+
+        res.json({ message: "Password successfully reset!" });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: "Invalid or expired token" });
+  }
 });
 
 // Route to add to cart

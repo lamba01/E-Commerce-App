@@ -1,4 +1,4 @@
-// App.js 
+// App.js
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home/Home";
@@ -11,6 +11,9 @@ import Footer from "./Components/Footer/Footer";
 import Shop from "./Pages/Shop/Shop";
 import Orders from "./Pages/Orders/Orders";
 import About from "./Pages/About/About";
+import ForgotPassword from "./Components/ResetPassword/ForgotPassword";
+import ResetPassword from "./Components/ResetPassword/ResetPassword";
+
 function App() {
   // Retrieve the cartAmount value from localStorage when the component loads
   const storedCartAmount = localStorage.getItem("cartAmount");
@@ -35,6 +38,8 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route
           path="/cart"
           element={

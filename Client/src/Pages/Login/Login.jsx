@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from 'react-router-dom';
-import "./login.css"
-
+import { useNavigate, Link } from "react-router-dom";
+import "./login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +11,7 @@ const Login = () => {
   });
 
   const [error, setError] = useState("");
-  const apiUrl = 'https://app-chi-pink.vercel.app'; 
+  const apiUrl = "https://app-chi-pink.vercel.app";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,7 +21,7 @@ const Login = () => {
       [name]: newValue,
     });
   };
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,12 +31,12 @@ const Login = () => {
         withCredentials: true,
       });
       if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
-  
+        localStorage.setItem("token", response.data.token);
+
         // Successful login, redirect or perform desired action
         console.log("Login successful");
         // Redirect or perform actions here (e.g., set user state, navigate to dashboard)
-        navigate('/')
+        navigate("/");
       }
     } catch (err) {
       if (err.response && err.response.data.error) {
@@ -51,57 +50,66 @@ const Login = () => {
   return (
     <div className="form">
       <div className="form-container">
-      <h2 className="header">Sign In</h2>
-      {error && <p className="error-msg">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="input">
-          <label>Email address<span>*</span></label>
-          <input
-            type="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-          />
+        <h2 className="header">Sign In</h2>
+        {error && <p className="error-msg">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="input">
+            <label>
+              Email address<span>*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input">
+            <label>
+              Password<span>*</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="pass">
+            <div>
+              <input
+                type="checkbox"
+                name="rememberMe"
+                id="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+              />
+              <label htmlFor="remember me">Remember me</label>
+            </div>
+            <p>
+              <Link to="/forgot-password">Lost your password?</Link>
+            </p>
+          </div>
+          <button className="submit-btn" type="submit">
+            Sign In
+          </button>
+        </form>
+        <div className="separator">
+          <div className="line"></div>
+          <p>or</p>
+          <div className="line"></div>
         </div>
-        <div className="input">
-          <label>Password<span>*</span></label>
-          <input
-            type="password"
-            name="password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="pass">
-        <div>    
-          <input
-            type="checkbox"
-            name="rememberMe"
-            id="rememberMe" 
-            checked={formData.rememberMe}
-            onChange={handleChange}
-          />
-          <label htmlFor="remember me">Remember me</label></div>
-          <p>Lost your password?</p>
-        </div>
-        <button className="submit-btn" type="submit">Sign In</button>
-      </form>
-      <div className="separator">
-      <div className="line"></div>
-      <p>or</p>
-      <div className="line"></div>
-      </div>
-      
-      <Link to = {`/Signup`} className="btn-container">
-        <button className="signup-btn" type="submit">Create an account</button>
+
+        <Link to={`/Signup`} className="btn-container">
+          <button className="signup-btn" type="submit">
+            Create an account
+          </button>
         </Link>
       </div>
     </div>
   );
 };
 
-export default Login
-
-
+export default Login;
