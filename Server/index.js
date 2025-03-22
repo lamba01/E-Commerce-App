@@ -17,7 +17,6 @@ const secretKey = process.env.SECRET_KEY;
 
 // Enable CORS for all routes or specify origins explicitly
 const corsOptions = {
-  // origin: ["http://localhost:3000", "https://commeercee.vercel.app"],
   origin: "https://commeercee.vercel.app",
   credentials: true,
 };
@@ -152,7 +151,6 @@ app.post("/api/forgot-password", async (req, res) => {
 
         // Send Reset Emai
         const resetLink = `https://commeercee.vercel.app/reset-password/${token}`;
-        // const resetLink = `http://localhost:3000/reset-password/${token}`;
 
         await transporter.sendMail({
           from: process.env.EMAIL_USER,
