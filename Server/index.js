@@ -130,7 +130,7 @@ app.post("/api/forgot-password", async (req, res) => {
   const { email } = req.body;
 
   try {
-    // Check if user exists in MySQL
+    // Check if user exists
     db.query(
       "SELECT * FROM user WHERE email = ?",
       [email],
@@ -143,20 +143,14 @@ app.post("/api/forgot-password", async (req, res) => {
           return res.status(400).json({ error: "User not found" });
         }
 
-        const user = results[0]; // Get the user from MySQL
+        const user = results[0]; // Get the user from database
 
         // Generate Token
         const token = jwt.sign({ id: user.id }, secretKey, {
           expiresIn: "15m",
         });
 
-        // Store the token in the database (optional)
-        db.query("UPDATE user SET reset_token = ? WHERE id = ?", [
-          token,
-          user.id,
-        ]);
-
-        // Send Reset Email
+        // Send Reset Emai
         const resetLink = `https://commeercee.vercel.app/reset-password/${token}`;
         // const resetLink = `http://localhost:3000/reset-password/${token}`;
 
@@ -176,44 +170,34 @@ app.post("/api/forgot-password", async (req, res) => {
   }
 });
 
-// Reset password route
+// Reset password
 app.post("/api/reset-password/:token", async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
 
   try {
+    // Verify token
     const decoded = jwt.verify(token, secretKey);
 
-    // Check if user exists
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Update password
     db.query(
-      "SELECT * FROM user WHERE id = ?",
-      [decoded.id],
-      async (err, results) => {
+      "UPDATE user SET password = ? WHERE id = ?",
+      [hashedPassword, decoded.id],
+      (err, result) => {
         if (err) {
           console.error("Database error:", err);
           return res.status(500).json({ error: "Internal Server Error" });
         }
-        if (results.length === 0) {
-          return res
-            .status(400)
-            .json({ error: "Invalid token or user not found" });
-        }
-
-        // Hash new password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Update password in MySQL
-        db.query(
-          "UPDATE user SET password = ?, reset_token = NULL WHERE id = ?",
-          [hashedPassword, decoded.id]
-        );
 
         res.json({ message: "Password successfully reset!" });
       }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Token error:", error);
     res.status(400).json({ error: "Invalid or expired token" });
   }
 });

@@ -5,6 +5,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const apiUrl = "https://app-chi-pink.vercel.app";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +14,8 @@ const ForgotPassword = () => {
 
     try {
       const response = await axios.post(
-        "https://app-chi-pink.vercel.app/api/forgot-password",
+        `${apiUrl}/api/forgot-password`,
+        // "https://app-chi-pink.vercel.app/api/forgot-password",
         { email }
       );
       setMessage(response.data.message);

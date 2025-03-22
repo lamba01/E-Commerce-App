@@ -8,6 +8,7 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const apiUrl = "https://app-chi-pink.vercel.app";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ const ResetPassword = () => {
 
     try {
       const response = await axios.post(
-        `https://app-chi-pink.vercel.app/api/reset-password/${token}`,
+        `${apiUrl}/api/reset-password/${token}`,
         { password }
       );
       setMessage(response.data.message);
