@@ -24,8 +24,13 @@
   font-weight: 600;
   text-decoration: underline;
   padding: 10px 0;
-  cursor: pointer;
   width: fit-content;
+}
+.product__names {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: black;
+  padding: 10px 0;
 }
 .slick-arrow.slick-next {
   position: absolute;

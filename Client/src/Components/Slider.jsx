@@ -44,8 +44,8 @@ function ProductSlider({ products, scrollToTop  }) {
               alt={product.title}
             />
             <div className="productinfo">
-              <h4 className="product__name">{product.title}</h4>
-              <p className='product__category'>{product.category}</p>
+              <h2 className="product__names">{product.title}</h2>
+              <p className="product__category">{product.category}</p>
             </div>
           </div>
         </div>
